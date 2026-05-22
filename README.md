@@ -1,7 +1,7 @@
 # Cách setup và chạy
 ## 1. Clone project về máy 
 ```
-git clone https://github.com/DangNH1652005/FER_202.git
+git clone git@github.com:DangNH1652005/Puff_Bear.git
 ```
 ## 2. Vào project
 ```
@@ -15,3 +15,17 @@ npm install
 ```
 npm run dev
 ```
+---
+# Một số thư viện hỗ trợ UI
+## framework
+- Boostrap
+## library
+- react-hot-toast
+- react-bootstrap
+- lucide-react
+---
+
+
+
+
+

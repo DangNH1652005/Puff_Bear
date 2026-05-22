@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import HomePage from './assets/HomePage'
+import HomePage from './pages/HomePage';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -8,6 +9,9 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
       </Routes>
+
+      <Toaster position="top-right"
+        reverseOrder={false} />
     </>
   )
 }

@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Nguyễn Văn Sáng",
+      "email": "nvs@gmail.com",
+      "phone": "0443188239",
+      "password": "123456",
+      "role": "customer",   // customer | admin
+      "avatar": "htts://image.png",
+      "address": "123 Đường Trần Hưng Đạo",
+      "createdAt": "2025-12-01T10:00:00Z"
+    }
+  ],
+  "catogories": [
+    {
+      "id": 1,
+      "type": "animal"
+
+    }
+  ],
+  "products": [],
+  "orders": [],
+  "reviews": [],
+}
