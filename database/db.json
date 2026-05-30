@@ -283,7 +283,7 @@
       "fullName": "dang nguyen",
       "email": "nguyenhaidang1652005@gmail.com",
       "password": "123456",
-      "roleId": 3,
+      "roleId": 1,
       "avatar": "/profile.png",
       "createdAt": "2026-01-01T10:00:00Z"
     },
@@ -307,7 +307,7 @@
       "fullName": "Dang Hoang Lam",
       "email": "hoanglam@gmail.com",
       "password": "123456",
-      "roleId": 3,
+      "roleId": 1,
       "createdAt": "2026-05-30T12:19:14.397Z",
       "id": "ierMS-8GsTs"
     }
