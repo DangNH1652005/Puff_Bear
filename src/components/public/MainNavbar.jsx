@@ -3,8 +3,16 @@ import { useState } from "react";
 import { Navbar, Nav, Container, Button, Form, Badge } from "react-bootstrap";
 
 import React from "react";
+import { useAuthStore } from "../../store/auth.store";
+import { Link } from "react-router-dom";
 
 const MainNavbar = () => {
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <Navbar expand="lg" bg="white" className="shadow-sm sticky-top py-3">
       <Container>
@@ -89,6 +97,22 @@ const MainNavbar = () => {
                 0
               </Badge> */}
             </Button>
+
+            {user ? (
+              <Button
+                variant="light"
+                className="rounded-pill px-4"
+                onClick={handleLogout}
+              >
+                Đăng xuất
+              </Button>
+            ) : (
+              <Link to="/auth/login">
+                <Button variant="light" className="rounded-pill px-4">
+                  Đăng nhập
+                </Button>
+              </Link>
+            )}
           </div>
         </Navbar.Collapse>
       </Container>

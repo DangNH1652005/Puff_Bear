@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Hero from "../components/public/Hero";
 import FeaturesSection from "../components/public/FeaturesSection";
 import BestSellerSection from "../components/public/BestSellerSection";
+import MainNavbar from "../components/public/MainNavbar";
 
 export default function HomePage() {
   return (
