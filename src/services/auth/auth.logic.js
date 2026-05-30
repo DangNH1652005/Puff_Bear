@@ -29,6 +29,7 @@ export const registerRequest = async({ fullName, email, password }) => {
     password,
     roleId: 3, // default: customer
     createdAt: new Date().toISOString(),
+    avatar: "/profile.png"
   };
 
   const newUser = await createUser(userData);

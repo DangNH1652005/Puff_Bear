@@ -13,6 +13,7 @@ import StaffDashBoardPage from "../pages/staff/StaffDashBoardPage";
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* Public layout */}
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
       </Route>
@@ -20,12 +21,18 @@ const AppRoutes = () => {
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
 
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashBoardPage />} />
+      {/* ADMIN ONLY */}
+      <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashBoardPage />} />
+        </Route>
       </Route>
 
-      <Route path="/staff" element={<StaffLayout />}>
-        <Route index element={<StaffDashBoardPage />} />
+      {/* STAFF ONLY */}
+      <Route element={<ProtectedRoute allowedRoles={["staff"]} />}>
+        <Route path="/staff" element={<StaffLayout />}>
+          <Route index element={<StaffDashBoardPage />} />
+        </Route>
       </Route>
     </Routes>
   );

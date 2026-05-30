@@ -13,13 +13,12 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { getAllUsers } from "../../services/user.service";
 import { useAuthStore } from "../../store/auth.store";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const { register, loading, role } = useAuthStore();
+  const { register } = useAuthStore();
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,30 +28,22 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(fullName, email, password);
+      const { role } = await register(fullName, email, password);
       toast.success("Đăng ký thành công");
+
+      if (role.name === "customer") {
+        navigate("/");
+      } else if (role.name === "admin") {
+        navigate("/admin");
+      } else if (role.name === "staff") {
+        navigate("/staff");
+      } else {
+        toast.error("Role không tồn tại");
+      }
     } catch (err) {
       toast.error(err.message);
     }
   };
-
-  useEffect(() => {
-    if (!role) {
-      return;
-    }
-
-    console.log(role);
-
-    if (role.name === "customer") {
-      navigate("/");
-    } else if (role.name === "admin") {
-      navigate("/admin");
-    } else if (role.name === "staff") {
-      navigate("/staff");
-    } else {
-      toast.error("Role không tồn tại");
-    }
-  }, [role, navigate]);
 
   return (
     <div>

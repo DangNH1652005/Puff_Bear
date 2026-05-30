@@ -99,13 +99,28 @@ const MainNavbar = () => {
             </Button>
 
             {user ? (
-              <Button
-                variant="light"
-                className="rounded-pill px-4"
-                onClick={handleLogout}
-              >
-                Đăng xuất
-              </Button>
+              <div className="d-flex align-items-center gap-3">
+                {/* Avatar → click sang user detail */}
+                <Link to="/user-detail" className="d-flex align-items-center">
+                  <img
+                    src={user.avatar || "/profile.png"}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-circle object-fit-cover border"
+                    style={{ cursor: "pointer" }}
+                  />
+                </Link>
+
+                {/* Logout button */}
+                <Button
+                  variant="light"
+                  className="rounded-pill px-4"
+                  onClick={handleLogout}
+                >
+                  Đăng xuất
+                </Button>
+              </div>
             ) : (
               <Link to="/auth/login">
                 <Button variant="light" className="rounded-pill px-4">

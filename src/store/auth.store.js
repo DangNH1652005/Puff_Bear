@@ -5,7 +5,7 @@ import { getRoleById } from "../services/auth/auth.service";
 export const useAuthStore = create((set) => ({
   user: JSON.parse(localStorage.getItem("user")) || null,
   loading: false,
-  role: null,
+  role: JSON.parse(localStorage.getItem("role")) || null,
 
   login: async (email, password) => {
     set({ loading: true });
@@ -15,6 +15,7 @@ export const useAuthStore = create((set) => ({
       const role = await getRoleById(user.roleId);
 
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", JSON.stringify(role));
 
       set({
         user,
@@ -22,7 +23,7 @@ export const useAuthStore = create((set) => ({
         role,
       });
 
-      return user;
+      return { user, role };
     } catch (err) {
       set({ loading: false });
       throw err;
@@ -42,21 +43,23 @@ export const useAuthStore = create((set) => ({
       const role = await getRoleById(user.roleId);
 
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("role", JSON.stringify(role));
       set({
         user,
         role,
         loading: false,
       });
 
-      return user;
+      return { user, role };
     } catch (error) {
       set({ loading: false });
-      throw err;
+      throw error;
     }
   },
 
   logout: () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("role");
     set({
       user: null,
       role: null,

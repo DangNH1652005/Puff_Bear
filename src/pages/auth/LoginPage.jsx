@@ -12,13 +12,12 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { getAllUsers } from "../../services/user.service";
 import { useAuthStore } from "../../store/auth.store";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const { login, loading, user, role } = useAuthStore();
+  const { login } = useAuthStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,30 +27,26 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      const { role } = await login(email, password);
       toast.success("Đăng nhập thành công");
+
+      if (!role) {
+        return;
+      }
+
+      if (role.name === "customer") {
+        navigate("/");
+      } else if (role.name === "admin") {
+        navigate("/admin");
+      } else if (role.name === "staff") {
+        navigate("/staff");
+      } else {
+        toast.error("không có role mà bạn tìm");
+      }
     } catch (err) {
       toast.error(err.message);
     }
   };
-
-  useEffect(() => {
-    if (!role) {
-      return;
-    }
-
-    console.log(role);
-
-    if (role.name === "customer") {
-      navigate("/");
-    } else if (role.name === "admin") {
-      navigate("/admin");
-    } else if (role.name === "staff") {
-      navigate("/staff");
-    } else {
-      toast.error("không có role mà bạn tìm");
-    }
-  }, [role, navigate]);
 
   return (
     <div>
