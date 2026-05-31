@@ -9,6 +9,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import AdminDashBoardPage from "../pages/admin/AdminDashBoardPage";
 import StaffLayout from "../layouts/StaffLayout";
 import StaffDashBoardPage from "../pages/staff/StaffDashBoardPage";
+import ProductDetailPage from "../pages/ProductDetailPage";
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
       {/* Public layout */}
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
