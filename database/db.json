@@ -5,7 +5,6 @@
       "name": "Gấu Bông"
     }
   ],
-
   "collections": [
     {
       "id": "1",
@@ -28,7 +27,6 @@
       "name": "Dream Series"
     }
   ],
-
   "sizes": [
     {
       "id": "S",
@@ -47,7 +45,6 @@
       "label": "XL"
     }
   ],
-
   "colors": [
     {
       "id": "pink_pastel",
@@ -90,7 +87,6 @@
       "name": "Nâu"
     }
   ],
-
   "products": [
     {
       "id": "1",
@@ -105,12 +101,22 @@
       "description": "Gấu bông Cloud Bear siêu mềm mại với chất liệu cotton cao cấp.",
       "categoryId": "1",
       "collectionId": "1",
-      "sizeIds": ["S", "M", "L", "XL"],
-      "colorIds": ["pink_pastel", "cream", "milk_brown"],
+      "sizeIds": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "colorIds": [
+        "pink_pastel",
+        "cream",
+        "milk_brown"
+      ],
       "rating": 4.8,
       "reviews": 124,
       "isBestSeller": true,
-      "discount": 25
+      "discount": 25,
+      "stock": 89
     },
     {
       "id": "2",
@@ -123,11 +129,20 @@
       "description": "Gấu bông Honey Bear với màu nâu mật ong ấm áp.",
       "categoryId": "1",
       "collectionId": "2",
-      "sizeIds": ["M", "L", "XL"],
-      "colorIds": ["honey_brown", "be", "cream"],
+      "sizeIds": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colorIds": [
+        "honey_brown",
+        "be",
+        "cream"
+      ],
       "rating": 4.9,
       "reviews": 89,
-      "isBestSeller": true
+      "isBestSeller": true,
+      "stock": 34
     },
     {
       "id": "3",
@@ -141,12 +156,21 @@
       "description": "Gấu bông Marshmallow mềm như kẹo bông gòn.",
       "categoryId": "1",
       "collectionId": "3",
-      "sizeIds": ["S", "M", "L"],
-      "colorIds": ["white", "light_pink", "lavender"],
+      "sizeIds": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colorIds": [
+        "white",
+        "light_pink",
+        "lavender"
+      ],
       "rating": 4.7,
       "reviews": 56,
       "isNew": true,
-      "discount": 15
+      "discount": 15,
+      "stock": 100
     },
     {
       "id": "4",
@@ -159,11 +183,20 @@
       "description": "Gấu Teddy kinh điển với chất liệu cao cấp.",
       "categoryId": "1",
       "collectionId": "4",
-      "sizeIds": ["M", "L", "XL"],
-      "colorIds": ["milk_brown", "cream", "be"],
+      "sizeIds": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "colorIds": [
+        "milk_brown",
+        "cream",
+        "be"
+      ],
       "rating": 5,
       "reviews": 203,
-      "isBestSeller": true
+      "isBestSeller": true,
+      "stock": 100
     },
     {
       "id": "5",
@@ -176,11 +209,20 @@
       "description": "Gấu bông Pastel Dream với sắc màu nhẹ nhàng.",
       "categoryId": "1",
       "collectionId": "5",
-      "sizeIds": ["S", "M", "L"],
-      "colorIds": ["pink_pastel", "mint", "lavender"],
+      "sizeIds": [
+        "S",
+        "M",
+        "L"
+      ],
+      "colorIds": [
+        "pink_pastel",
+        "mint",
+        "lavender"
+      ],
       "rating": 4.6,
       "reviews": 78,
-      "isNew": true
+      "isNew": true,
+      "stock": 100
     },
     {
       "id": "6",
@@ -194,14 +236,21 @@
       "description": "Gấu bông Cozy mang đến cảm giác ấm áp.",
       "categoryId": "1",
       "collectionId": "1",
-      "sizeIds": ["M", "L"],
-      "colorIds": ["brown", "cream", "pink_pastel"],
+      "sizeIds": [
+        "M",
+        "L"
+      ],
+      "colorIds": [
+        "brown",
+        "cream",
+        "pink_pastel"
+      ],
       "rating": 4.8,
       "reviews": 92,
-      "discount": 17
+      "discount": 17,
+      "stock": 100
     }
   ],
-
   "roles": [
     {
       "id": "1",
@@ -216,7 +265,6 @@
       "name": "customer"
     }
   ],
-
   "users": [
     {
       "id": "1",
@@ -269,7 +317,6 @@
       "id": "ierMS-8GsTs"
     }
   ],
-
   "cartItems": [
     {
       "id": "1",
@@ -280,35 +327,41 @@
       "quantity": 2
     }
   ],
-
   "orders": [
     {
-      "id": "1001",
-      "userId": "wFZGI29jwQE",
-      "receiverName": "Nguyễn Văn A",
-      "phone": "0901234567",
-      "address": "Hà Nội",
-      "totalAmount": 797000,
+      "userId": "3",
+      "receiverName": "Đăng Nguyễn",
+      "phone": "0888993880",
+      "address": "Thai Binh",
+      "totalAmount": 897000,
       "status": "PENDING",
-      "createdAt": "2026-06-02T10:00:00Z"
+      "createdAt": "2026-06-06T01:44:27.784Z",
+      "id": "lmdRRHEC3bM"
     }
   ],
-
   "orderItems": [
     {
-      "id": "1",
-      "orderId": "1001",
-      "productId": "2",
-
+      "orderId": "lmdRRHEC3bM",
+      "productId": "1",
       "productName": "Gấu Bông Cloud Bear",
       "productPrice": 299000,
-
       "sizeId": "L",
       "colorId": "cream",
-
-      "quantity": 2
+      "quantity": 3,
+      "id": "-VEpIjqkZAw"
     }
   ],
-
+  "checkouts": [
+    {
+      "proId": "1",
+      "userId": "3",
+      "totalPrice": 897000,
+      "uniquePrice": 299000,
+      "quantity": 3,
+      "size": "L",
+      "color": "cream",
+      "id": "OA94_iUCEQk"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

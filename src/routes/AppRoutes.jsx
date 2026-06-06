@@ -10,6 +10,8 @@ import AdminDashBoardPage from "../pages/admin/AdminDashBoardPage";
 import StaffLayout from "../layouts/StaffLayout";
 import StaffDashBoardPage from "../pages/staff/StaffDashBoardPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
+import CheckoutPage from "../pages/order/CheckoutPage";
+import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 
 const AppRoutes = () => {
   return (
@@ -18,10 +20,13 @@ const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/checkout/:id" element={<CheckoutPage />} />
+        <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
+      
 
       {/* ADMIN ONLY */}
       <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

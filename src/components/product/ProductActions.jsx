@@ -1,13 +1,18 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
+import { createCheckoutLogic } from "../../services/checkout/checkout.logic";
+import { useAuthStore } from "../../store/auth.store";
+import { useNavigate } from "react-router-dom";
+import { useProductDetailStore } from "../../store/useProductDetailStore";
 
-/**
- * ProductActions
- * - Nhận product + selection (size, color, quantity) từ parent
- * - Tự xử lý logic thêm giỏ / mua ngay (toast, gọi API sau)
- */
-const ProductActions = ({ product, selection }) => {
+const ProductActions = () => {
+  const { product, selection } = useProductDetailStore();
+  const { user } = useAuthStore();
+  const navigate = useNavigate();
+
+  if (!product) return null;
+
   const handleAddToCart = () => {
     if (!selection?.size || !selection?.color) {
       toast.error("Vui lòng chọn kích thước và màu sắc!");
@@ -19,13 +24,24 @@ const ProductActions = ({ product, selection }) => {
     // TODO: gọi cart API tại đây
   };
 
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
     if (!selection?.size || !selection?.color) {
       toast.error("Vui lòng chọn kích thước và màu sắc!");
       return;
     }
-    toast.success("Chuyển đến thanh toán...");
-    // TODO: navigate to checkout
+
+    if (!user) {
+      navigate("/auth/login");
+      return;
+    }
+    const loadingToast = toast.loading("Đang khởi tạo đơn hàng...");
+
+    const res = await createCheckoutLogic({ product, selection, user });
+
+    if(res) {
+      navigate(`/checkout/${res.id}`)
+    }
+    toast.dismiss(loadingToast);
   };
 
   return (

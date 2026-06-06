@@ -11,3 +11,4 @@ export const getProductById = async (proId) => {
     throw error;
   }
 };
+

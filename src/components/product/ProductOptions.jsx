@@ -4,19 +4,12 @@ import { Minus, Plus } from "lucide-react";
 import { getAllSizes } from "../../services/size/size.service";
 import { getAllColors } from "../../services/color/color.service";
 import { getProductSizes } from "../../services/size/size.logic";
+import { useProductDetailStore } from "../../store/useProductDetailStore";
 
-/**
- * ProductOptions
- * - Tự fetch sizes & colors từ API
- * - Quản lý selectedSize, selectedColor, quantity nội bộ
- * - Emit selection lên parent qua onSelectionChange({ size, color, quantity })
- */
-const ProductOptions = ({ product, onSelectionChange }) => {
+const ProductOptions = () => {
+  const { product, selection, setSelection } = useProductDetailStore();
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [quantity, setQuantity] = useState(1);
 
   // Fetch sizes & colors khi product thay đổi
   useEffect(() => {
@@ -37,32 +30,30 @@ const ProductOptions = ({ product, onSelectionChange }) => {
 
       const defaultSize = filteredSizes[0]?.id ?? null;
       const defaultColor = filteredColors[0]?.id ?? null;
-      setSelectedSize(defaultSize);
-      setSelectedColor(defaultColor);
 
-      // Emit defaults lên parent
-      onSelectionChange?.({ size: defaultSize, color: defaultColor, quantity: 1 });
+      // Update store with defaults if not set yet
+      if (!selection.size && !selection.color) {
+        setSelection({ size: defaultSize, color: defaultColor, quantity: 1 });
+      }
     };
     fetchOptions();
-  }, [product]);
+  }, [product, setSelection, selection.size, selection.color]);
 
-  // Emit mỗi khi selection thay đổi
+  if (!product) return null;
+
+  const { size: selectedSize, color: selectedColor, quantity } = selection;
+
   const handleSizeChange = (sizeId) => {
-    setSelectedSize(sizeId);
-    onSelectionChange?.({ size: sizeId, color: selectedColor, quantity });
+    setSelection({ size: sizeId });
   };
 
   const handleColorChange = (colorId) => {
-    setSelectedColor(colorId);
-    onSelectionChange?.({ size: selectedSize, color: colorId, quantity });
+    setSelection({ color: colorId });
   };
 
   const handleQuantityChange = (updater) => {
-    setQuantity((prev) => {
-      const next = typeof updater === "function" ? updater(prev) : updater;
-      onSelectionChange?.({ size: selectedSize, color: selectedColor, quantity: next });
-      return next;
-    });
+    const next = typeof updater === "function" ? updater(quantity) : updater;
+    setSelection({ quantity: next });
   };
 
   return (

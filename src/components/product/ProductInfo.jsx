@@ -3,8 +3,10 @@ import { Badge } from "react-bootstrap";
 import { Star } from "lucide-react";
 import { getCategoryById } from "../../services/category/category.service";
 import { getCollectionById } from "../../services/collection/collection.service";
+import { useProductDetailStore } from "../../store/useProductDetailStore";
 
-const ProductInfo = ({ product }) => {
+const ProductInfo = () => {
+  const { product } = useProductDetailStore();
   const [category, setCategory] = useState(null);
   const [collection, setCollection] = useState(null);
 
@@ -20,6 +22,8 @@ const ProductInfo = ({ product }) => {
     };
     fetchMeta();
   }, [product]);
+
+  if (!product) return null;
 
   return (
     <>
