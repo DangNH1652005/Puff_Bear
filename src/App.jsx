@@ -1,20 +1,16 @@
-import { Route, Routes } from 'react-router-dom'
-import './App.css'
-import HomePage from './pages/HomePage';
-import { Toaster } from 'react-hot-toast';
-import AdminProducts from './pages/admin/AdminProducts';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Toaster } from "react-hot-toast";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
   return (
     <>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/admin/products' element={<AdminProducts />} />
-      </Routes>
+      <AppRoutes />
 
-      <Toaster position="top-right"
-        reverseOrder={false} />
+      <Toaster position="top-right" reverseOrder={false} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
