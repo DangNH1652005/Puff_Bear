@@ -1,16 +1,26 @@
 import { ShoppingCart, Heart, Menu, Search } from "lucide-react";
-import { useState } from "react";
 import { Navbar, Nav, Container, Button, Form, Badge } from "react-bootstrap";
-
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthStore } from "../../store/auth.store";
-import { Link } from "react-router-dom";
+import { useCartStore } from "../../store/cart.store";
+import { Link, useNavigate } from "react-router-dom";
 
 const MainNavbar = () => {
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
+  const { cartItems, fetchCart, clearCart } = useCartStore();
+
+  useEffect(() => {
+    if (user && user.id) {
+      fetchCart(user.id);
+    } else {
+      clearCart();
+    }
+  }, [user, fetchCart, clearCart]);
 
   const handleLogout = () => {
     logout();
+    clearCart();
   };
 
   return (
@@ -86,16 +96,18 @@ const MainNavbar = () => {
               variant="light"
               className="rounded-circle position-relative d-flex align-items-center justify-content-center"
               style={{ width: "45px", height: "45px" }}
+              onClick={() => navigate("/cart")}
             >
               <ShoppingCart size={20} />
-
-              {/* <Badge
-                pill
-                bg="danger"
-                className="position-absolute top-0 start-100 translate-middle"
-              >
-                0
-              </Badge> */}
+              {cartItems.length > 0 && (
+                <Badge
+                  pill
+                  bg="danger"
+                  className="position-absolute top-0 start-100 translate-middle"
+                >
+                  {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                </Badge>
+              )}
             </Button>
 
             {user ? (

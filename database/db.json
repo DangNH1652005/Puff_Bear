@@ -253,115 +253,87 @@
   ],
   "roles": [
     {
-      "id": "1",
-      "name": "admin"
+      "name": "admin",
+      "id": "zJUF8HyGSzo"
     },
     {
-      "id": "2",
-      "name": "staff"
+      "name": "staff",
+      "id": "R6pfGXfVYrc"
     },
     {
-      "id": "3",
-      "name": "customer"
+      "name": "customer",
+      "id": "0eLmcbt9W-M"
     }
   ],
   "users": [
     {
-      "id": "1",
-      "fullName": "Harry Kollow",
-      "email": "harrykollow@gmail.com",
-      "password": "123456",
-      "roleId": 1,
-      "avatar": "/profile.png",
-      "createdAt": "2026-01-01T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "fullName": "kimiko",
-      "email": "kimiko@gmail.com",
-      "password": "123456",
-      "roleId": "3",
-      "createdAt": "2026-01-01T10:00:00Z"
-    },
-    {
-      "id": "3",
-      "fullName": "dang nguyen",
+      "fullName": "Nguyen Hai Dang",
       "email": "nguyenhaidang1652005@gmail.com",
       "password": "123456",
-      "roleId": "1",
+      "roleId": "0eLmcbt9W-M",
+      "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "createdAt": "2026-01-01T10:00:00Z"
+      "id": "25v3gKqwfz8"
     },
     {
-      "id": "4",
-      "fullName": "john smith",
-      "email": "johnsmith@gmail.com",
+      "fullName": "Pham Anh Tuan",
+      "email": "phamanhtuan@gmail.com",
       "password": "123456",
-      "roleId": "2",
-      "createdAt": "2026-01-01T10:00:00Z"
+      "roleId": "R6pfGXfVYrc",
+      "createdAt": "2026-06-06T17:31:18.730Z",
+      "avatar": "/profile.png",
+      "id": "U352jew445"
     },
     {
-      "fullName": "Nguyen Van A",
-      "email": "nguyenvana@example.com",
+      "fullName": "Pham Hoang Anh",
+      "email": "phamhoanganh@gmail.com",
       "password": "123456",
-      "roleId": "3",
-      "createdAt": "2026-05-30T12:34:56.789Z",
-      "id": "wFZGI29jwQE"
-    },
-    {
-      "fullName": "Dang Hoang Lam",
-      "email": "hoanglam@gmail.com",
-      "password": "123456",
-      "roleId": "1",
-      "createdAt": "2026-05-30T12:19:14.397Z",
-      "id": "ierMS-8GsTs"
+      "roleId": "zJUF8HyGSzo",
+      "createdAt": "2026-06-06T17:31:18.730Z",
+      "avatar": "/profile.png",
+      "id": "kjer345DFGR"
     }
   ],
   "cartItems": [
     {
-      "id": "1",
-      "userId": "wFZGI29jwQE",
-      "productId": "2",
-      "sizeId": "L",
-      "colorId": "cream",
-      "quantity": 2
-    }
-  ],
-  "orders": [
-    {
-      "userId": "3",
-      "receiverName": "Đăng Nguyễn",
-      "phone": "0888993880",
-      "address": "Thai Binh",
-      "totalAmount": 897000,
-      "status": "PENDING",
-      "createdAt": "2026-06-06T01:44:27.784Z",
-      "id": "lmdRRHEC3bM"
-    }
-  ],
-  "orderItems": [
-    {
-      "orderId": "lmdRRHEC3bM",
+      "userId": "25v3gKqwfz8",
       "productId": "1",
-      "productName": "Gấu Bông Cloud Bear",
-      "productPrice": 299000,
       "sizeId": "L",
       "colorId": "cream",
-      "quantity": 3,
-      "id": "-VEpIjqkZAw"
-    }
-  ],
-  "checkouts": [
+      "quantity": 5,
+      "totalPrice": 1495000,
+      "id": "w14rrHFcrPM"
+    },
     {
-      "proId": "1",
-      "userId": "3",
-      "totalPrice": 897000,
-      "uniquePrice": 299000,
+      "userId": "25v3gKqwfz8",
+      "productId": "2",
+      "sizeId": "XL",
+      "colorId": "cream",
+      "quantity": 2,
+      "totalPrice": 698000,
+      "id": "eni4pmhAhCc"
+    },
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "3",
+      "sizeId": "S",
+      "colorId": "light_pink",
       "quantity": 3,
-      "size": "L",
-      "color": "cream",
-      "id": "OA94_iUCEQk"
+      "totalPrice": 837000,
+      "id": "AfDNfhj4ZG0"
+    },
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "1",
+      "sizeId": "S",
+      "colorId": "pink_pastel",
+      "quantity": 2,
+      "totalPrice": 598000,
+      "id": "GGU9OXAlvaE"
     }
   ],
+  "orders": [],
+  "orderItems": [],
+  "checkouts": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

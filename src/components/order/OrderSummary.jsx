@@ -1,66 +1,61 @@
 import { Card, Button } from "react-bootstrap";
 
-const OrderSummary = ({ checkout, product, onPlaceOrder }) => {
-    return (
-        <Card className="p-4">
-            <h5 className="mb-3">Order Summary</h5>
+const OrderSummary = ({ totalPriceCart, cartItems }) => {
+  return (
+    <Card className="p-4 shadow-sm border-0 rounded-4">
+      <h5 className="mb-3">Order Summary</h5>
 
-            {product && (
-                <div className="d-flex gap-3 mb-3">
-                    <img
-                        src={product.image}
-                        alt={product.name}
-                        width="80"
-                        height="80"
-                        style={{
-                            objectFit: "cover",
-                            borderRadius: "8px",
-                        }}
-                    />
+      {cartItems.map((item) => (
+        <div key={item.id} className="d-flex justify-content-between mb-3">
+          <div className="d-flex gap-2 align-items-center">
+            <img
+              src={item.product?.image}
+              alt={item.product?.name}
+              width="60"
+              height="60"
+              className="rounded"
+              style={{
+                objectFit: "cover",
+              }}
+            />
 
-                    <div className="d-flex flex-column">
-                        <small className="text-muted">
-                            Số lượng: {checkout.quantity}
-                        </small>
+            <div>
+              <div className="fw-semibold">{item.product?.name}</div>
 
-                        <small className="text-muted">
-                            Màu sắc: {checkout.color}
-                        </small>
+              <small className="text-muted d-block">
+                Size: {item.size?.label}
+                
+              </small>
 
-                        <small className="text-muted">
-                            Kích cỡ: {checkout.size}
-                        </small>
-                    </div>
-
-                </div>
-            )}
-
-            <hr />
-
-            <div className="d-flex justify-content-between mb-2">
-                <span>Giá</span>
-                <span>
-                    {product?.price?.toLocaleString("vi-VN")}đ
-                </span>
+              <small className="text-muted d-block">
+                Color: {item.color?.name}
+              </small>
             </div>
+          </div>
 
-            <div className="d-flex justify-content-between mb-2">
-                <span>Số lượng</span>
-                <span>{checkout.quantity}</span>
-            </div>
+          <div className="text-end">
+            <div>x{item.quantity}</div>
 
-            <div className="d-flex justify-content-between fw-bold fs-5">
-                <span>Tổng giá</span>
-                <span>
-                    {checkout.totalPrice?.toLocaleString("vi-VN")}đ
-                </span>
-            </div>
+            <small className="text-muted">
+              {item.totalPrice.toLocaleString("vi-VN")}đ
+            </small>
+          </div>
+        </div>
+      ))}
 
-            <Button className="w-100 mt-4" onClick={onPlaceOrder}>
-                Place Order
-            </Button>
-        </Card>
-    );
+      <hr />
+
+      <div className="d-flex justify-content-between mb-2">
+        <span>Tổng sản phẩm</span>
+        <span>{cartItems.length}</span>
+      </div>
+
+      <div className="d-flex justify-content-between fw-bold fs-5">
+        <span>Tổng giá</span>
+        <span>{totalPriceCart.toLocaleString("vi-VN")}đ</span>
+      </div>
+    </Card>
+  );
 };
 
 export default OrderSummary;
