@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ const ProductCard = () => {
           <Link to="/product/1">
             <Card.Img
               variant="top"
-              src="https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800"
+              src={product.image}
               className="product-image"
             />
           </Link>
@@ -49,7 +49,7 @@ const ProductCard = () => {
         <Card.Body className="p-4">
           {/* Title */}
           <Card.Title className="product-title fw-semibold mb-3">
-            Gấu Bông Cloud Bear
+            {product.name}
           </Card.Title>
 
           {/* Rating */}
@@ -62,14 +62,14 @@ const ProductCard = () => {
               />
             ))}
 
-            <span className="rating-text ms-1">(124)</span>
+            <span className="rating-text ms-1">{product.rating}</span>
           </div>
 
           {/* Bottom */}
           <div className="d-flex justify-content-between align-items-end">
             {/* Price */}
             <div>
-              <div className="price-text fw-semibold">299.000đ</div>
+              <div className="price-text fw-semibold">{product.price.toLocaleString()}đ</div>
 
               <div className="old-price text-decoration-line-through">
                 399.000đ

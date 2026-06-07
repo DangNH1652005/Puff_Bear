@@ -14,13 +14,14 @@ import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
 import CartPage from "../pages/cart/CartPage";
-
+import ProductListPage from "../components/product/ProductListPage";
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Public layout */}
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductListPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
