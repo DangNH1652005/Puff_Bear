@@ -83,60 +83,6 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Gấu Teddy",
-      "price": 450000,
-      "categoryId": "1",
-      "collectionId": "4",
-      "stock": 50,
-      "sold": 145,
-      "status": "active",
-      "sizeIds": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "colorIds": [
-        "milk_brown",
-        "cream",
-        "be"
-      ],
-      "rating": 4.8,
-      "image": "https://quatangketnoi.com.vn/apps/uploads/2023/07/85011552744-650x650.jpg",
-      "images": [
-        "https://quatangketnoi.com.vn/apps/uploads/2023/07/85011552744-650x650.jpg"
-      ],
-      "description": "Gấu bông Teddy màu nâu cổ điển, chất liệu cao cấp, mềm mại.",
-      "createdAt": "2025-01-10T08:00:00Z"
-    },
-    {
-      "id": "2",
-      "name": "Gấu Panda Mini",
-      "price": 320000,
-      "categoryId": "2",
-      "collectionId": "3",
-      "stock": 30,
-      "sold": 98,
-      "status": "active",
-      "sizeIds": [
-        "S",
-        "M",
-        "L"
-      ],
-      "colorIds": [
-        "white",
-        "cream"
-      ],
-      "rating": 4.7,
-      "image": "https://i.pinimg.com/1200x/81/36/18/8136189bbe2f423b02332f3d55547513.jpg",
-      "images": [
-        "https://i.pinimg.com/1200x/81/36/18/8136189bbe2f423b02332f3d55547513.jpg"
-      ],
-      "description": "Gấu bông Panda size nhỏ xinh, đen trắng đáng yêu.",
-      "createdAt": "2025-01-12T08:00:00Z"
-    },
-    {
       "id": "3",
       "name": "Gấu Hoa Thỏ",
       "price": 495000,
@@ -333,197 +279,30 @@
   ],
   "orders": [
     {
-      "id": "12345",
-      "userId": 1,
-      "customer": {
-        "name": "Nguyễn Văn A",
-        "email": "vana@gmail.com",
-        "phone": "0901234567",
-        "address": "123 Lê Lợi, Q.1, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 1,
-          "name": "Gấu Teddy Brown",
-          "price": 450000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 450000,
-      "status": "processing",
-      "paymentMethod": "COD",
-      "note": "Giao giờ hành chính",
-      "createdAt": "2025-06-01T09:30:00Z"
-    },
-    {
-      "id": "12344",
-      "userId": 1,
-      "customer": {
-        "name": "Trần Thị B",
-        "email": "thib@gmail.com",
-        "phone": "0912345678",
-        "address": "45 Nguyễn Huệ, Q.1, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 2,
-          "name": "Gấu Panda Mini",
-          "price": 320000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 320000,
-      "status": "delivered",
-      "paymentMethod": "Banking",
-      "note": "",
-      "createdAt": "2025-05-30T14:20:00Z"
-    },
-    {
-      "id": "12343",
-      "userId": 1,
-      "customer": {
-        "name": "Lê Văn C",
-        "email": "vanc@gmail.com",
-        "phone": "0923456789",
-        "address": "78 Trần Hưng Đạo, Q.5, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 4,
-          "name": "Gấu Khổng Lồ Pink",
-          "price": 1200000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 1200000,
-      "status": "shipping",
-      "paymentMethod": "COD",
-      "note": "Gói làm quà sinh nhật",
-      "createdAt": "2025-05-29T10:00:00Z"
-    },
-    {
-      "id": "12342",
-      "userId": 1,
-      "customer": {
-        "name": "Phạm Thị D",
-        "email": "thid@gmail.com",
-        "phone": "0934567890",
-        "address": "12 Hai Bà Trưng, Q.3, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 5,
-          "name": "Bộ 3 Gấu Mini",
-          "price": 890000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1530462943125-677cc511c87e?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 890000,
-      "status": "delivered",
-      "paymentMethod": "Banking",
-      "note": "",
-      "createdAt": "2025-05-28T08:15:00Z"
-    },
-    {
-      "id": "12341",
-      "userId": 1,
-      "customer": {
-        "name": "Hoàng Văn E",
-        "email": "vane@gmail.com",
-        "phone": "0945678901",
-        "address": "99 Điện Biên Phủ, Bình Thạnh, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 3,
-          "name": "Gấu Polar Bear",
-          "price": 495000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1551085254-e96b210db58a?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 495000,
-      "status": "processing",
-      "paymentMethod": "COD",
-      "note": "",
-      "createdAt": "2025-05-27T16:45:00Z"
-    },
-    {
-      "id": "12340",
-      "userId": 1,
-      "customer": {
-        "name": "Võ Thị F",
-        "email": "thif@gmail.com",
-        "phone": "0956789012",
-        "address": "33 Cách Mạng Tháng 8, Q.10, TP.HCM"
-      },
-      "items": [
-        {
-          "productId": 1,
-          "name": "Gấu Teddy Brown",
-          "price": 450000,
-          "qty": 2,
-          "image": "https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=80&h=80&fit=crop"
-        },
-        {
-          "productId": 2,
-          "name": "Gấu Panda Mini",
-          "price": 320000,
-          "qty": 1,
-          "image": "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=80&h=80&fit=crop"
-        }
-      ],
-      "total": 1220000,
-      "status": "cancelled",
-      "paymentMethod": "Banking",
-      "note": "Khách huỷ vì đổi ý",
-      "createdAt": "2025-05-26T11:30:00Z"
+      "userId": "25v3gKqwfz8",
+      "receiverName": "Đăng Nguyễn",
+      "phone": "0888993880",
+      "address": "Thai Binh",
+      "city": "London",
+      "zipCode": "zsd35s",
+      "totalPriceCart": 1800000,
+      "status": "PENDING",
+      "createdAt": "2026-06-07T10:29:56.866Z",
+      "id": "yXNG7SJKNAM"
     }
   ],
   "reviews": [],
-  "cart": [
+  "cartItems": [],
+  "orderItems": [
     {
-      "userId": "25v3gKqwfz8",
-      "productId": "1",
-      "sizeId": "L",
-      "colorId": "cream",
-      "quantity": 5,
-      "totalPrice": 1495000,
-      "id": "w14rrHFcrPM"
-    },
-    {
-      "userId": "25v3gKqwfz8",
-      "productId": "2",
-      "sizeId": "XL",
-      "colorId": "cream",
-      "quantity": 2,
-      "totalPrice": 698000,
-      "id": "eni4pmhAhCc"
-    },
-    {
-      "userId": "25v3gKqwfz8",
-      "productId": "3",
-      "sizeId": "S",
-      "colorId": "light_pink",
-      "quantity": 3,
-      "totalPrice": 837000,
-      "id": "AfDNfhj4ZG0"
-    },
-    {
-      "userId": "25v3gKqwfz8",
-      "productId": "1",
-      "sizeId": "S",
-      "colorId": "pink_pastel",
-      "quantity": 2,
-      "totalPrice": 598000,
-      "id": "GGU9OXAlvaE"
+      "orderId": "yXNG7SJKNAM",
+      "productId": null,
+      "sizeId": "M",
+      "colorId": "milk_brown",
+      "quantity": 4,
+      "totalPrice": 1800000,
+      "id": "jX1nUmDcQ8Y"
     }
   ],
-  "orderItems": [],
-  "checkouts": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

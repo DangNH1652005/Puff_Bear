@@ -17,3 +17,12 @@ export const getCartItemsByUserId = async (userId) => {
         return error;
     }
 };
+
+export const deleteCartItemById = async (cartItemId) => {
+  try {
+    const res = await instance.delete(`/cartItems/${cartItemId}`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

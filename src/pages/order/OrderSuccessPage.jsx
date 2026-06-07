@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getOrderById, getOrderItemsByOrderId } from "../../services/order/order.service";
-import { Container, Spinner, Alert, Button } from "react-bootstrap";
+import { getProductById } from "../../services/product/product.service";
+import { Container, Spinner, Alert, Button, Card, Badge, Row, Col } from "react-bootstrap";
+import { BsBoxSeam, BsCheckCircleFill, BsGeoAltFill, BsPersonFill, BsTelephoneFill } from "react-icons/bs";
 
 const OrderSuccessPage = () => {
   const { orderId } = useParams();
@@ -16,9 +18,21 @@ const OrderSuccessPage = () => {
         setLoading(true);
         const orderData = await getOrderById(orderId);
         const itemsData = await getOrderItemsByOrderId(orderId);
-        
+
+        // Fetch product info (image + name) cho mỗi order item
+        const itemsWithProduct = await Promise.all(
+          itemsData.map(async (item) => {
+            try {
+              const product = await getProductById(item.productId);
+              return { ...item, product };
+            } catch {
+              return item;
+            }
+          })
+        );
+
         setOrder(orderData);
-        setOrderItems(itemsData);
+        setOrderItems(itemsWithProduct);
       } catch (err) {
         setError(err.message || "Failed to load order details");
       } finally {
@@ -56,44 +70,138 @@ const OrderSuccessPage = () => {
   }
 
   return (
-    <Container className="py-5">
-      <Alert variant="success">
-        <Alert.Heading>Đặt hàng thành công!</Alert.Heading>
-        <p>Mã đơn hàng của bạn là: <strong>{order.id}</strong></p>
-      </Alert>
+    <Container className="py-4">
 
-      <div className="mt-4">
-        <h4>Thông tin giao hàng</h4>
-        <p><strong>Người nhận:</strong> {order.receiverName}</p>
-        <p><strong>Số điện thoại:</strong> {order.phone}</p>
-        <p><strong>Địa chỉ:</strong> {order.address}</p>
-        <p><strong>Ngày đặt:</strong> {new Date(order.createdAt).toLocaleString("vi-VN")}</p>
-        <p><strong>Tổng tiền:</strong> {order.totalAmount?.toLocaleString("vi-VN")}đ</p>
-      </div>
+      {/* SUCCESS HEADER */}
+      <Card className="text-center shadow-sm border-0 mb-4">
+        <Card.Body className="py-5">
+          <BsCheckCircleFill size={70} className="text-success mb-3" />
 
-      <div className="mt-4">
-        <h4>Sản phẩm đã đặt</h4>
-        <ul className="list-group">
-          {orderItems.map(item => (
-            <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{item.productName}</strong>
-                <br />
-                <small className="text-muted">
-                  Size: {item.sizeId} | Màu: {item.colorId} | Số lượng: {item.quantity}
-                </small>
+          <h3 className="fw-bold text-success">
+            Đặt hàng thành công
+          </h3>
+
+          <p className="text-muted mb-3">
+            Cảm ơn bạn đã mua hàng tại cửa hàng
+          </p>
+
+          <Badge bg="dark" className="px-3 py-2 fs-6">
+            Order ID: {order.id}
+          </Badge>
+        </Card.Body>
+      </Card>
+
+      <Row className="g-3">
+
+        {/* LEFT - SHIPPING INFO */}
+        <Col lg={4}>
+          <Card className="shadow-sm border-0 h-100">
+            <Card.Body>
+              <h5 className="mb-3">
+                <BsPersonFill className="me-2" />
+                Thông tin giao hàng
+              </h5>
+
+              <div className="mb-3">
+                <strong>{order.receiverName}</strong>
               </div>
-              <span>{(item.productPrice * item.quantity).toLocaleString("vi-VN")}đ</span>
-            </li>
-          ))}
-        </ul>
-      </div>
 
-      <div className="mt-4">
-        <Link to="/">
-          <Button variant="primary">Về trang chủ</Button>
+              <div className="mb-3">
+                <BsTelephoneFill className="me-2 text-success" />
+                {order.phone}
+              </div>
+
+              <div className="mb-3">
+                <BsGeoAltFill className="me-2 text-danger" />
+                {order.address}
+              </div>
+
+              <hr />
+
+              <div className="d-flex justify-content-between">
+                <span>Ngày đặt</span>
+                <span>
+                  {new Date(order.createdAt).toLocaleString("vi-VN")}
+                </span>
+              </div>
+
+              <div className="d-flex justify-content-between mt-3">
+                <strong>Tổng tiền</strong>
+                <strong className="text-danger">
+                  {order.totalPriceCart?.toLocaleString("vi-VN")}đ
+                </strong>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        {/* RIGHT - PRODUCTS */}
+        <Col lg={8}>
+          <Card className="shadow-sm border-0">
+            <Card.Body>
+              <h5 className="mb-3">
+                <BsBoxSeam className="me-2" />
+                Sản phẩm đã đặt
+              </h5>
+
+              {orderItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="d-flex justify-content-between align-items-center py-3 border-bottom"
+                >
+                  {/* LEFT PRODUCT */}
+                  <div className="d-flex align-items-center gap-3">
+
+                    <img
+                      src={item.product?.image}
+                      alt={item.product?.name}
+                      width={70}
+                      height={70}
+                      className="rounded"
+                      style={{ objectFit: "cover" }}
+                    />
+
+                    <div>
+                      <div className="fw-semibold">
+                        {item.product?.name}
+                      </div>
+
+                      <small className="text-muted d-block">
+                        Size: {item.sizeId}
+                      </small>
+
+                      <small className="text-muted d-block">
+                        Màu: {item.colorId}
+                      </small>
+
+                      <small className="text-muted d-block">
+                        SL: {item.quantity}
+                      </small>
+                    </div>
+                  </div>
+
+                  {/* RIGHT PRICE */}
+                  <div className="text-end">
+                    <div className="fw-bold text-danger">
+                      {item.totalPrice?.toLocaleString("vi-VN")}đ
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* BUTTON */}
+      <div className="text-center mt-4">
+        <Link to="/products">
+          <Button variant="primary" size="lg">
+            Tiếp tục mua sắm
+          </Button>
         </Link>
       </div>
+
     </Container>
   );
 };
