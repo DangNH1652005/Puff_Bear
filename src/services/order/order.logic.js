@@ -1,33 +1,31 @@
 import { ORDER_STATUS } from "../../constants/orderStatus";
+import { deleteCartItemById, getCartItemsByUserId } from "../cart/cart.service";
 import { getProductById } from "../product/product.service";
-import { createOrder, createOrderItem, updateProductStock } from "./order.service";
+import {
+  createOrder,
+  createOrderItem,
+  updateProductStock,
+} from "./order.service";
 
-export const placeOrder = async (orderForm, product, selection) => {
+export const placeOrder = async (
+  user,
+  orderForm,
+  totalPriceCart,
+  cartItems,
+) => {
   // 1. Validate form input
   if (!orderForm.receiverName || !orderForm.phone || !orderForm.address) {
     throw new Error("Vui lòng điền đầy đủ thông tin giao hàng.");
   }
 
-  // 2. Lấy product mới nhất từ DB để check tồn kho chính xác
-  const freshProduct = await getProductById(product.id);
-  if (!freshProduct) {
-    throw new Error("Sản phẩm không tồn tại.");
-  }
-
-  // 3. Kiểm tra tồn kho
-  if (freshProduct.stock < selection.quantity) {
-    throw new Error("Sản phẩm đã hết hàng hoặc không đủ số lượng.");
-  }
-
-  // 4. Tạo data tạm, tính totalAmount
-  const totalAmount = freshProduct.price * selection.quantity;
-
   const orderPayload = {
-    userId: orderForm.userId || null,
+    userId: user.id || null,
     receiverName: orderForm.receiverName,
     phone: orderForm.phone,
     address: orderForm.address,
-    totalAmount,
+    city: orderForm.city,
+    zipCode: orderForm.zipCode,
+    totalPriceCart: totalPriceCart,
     status: ORDER_STATUS.PENDING,
     createdAt: new Date().toISOString(),
   };
@@ -35,23 +33,44 @@ export const placeOrder = async (orderForm, product, selection) => {
   // 5. Tạo Order
   const createdOrder = await createOrder(orderPayload);
 
-  // 6. Tạo OrderItem
-  const orderItemPayload = {
-    orderId: createdOrder.id,
-    productId: freshProduct.id,
-    productName: freshProduct.name,
-    productPrice: freshProduct.price,
-    sizeId: selection.size,
-    colorId: selection.color,
-    quantity: selection.quantity,
-  };
-  
-  const createdOrderItem = await createOrderItem(orderItemPayload);
+  for (const item of cartItems) {
+    const orderItemPayload = {
+      orderId: createdOrder.id,
+      productId: item.productId,
+      sizeId: item.sizeId,
+      colorId: item.colorId,
+      quantity: item.quantity,
+      totalPrice: item.totalPrice,
+    };
 
-  // 7. Trừ tồn kho
-  const newStock = freshProduct.stock - selection.quantity;
-  await updateProductStock(freshProduct.id, newStock);
+    await createOrderItem(orderItemPayload);
 
-  // 8. Return kết quả
-  return { order: createdOrder, orderItem: createdOrderItem };
+    const product = await getProductById(item.productId);
+
+    if (product.stock < item.quantity) {
+      throw new Error(
+        `${product.name} chỉ còn ${product.stock} sản phẩm trong kho`,
+      );
+    }
+    await updateProductStock(item.productId, product.stock - item.quantity);
+  }
+
+  await clearCartByUserId(user.id);
+  return createdOrder;
+};
+
+export const clearCartByUserId = async (userId) => {
+  try {
+    const cartItems = await getCartItemsByUserId(userId);
+
+    await Promise.all(
+      cartItems.map(item =>
+        deleteCartItemById(item.id)
+      )
+    );
+
+    return true;
+  } catch (error) {
+    return error;
+  }
 };

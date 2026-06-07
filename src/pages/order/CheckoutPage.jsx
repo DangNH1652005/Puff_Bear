@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
-import { getCheckoutById } from "../../services/checkout/checkout.service";
 import { getProductById } from "../../services/product/product.service";
 import { placeOrder } from "../../services/order/order.logic";
 import OrderSummary from "../../components/order/OrderSummary";
@@ -45,7 +44,15 @@ const CheckoutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
-    console.log(shippingInfo)
+    try {
+      const res = await placeOrder(user, shippingInfo, totalPriceCart, cartItems)
+      console.log(res.id);
+      if (res) {
+        navigate(`/order-success/${res.id}`)
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   if (loading) {

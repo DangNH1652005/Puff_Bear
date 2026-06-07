@@ -116,7 +116,7 @@
       "reviews": 124,
       "isBestSeller": true,
       "discount": 25,
-      "stock": 89
+      "stock": 11
     },
     {
       "id": "2",
@@ -142,7 +142,7 @@
       "rating": 4.9,
       "reviews": 89,
       "isBestSeller": true,
-      "stock": 34
+      "stock": 25
     },
     {
       "id": "3",
@@ -170,7 +170,7 @@
       "reviews": 56,
       "isNew": true,
       "discount": 15,
-      "stock": 100
+      "stock": 88
     },
     {
       "id": "4",
@@ -294,46 +294,40 @@
       "id": "kjer345DFGR"
     }
   ],
-  "cartItems": [
+  "cartItems": [],
+  "orders": [
     {
       "userId": "25v3gKqwfz8",
-      "productId": "1",
-      "sizeId": "L",
-      "colorId": "cream",
-      "quantity": 5,
-      "totalPrice": 1495000,
-      "id": "w14rrHFcrPM"
-    },
+      "receiverName": "Đăng Nguyễn",
+      "phone": "0888993880",
+      "address": "Thai Binh",
+      "city": "London",
+      "zipCode": "zsd35s",
+      "totalPriceCart": 648000,
+      "status": "PENDING",
+      "createdAt": "2026-06-07T09:42:15.562Z",
+      "id": "RVRdQEpQfn4"
+    }
+  ],
+  "orderItems": [
     {
-      "userId": "25v3gKqwfz8",
-      "productId": "2",
-      "sizeId": "XL",
-      "colorId": "cream",
-      "quantity": 2,
-      "totalPrice": 698000,
-      "id": "eni4pmhAhCc"
-    },
-    {
-      "userId": "25v3gKqwfz8",
-      "productId": "3",
-      "sizeId": "S",
-      "colorId": "light_pink",
-      "quantity": 3,
-      "totalPrice": 837000,
-      "id": "AfDNfhj4ZG0"
-    },
-    {
-      "userId": "25v3gKqwfz8",
+      "orderId": "RVRdQEpQfn4",
       "productId": "1",
       "sizeId": "S",
       "colorId": "pink_pastel",
-      "quantity": 2,
-      "totalPrice": 598000,
-      "id": "GGU9OXAlvaE"
+      "quantity": 1,
+      "totalPrice": 299000,
+      "id": "TXYqikkEWW4"
+    },
+    {
+      "orderId": "RVRdQEpQfn4",
+      "productId": "2",
+      "sizeId": "M",
+      "colorId": "cream",
+      "quantity": 1,
+      "totalPrice": 349000,
+      "id": "2z8nhaFD6Hg"
     }
   ],
-  "orders": [],
-  "orderItems": [],
-  "checkouts": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

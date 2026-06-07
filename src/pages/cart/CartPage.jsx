@@ -44,6 +44,7 @@ const CartPage = () => {
                 variant="primary"
                 size="lg"
                 style={{ borderRadius: "30px" }}
+                onClick={() => navigate("/checkout")}
               >
                 Thanh toán
               </Button>
