@@ -2,12 +2,13 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/HomePage';
 import { Toaster } from 'react-hot-toast';
-
+import AdminProducts from './pages/admin/AdminProducts';
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/admin/products' element={<AdminProducts />} />
       </Routes>
 
       <Toaster position="top-right"
