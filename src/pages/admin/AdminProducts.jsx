@@ -17,6 +17,9 @@ const EMPTY_FORM = {
   status: "active",
   image: "",
   description: "",
+  sizeIds: [],
+  colorIds: [],
+  collectionId: "",
 };
 
 const fmt = (n) => Number(n).toLocaleString("vi-VN") + "đ";
@@ -26,6 +29,9 @@ export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [stats, setStats] = useState({});
   const [categories, setCategories] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filterCat, setFilterCat] = useState("all");
@@ -47,14 +53,21 @@ export default function AdminProducts() {
   const reload = useCallback(async () => {
     try {
       setLoading(true);
-      const [prods, st, catsRes] = await Promise.all([
-        getProducts(),
-        getProductStats(),
-        api.get("/categories"),
-      ]);
+      const [prods, st, catsRes, sizesRes, colorsRes, collectionsRes] =
+        await Promise.all([
+          getProducts(),
+          getProductStats(),
+          api.get("/categories"),
+          api.get("/sizes"),
+          api.get("/colors"),
+          api.get("/collections"),
+        ]);
       setProducts(prods);
       setStats(st);
       setCategories(catsRes.data);
+      setSizes(sizesRes.data);
+      setColors(colorsRes.data);
+      setCollections(collectionsRes.data);
     } catch {
       showToast(
         "❌ Không thể kết nối server. Hãy chạy: npm run server",
@@ -652,6 +665,73 @@ export default function AdminProducts() {
                       onChange={handleChange}
                       placeholder="Mô tả ngắn..."
                     />
+                  </div>
+                  {/* Sizes */}
+                  <div className="col-12">
+                    <label className="ap-label">Kích thước</label>
+                    <div className="ap-checkbox-group">
+                      {sizes.map((s) => (
+                        <label
+                          key={s.id}
+                          className={`ap-checkbox-item ${form.sizeIds.includes(s.id) ? "checked" : ""}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={form.sizeIds.includes(s.id)}
+                            onChange={(e) => {
+                              const updated = e.target.checked
+                                ? [...form.sizeIds, s.id]
+                                : form.sizeIds.filter((x) => x !== s.id);
+                              setForm((f) => ({ ...f, sizeIds: updated }));
+                            }}
+                          />
+                          {s.label}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Colors */}
+                  <div className="col-12">
+                    <label className="ap-label">Màu sắc</label>
+                    <div className="ap-checkbox-group">
+                      {colors.map((c) => (
+                        <label
+                          key={c.id}
+                          className={`ap-checkbox-item ${form.colorIds.includes(c.id) ? "checked" : ""}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={form.colorIds.includes(c.id)}
+                            onChange={(e) => {
+                              const updated = e.target.checked
+                                ? [...form.colorIds, c.id]
+                                : form.colorIds.filter((x) => x !== c.id);
+                              setForm((f) => ({ ...f, colorIds: updated }));
+                            }}
+                          />
+                          {c.name}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Collection */}
+                  <div className="col-12">
+                    <label className="ap-label">Bộ sưu tập</label>
+                    <select
+                      className="form-select ap-input"
+                      name="collectionId"
+                      value={form.collectionId}
+                      onChange={handleChange}
+                    >
+                      <option value="">-- Chọn bộ sưu tập --</option>
+                      {collections.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               )}

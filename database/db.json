@@ -1,10 +1,4 @@
 {
-  "categories": [
-    {
-      "id": "1",
-      "name": "Gấu Bông"
-    }
-  ],
   "collections": [
     {
       "id": "1",
@@ -90,100 +84,15 @@
   "products": [
     {
       "id": "1",
-      "name": "Gấu Bông Cloud Bear",
-      "price": 299000,
-      "originalPrice": 399000,
-      "image": "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800",
-        "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800"
-      ],
-      "description": "Gấu bông Cloud Bear siêu mềm mại với chất liệu cotton cao cấp.",
-      "categoryId": "1",
-      "collectionId": "1",
-      "sizeIds": [
-        "S",
-        "M",
-        "L",
-        "XL"
-      ],
-      "colorIds": [
-        "pink_pastel",
-        "cream",
-        "milk_brown"
-      ],
-      "rating": 4.8,
-      "reviews": 124,
-      "isBestSeller": true,
-      "discount": 25,
-      "stock": 89
-    },
-    {
-      "id": "2",
-      "name": "Gấu Bông Honey Bear",
-      "price": 349000,
-      "image": "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800"
-      ],
-      "description": "Gấu bông Honey Bear với màu nâu mật ong ấm áp.",
-      "categoryId": "1",
-      "collectionId": "2",
-      "sizeIds": [
-        "M",
-        "L",
-        "XL"
-      ],
-      "colorIds": [
-        "honey_brown",
-        "be",
-        "cream"
-      ],
-      "rating": 4.9,
-      "reviews": 89,
-      "isBestSeller": true,
-      "stock": 34
-    },
-    {
-      "id": "3",
-      "name": "Gấu Bông Marshmallow",
-      "price": 279000,
-      "originalPrice": 329000,
-      "image": "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800"
-      ],
-      "description": "Gấu bông Marshmallow mềm như kẹo bông gòn.",
-      "categoryId": "1",
-      "collectionId": "3",
-      "sizeIds": [
-        "S",
-        "M",
-        "L"
-      ],
-      "colorIds": [
-        "white",
-        "light_pink",
-        "lavender"
-      ],
-      "rating": 4.7,
-      "reviews": 56,
-      "isNew": true,
-      "discount": 15,
-      "stock": 100
-    },
-    {
-      "id": "4",
-      "name": "Gấu Bông Teddy Classic",
-      "price": 399000,
-      "image": "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800"
-      ],
-      "description": "Gấu Teddy kinh điển với chất liệu cao cấp.",
+      "name": "Gấu Teddy",
+      "price": 450000,
       "categoryId": "1",
       "collectionId": "4",
+      "stock": 50,
+      "sold": 145,
+      "status": "active",
       "sizeIds": [
+        "S",
         "M",
         "L",
         "XL"
@@ -193,100 +102,201 @@
         "cream",
         "be"
       ],
-      "rating": 5,
-      "reviews": 203,
-      "isBestSeller": true,
-      "stock": 100
+      "rating": 4.8,
+      "image": "https://quatangketnoi.com.vn/apps/uploads/2023/07/85011552744-650x650.jpg",
+      "images": [
+        "https://quatangketnoi.com.vn/apps/uploads/2023/07/85011552744-650x650.jpg"
+      ],
+      "description": "Gấu bông Teddy màu nâu cổ điển, chất liệu cao cấp, mềm mại.",
+      "createdAt": "2025-01-10T08:00:00Z"
     },
     {
-      "id": "5",
-      "name": "Gấu Bông Pastel Dream",
-      "price": 329000,
-      "image": "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1754215938449-f1eb6984b007?w=800"
-      ],
-      "description": "Gấu bông Pastel Dream với sắc màu nhẹ nhàng.",
-      "categoryId": "1",
-      "collectionId": "5",
+      "id": "2",
+      "name": "Gấu Panda Mini",
+      "price": 320000,
+      "categoryId": "2",
+      "collectionId": "3",
+      "stock": 30,
+      "sold": 98,
+      "status": "active",
       "sizeIds": [
         "S",
         "M",
         "L"
       ],
       "colorIds": [
-        "pink_pastel",
-        "mint",
-        "lavender"
+        "white",
+        "cream"
       ],
-      "rating": 4.6,
-      "reviews": 78,
-      "isNew": true,
-      "stock": 100
+      "rating": 4.7,
+      "image": "https://i.pinimg.com/1200x/81/36/18/8136189bbe2f423b02332f3d55547513.jpg",
+      "images": [
+        "https://i.pinimg.com/1200x/81/36/18/8136189bbe2f423b02332f3d55547513.jpg"
+      ],
+      "description": "Gấu bông Panda size nhỏ xinh, đen trắng đáng yêu.",
+      "createdAt": "2025-01-12T08:00:00Z"
     },
     {
-      "id": "6",
-      "name": "Gấu Bông Cozy Bear",
-      "price": 289000,
-      "originalPrice": 349000,
-      "image": "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800",
-      "images": [
-        "https://images.unsplash.com/photo-1770389356265-d1eeeda3430e?w=800"
+      "id": "3",
+      "name": "Gấu Hoa Thỏ",
+      "price": 495000,
+      "categoryId": "3",
+      "collectionId": "3",
+      "stock": 20,
+      "sold": 76,
+      "status": "active",
+      "sizeIds": [
+        "S",
+        "M"
       ],
-      "description": "Gấu bông Cozy mang đến cảm giác ấm áp.",
-      "categoryId": "1",
+      "colorIds": [
+        "white",
+        "light_pink"
+      ],
+      "rating": 4.9,
+      "image": "https://i.pinimg.com/736x/68/72/07/68720705d90e2fa6e319739417a90e49.jpg",
+      "images": [
+        "https://i.pinimg.com/736x/68/72/07/68720705d90e2fa6e319739417a90e49.jpg"
+      ],
+      "description": "Bó hoa cute tặng ny <3",
+      "createdAt": "2025-01-15T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "name": "Gấu Heo Hồng Cute",
+      "price": 250000,
+      "categoryId": "5",
       "collectionId": "1",
+      "stock": 10,
+      "sold": 54,
+      "status": "active",
+      "sizeIds": [
+        "S",
+        "M"
+      ],
+      "colorIds": [
+        "pink_pastel",
+        "light_pink"
+      ],
+      "rating": 4.6,
+      "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg",
+      "images": [
+        "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg"
+      ],
+      "description": "Heo con hồng siêu đáng yêu :3",
+      "createdAt": "2025-02-01T08:00:00Z"
+    },
+    {
+      "id": "5",
+      "name": "Gấu Bông Mèo",
+      "price": 890000,
+      "categoryId": "4",
+      "collectionId": "5",
+      "stock": 15,
+      "sold": 62,
+      "status": "inactive",
       "sizeIds": [
         "M",
         "L"
       ],
       "colorIds": [
-        "brown",
         "cream",
-        "pink_pastel"
+        "mint"
       ],
-      "rating": 4.8,
-      "reviews": 92,
-      "discount": 17,
-      "stock": 100
+      "rating": 4.5,
+      "image": "https://i.pinimg.com/736x/4a/3e/69/4a3e69072774fb9672e035bcbada3fcc.jpg",
+      "images": [
+        "https://i.pinimg.com/736x/4a/3e/69/4a3e69072774fb9672e035bcbada3fcc.jpg"
+      ],
+      "description": "Gấu bông mèo mini siêu dễ thương.",
+      "createdAt": "2025-02-10T08:00:00Z"
+    },
+    {
+      "id": "T5SVlpR01Po",
+      "name": "Thỏ Trắng Mini",
+      "price": 200000,
+      "categoryId": "3",
+      "collectionId": "3",
+      "stock": 20,
+      "sold": 0,
+      "status": "active",
+      "sizeIds": [
+        "S",
+        "M"
+      ],
+      "colorIds": [
+        "white",
+        "light_pink"
+      ],
+      "rating": 4.5,
+      "image": "https://bizweb.dktcdn.net/thumb/large/100/443/377/products/179-1735805837677.jpg",
+      "images": [
+        "https://bizweb.dktcdn.net/thumb/large/100/443/377/products/179-1735805837677.jpg"
+      ],
+      "description": "Bé thỏ cute hợp decor phòng ngủ",
+      "createdAt": "2026-06-07T04:10:28.220Z"
+    },
+    {
+      "name": "Bé rắn đáng yêu ",
+      "price": 150000,
+      "stock": 29,
+      "categoryId": 1,
+      "status": "active",
+      "image": "https://down-vn.img.susercontent.com/file/sg-11134201-81zu8-mn56e04hiltwf3.webp",
+      "description": "Bé siu đáng yêu, ôm ngủ siêu mềm",
+      "sizeIds": [
+        "S"
+      ],
+      "colorIds": [
+        "mint"
+      ],
+      "collectionId": "5",
+      "sold": 0,
+      "createdAt": "2026-06-07T07:02:59.678Z",
+      "id": "eyeHGTc7sm4"
     }
   ],
   "roles": [
     {
-      "id": "1",
-      "name": "admin"
+      "name": "admin",
+      "id": "zJUF8HyGSzo"
     },
     {
-      "id": "2",
-      "name": "staff"
+      "name": "staff",
+      "id": "R6pfGXfVYrc"
     },
     {
-      "id": "3",
-      "name": "customer"
+      "name": "customer",
+      "id": "0eLmcbt9W-M"
     }
   ],
   "users": [
     {
-      "id": "1",
-      "fullName": "Nguyễn Văn Sáng",
-      "email": "nvs@gmail.com",
-      "phone": "0443188239",
+      "fullName": "Nguyen Hai Dang",
+      "email": "nguyenhaidang1652005@gmail.com",
       "password": "123456",
-      "role": "customer",
-      "avatar": "",
-      "address": "123 Đường Trần Hưng Đạo",
-      "createdAt": "2025-12-01T10:00:00Z"
+      "roleId": "0eLmcbt9W-M",
+      "createdAt": "2026-06-06T17:31:18.730Z",
+      "avatar": "/profile.png",
+      "id": "25v3gKqwfz8"
     },
     {
-      "id": "2",
-      "fullName": "Admin",
-      "email": "admin@puffbear.com",
-      "phone": "0900000000",
-      "password": "admin123",
-      "role": "admin",
-      "avatar": "",
-      "address": "",
-      "createdAt": "2025-01-01T00:00:00Z"
+      "fullName": "Pham Anh Tuan",
+      "email": "phamanhtuan@gmail.com",
+      "password": "123456",
+      "roleId": "R6pfGXfVYrc",
+      "createdAt": "2026-06-06T17:31:18.730Z",
+      "avatar": "/profile.png",
+      "id": "U352jew445"
+    },
+    {
+      "fullName": "Pham Hoang Anh",
+      "email": "yenn65995@gmail.com",
+      "password": "123456",
+      "roleId": "zJUF8HyGSzo",
+      "createdAt": "2026-06-06T17:31:18.730Z",
+      "avatar": "/profile.png",
+      "id": "kjer345DFGR"
     }
   ],
   "categories": [
@@ -319,80 +329,6 @@
       "name": "Pig",
       "type": "combo",
       "slug": "pig"
-    }
-  ],
-  "products": [
-    {
-      "id": "1",
-      "name": "Gấu Teddy ",
-      "price": 450000,
-      "categoryId": 1,
-      "stock": 50,
-      "sold": 145,
-      "status": "active",
-      "image": "https://quatangketnoi.com.vn/apps/uploads/2023/07/85011552744-650x650.jpg",
-      "description": "Gấu bông Teddy màu nâu cổ điển, chất liệu cao cấp, mềm mại.",
-      "createdAt": "2025-01-10T08:00:00Z"
-    },
-    {
-      "id": "2",
-      "name": "Gấu Panda Mini",
-      "price": 320000,
-      "categoryId": 2,
-      "stock": 30,
-      "sold": 98,
-      "status": "active",
-      "image": "https://i.pinimg.com/1200x/81/36/18/8136189bbe2f423b02332f3d55547513.jpg",
-      "description": "Gấu bông Panda size nhỏ xinh, đen trắng đáng yêu.",
-      "createdAt": "2025-01-12T08:00:00Z"
-    },
-    {
-      "id": "3",
-      "name": "Gấu Hoa Thỏ",
-      "price": 495000,
-      "categoryId": 3,
-      "stock": 20,
-      "sold": 76,
-      "status": "active",
-      "image": "https://i.pinimg.com/736x/68/72/07/68720705d90e2fa6e319739417a90e49.jpg",
-      "description": "Bó hoa cute tặng ny <3",
-      "createdAt": "2025-01-15T08:00:00Z"
-    },
-    {
-      "id": "4",
-      "name": "Gấu Heo Hồng Cute",
-      "price": 250000,
-      "categoryId": "5",
-      "stock": 10,
-      "sold": 54,
-      "status": "active",
-      "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg",
-      "description": "Heo con hồng siêu đáng yêu :3",
-      "createdAt": "2025-02-01T08:00:00Z"
-    },
-    {
-      "id": "5",
-      "name": "Gấu bông mèo",
-      "price": 890000,
-      "categoryId": 5,
-      "stock": 15,
-      "sold": 62,
-      "status": "inactive",
-      "image": "https://i.pinimg.com/736x/4a/3e/69/4a3e69072774fb9672e035bcbada3fcc.jpg",
-      "description": "Gấu bông mèo mini siêu dễ thương.",
-      "createdAt": "2025-02-10T08:00:00Z"
-    },
-    {
-      "name": "Thỏ trắng mini ",
-      "price": 200000,
-      "stock": 20,
-      "categoryId": "3",
-      "status": "active",
-      "image": "https://bizweb.dktcdn.net/thumb/large/100/443/377/products/179-1735805837677.jpg?v=1735805842077",
-      "description": "Bé thỏ cute hợp decor phòng ngủ",
-      "sold": 0,
-      "createdAt": "2026-06-07T04:10:28.220Z",
-      "id": "T5SVlpR01Po"
     }
   ],
   "orders": [
@@ -549,5 +485,45 @@
     }
   ],
   "reviews": [],
+  "cart": [
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "1",
+      "sizeId": "L",
+      "colorId": "cream",
+      "quantity": 5,
+      "totalPrice": 1495000,
+      "id": "w14rrHFcrPM"
+    },
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "2",
+      "sizeId": "XL",
+      "colorId": "cream",
+      "quantity": 2,
+      "totalPrice": 698000,
+      "id": "eni4pmhAhCc"
+    },
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "3",
+      "sizeId": "S",
+      "colorId": "light_pink",
+      "quantity": 3,
+      "totalPrice": 837000,
+      "id": "AfDNfhj4ZG0"
+    },
+    {
+      "userId": "25v3gKqwfz8",
+      "productId": "1",
+      "sizeId": "S",
+      "colorId": "pink_pastel",
+      "quantity": 2,
+      "totalPrice": 598000,
+      "id": "GGU9OXAlvaE"
+    }
+  ],
+  "orderItems": [],
+  "checkouts": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

@@ -12,7 +12,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
   }
 
   // check role: so sánh role.name với danh sách allowedRoles
-  if (allowedRoles && !allowedRoles.includes(role?.name)) {
+  if (allowedRoles && !allowedRoles.includes(user?.roleId)) {
     return <Navigate to="/" replace />;
   }
 

@@ -12,7 +12,7 @@ export const useAuthStore = create((set) => ({
 
     try {
       const user = await loginRequest({ email, password });
-      const role = { name: user.role };
+      const role = await getRoleById(user.roleId);
 
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("role", JSON.stringify(role));
@@ -40,7 +40,7 @@ export const useAuthStore = create((set) => ({
         password,
       });
 
-      const role = { name: user.role };
+      const role = await getRoleById(user.roleId);
 
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("role", JSON.stringify(role));

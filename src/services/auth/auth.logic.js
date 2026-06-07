@@ -1,4 +1,5 @@
 import { createUser, getUsers } from "./auth.service";
+import { getRoles } from "../role/role.service";
 
 export const loginRequest = async ({ email, password }) => {
   const users = await getUsers();
@@ -23,11 +24,19 @@ export const registerRequest = async({ fullName, email, password }) => {
     throw new Error("Email đã tồn tại");
   }
 
+  // Get dynamic roleId for customer
+  const roles = await getRoles();
+  const customerRole = roles.find(r => r.name === "customer");
+  
+  if (!customerRole) {
+    throw new Error("Hệ thống chưa khởi tạo role customer");
+  }
+
   const userData = {
     fullName,
     email,
     password,
-    roleId: 3, // default: customer
+    roleId: customerRole.id,
     createdAt: new Date().toISOString(),
     avatar: "/profile.png"
   };

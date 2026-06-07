@@ -403,5 +403,40 @@ select.form-select {
 
 .ap-btn-add {
   font-family: 'Lora', serif !important;
-  
+}
+/* Checkbox group */
+.ap-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ap-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--pink-pale);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-muted);
+}
+
+.ap-checkbox-item input {
+  display: none;
+}
+
+.ap-checkbox-item.checked {
+  background: var(--pink-light);
+  border-color: var(--pink);
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.ap-checkbox-item:hover {
+  border-color: var(--pink);
+  color: var(--pink);
 }

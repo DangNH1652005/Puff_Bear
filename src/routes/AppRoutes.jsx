@@ -13,6 +13,7 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
+import CartPage from "../pages/cart/CartPage";
 
 const AppRoutes = () => {
   return (
@@ -21,16 +22,17 @@ const AppRoutes = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/checkout/:id" element={<CheckoutPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
-      
+
 
       {/* ADMIN ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={["zJUF8HyGSzo"]} />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashBoardPage />} />
           <Route path="products" element={<AdminProducts />} />
