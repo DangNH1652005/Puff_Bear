@@ -35,7 +35,7 @@ const AdminLayout = () => {
       <div className="flex-grow-1 d-flex flex-column overflow-hidden">
         <AdminNavbar onMenuClick={() => setShowSidebar(true)} />
 
-        <main className="flex-grow-1 overflow-auto p-4 bg-light">
+        <main className="flex-grow-1 overflow-auto p-4" style={{ background: "#fff5f8" }}>
           <Outlet />
         </main>
       </div>

@@ -12,6 +12,7 @@ import StaffDashBoardPage from "../pages/staff/StaffDashBoardPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
+import AdminProducts from "../pages/admin/AdminProducts";
 
 const AppRoutes = () => {
   return (
