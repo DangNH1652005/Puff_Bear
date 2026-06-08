@@ -41,7 +41,7 @@ const AppRoutes = () => {
       </Route>
 
       {/* STAFF ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["staff"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={["R6pfGXfVYrc"]} />}>
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
         </Route>
