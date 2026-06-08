@@ -88,7 +88,7 @@
       "price": 495000,
       "categoryId": "3",
       "collectionId": "3",
-      "stock": 20,
+      "stock": 16,
       "sold": 76,
       "status": "active",
       "sizeIds": [
@@ -113,7 +113,7 @@
       "price": 250000,
       "categoryId": "5",
       "collectionId": "1",
-      "stock": 10,
+      "stock": 9,
       "sold": 54,
       "status": "active",
       "sizeIds": [
@@ -138,7 +138,7 @@
       "price": 890000,
       "categoryId": "4",
       "collectionId": "5",
-      "stock": 15,
+      "stock": 13,
       "sold": 62,
       "status": "inactive",
       "sizeIds": [
@@ -187,7 +187,7 @@
       "price": 150000,
       "stock": 29,
       "categoryId": 1,
-      "status": "active",
+      "status": "inactive",
       "image": "https://down-vn.img.susercontent.com/file/sg-11134201-81zu8-mn56e04hiltwf3.webp",
       "description": "Bé siu đáng yêu, ôm ngủ siêu mềm",
       "sizeIds": [
@@ -243,6 +243,15 @@
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
       "id": "kjer345DFGR"
+    },
+    {
+      "fullName": "Bùi Cửu Đỉnh",
+      "email": "buidinhyt@gmail.com",
+      "password": "123456",
+      "roleId": "R6pfGXfVYrc",
+      "createdAt": "2026-06-08T06:39:35.115Z",
+      "avatar": "/profile.png",
+      "id": "btZwU7D10Fw"
     }
   ],
   "categories": [
@@ -289,6 +298,42 @@
       "status": "PENDING",
       "createdAt": "2026-06-07T10:29:56.866Z",
       "id": "yXNG7SJKNAM"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Bùi Đỉnh",
+      "phone": "0862158523",
+      "address": "Trung yên thị trấn yên thịnh yên mô ninh bình",
+      "city": "Ninh Bình",
+      "zipCode": "086065275GH3",
+      "totalPriceCart": 250000,
+      "status": "SHIPPING",
+      "createdAt": "2026-06-08T08:51:18.541Z",
+      "id": "0BWv6tiQ0BU"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Doris",
+      "phone": "0877887462",
+      "address": "Trọ Mạnh Tuyến",
+      "city": "Hòa Lạc",
+      "zipCode": "029018425",
+      "totalPriceCart": 2275000,
+      "status": "DELIVERED",
+      "createdAt": "2026-06-08T09:05:44.183Z",
+      "id": "WQwl7--n1FY"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Anh Tú Atus",
+      "phone": "098765",
+      "address": "dbfbfbdfdb",
+      "city": "dfbdbf",
+      "zipCode": "09876gf",
+      "totalPriceCart": 1485000,
+      "status": "CANCELLED",
+      "createdAt": "2026-06-08T09:21:23.684Z",
+      "id": "DqlQa2zzwJQ"
     }
   ],
   "reviews": [],
@@ -302,6 +347,42 @@
       "quantity": 4,
       "totalPrice": 1800000,
       "id": "jX1nUmDcQ8Y"
+    },
+    {
+      "orderId": "0BWv6tiQ0BU",
+      "productId": "4",
+      "sizeId": "S",
+      "colorId": "pink_pastel",
+      "quantity": 1,
+      "totalPrice": 250000,
+      "id": "Dja_hTrWwZU"
+    },
+    {
+      "orderId": "WQwl7--n1FY",
+      "productId": "5",
+      "sizeId": "M",
+      "colorId": "cream",
+      "quantity": 2,
+      "totalPrice": 1780000,
+      "id": "MUfgunYr_EU"
+    },
+    {
+      "orderId": "WQwl7--n1FY",
+      "productId": "3",
+      "sizeId": "S",
+      "colorId": "white",
+      "quantity": 1,
+      "totalPrice": 495000,
+      "id": "Xrxu7j7FFBU"
+    },
+    {
+      "orderId": "DqlQa2zzwJQ",
+      "productId": "3",
+      "sizeId": "S",
+      "colorId": "light_pink",
+      "quantity": 3,
+      "totalPrice": 1485000,
+      "id": "G8laNTgJuio"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
