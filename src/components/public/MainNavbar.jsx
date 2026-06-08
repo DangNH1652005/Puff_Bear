@@ -59,8 +59,8 @@ const MainNavbar = () => {
         {/* Menu */}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto text-center">
-            <Nav.Link href="#">Trang chủ</Nav.Link>
-            <Nav.Link href="#">Sản phẩm</Nav.Link>
+            <Nav.Link href="/">Trang chủ</Nav.Link>
+            <Nav.Link href="/products">Sản phẩm</Nav.Link>
             <Nav.Link href="#">Giảm giá</Nav.Link>
             <Nav.Link href="#">Liên hệ</Nav.Link>
           </Nav>

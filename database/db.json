@@ -1,128 +1,103 @@
 {
   "collections": [
     {
-      "id": "1",
+      "id": "a7f3c9d1",
       "name": "Cloud Series"
     },
     {
-      "id": "2",
+      "id": "b82e4f6a",
       "name": "Honey Series"
     },
     {
-      "id": "3",
+      "id": "c1d9e7b5",
       "name": "Sweet Series"
     },
     {
-      "id": "4",
+      "id": "d4a8f2c9",
       "name": "Classic Series"
     },
     {
-      "id": "5",
+      "id": "e6b1d3f7",
       "name": "Dream Series"
     }
   ],
   "sizes": [
     {
-      "id": "S",
+      "id": "f8d3a7c2b1",
       "label": "S"
     },
     {
-      "id": "M",
+      "id": "k4m9x2v8q6",
       "label": "M"
     },
     {
-      "id": "L",
+      "id": "t7n1p5z3w9",
       "label": "L"
     },
     {
-      "id": "XL",
+      "id": "y2h8r4j6c1",
       "label": "XL"
     }
   ],
   "colors": [
     {
-      "id": "pink_pastel",
+      "id": "x7m4q9k2p1",
       "name": "Hồng Pastel"
     },
     {
-      "id": "cream",
+      "id": "b3v8n5r6t2",
       "name": "Kem"
     },
     {
-      "id": "milk_brown",
+      "id": "f1c9z4w7h8",
       "name": "Nâu Sữa"
     },
     {
-      "id": "honey_brown",
+      "id": "k6p2d8m3q5",
       "name": "Nâu Mật Ong"
     },
     {
-      "id": "be",
+      "id": "t9j1x7n4v6",
       "name": "Be"
     },
     {
-      "id": "white",
+      "id": "r4h8c2y5k1",
       "name": "Trắng"
     },
     {
-      "id": "light_pink",
+      "id": "m7q3p9z6d2",
       "name": "Hồng Nhạt"
     },
     {
-      "id": "lavender",
+      "id": "w2t5n8f1j4",
       "name": "Tím Lavender"
     },
     {
-      "id": "mint",
+      "id": "c8v4k7r2h9",
       "name": "Xanh Mint"
     },
     {
-      "id": "brown",
+      "id": "z1m6x3p8q5",
       "name": "Nâu"
     }
   ],
   "products": [
     {
-      "id": "3",
-      "name": "Gấu Hoa Thỏ",
-      "price": 495000,
-      "categoryId": "3",
-      "collectionId": "3",
-      "stock": 20,
-      "sold": 76,
-      "status": "active",
-      "sizeIds": [
-        "S",
-        "M"
-      ],
-      "colorIds": [
-        "white",
-        "light_pink"
-      ],
-      "rating": 4.9,
-      "image": "https://i.pinimg.com/736x/68/72/07/68720705d90e2fa6e319739417a90e49.jpg",
-      "images": [
-        "https://i.pinimg.com/736x/68/72/07/68720705d90e2fa6e319739417a90e49.jpg"
-      ],
-      "description": "Bó hoa cute tặng ny <3",
-      "createdAt": "2025-01-15T08:00:00Z"
-    },
-    {
-      "id": "4",
+      "id": "asdf32ssfj",
       "name": "Gấu Heo Hồng Cute",
       "price": 250000,
-      "categoryId": "5",
-      "collectionId": "1",
+      "categoryId": "a7f3d9c2",
+      "collectionId": "a7f3c9d1",
       "stock": 10,
       "sold": 54,
       "status": "active",
       "sizeIds": [
-        "S",
-        "M"
+        "r4h8c2y5k1",
+        "b3v8n5r6t2"
       ],
       "colorIds": [
-        "pink_pastel",
-        "light_pink"
+        "k6p2d8m3q5",
+        "w2t5n8f1j4"
       ],
       "rating": 4.6,
       "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg",
@@ -131,75 +106,6 @@
       ],
       "description": "Heo con hồng siêu đáng yêu :3",
       "createdAt": "2025-02-01T08:00:00Z"
-    },
-    {
-      "id": "5",
-      "name": "Gấu Bông Mèo",
-      "price": 890000,
-      "categoryId": "4",
-      "collectionId": "5",
-      "stock": 15,
-      "sold": 62,
-      "status": "inactive",
-      "sizeIds": [
-        "M",
-        "L"
-      ],
-      "colorIds": [
-        "cream",
-        "mint"
-      ],
-      "rating": 4.5,
-      "image": "https://i.pinimg.com/736x/4a/3e/69/4a3e69072774fb9672e035bcbada3fcc.jpg",
-      "images": [
-        "https://i.pinimg.com/736x/4a/3e/69/4a3e69072774fb9672e035bcbada3fcc.jpg"
-      ],
-      "description": "Gấu bông mèo mini siêu dễ thương.",
-      "createdAt": "2025-02-10T08:00:00Z"
-    },
-    {
-      "id": "T5SVlpR01Po",
-      "name": "Thỏ Trắng Mini",
-      "price": 200000,
-      "categoryId": "3",
-      "collectionId": "3",
-      "stock": 20,
-      "sold": 0,
-      "status": "active",
-      "sizeIds": [
-        "S",
-        "M"
-      ],
-      "colorIds": [
-        "white",
-        "light_pink"
-      ],
-      "rating": 4.5,
-      "image": "https://bizweb.dktcdn.net/thumb/large/100/443/377/products/179-1735805837677.jpg",
-      "images": [
-        "https://bizweb.dktcdn.net/thumb/large/100/443/377/products/179-1735805837677.jpg"
-      ],
-      "description": "Bé thỏ cute hợp decor phòng ngủ",
-      "createdAt": "2026-06-07T04:10:28.220Z"
-    },
-    {
-      "name": "Bé rắn đáng yêu ",
-      "price": 150000,
-      "stock": 29,
-      "categoryId": 1,
-      "status": "active",
-      "image": "https://down-vn.img.susercontent.com/file/sg-11134201-81zu8-mn56e04hiltwf3.webp",
-      "description": "Bé siu đáng yêu, ôm ngủ siêu mềm",
-      "sizeIds": [
-        "S"
-      ],
-      "colorIds": [
-        "mint"
-      ],
-      "collectionId": "5",
-      "sold": 0,
-      "createdAt": "2026-06-07T07:02:59.678Z",
-      "id": "eyeHGTc7sm4"
     }
   ],
   "roles": [
@@ -247,62 +153,38 @@
   ],
   "categories": [
     {
-      "id": "1",
+      "id": "a7f3d9c2",
       "name": "Teddy",
       "type": "animal",
       "slug": "teddy"
     },
     {
-      "id": "2",
+      "id": "b1e8k4m7",
       "name": "Panda",
       "type": "animal",
       "slug": "panda"
     },
     {
-      "id": "3",
+      "id": "x9p2q6r5",
       "name": "Rabbit",
       "type": "animal",
       "slug": "rabbit"
     },
     {
-      "id": "4",
+      "id": "n4v8z1t3",
       "name": "Cat",
       "type": "size",
       "slug": "cat"
     },
     {
-      "id": "5",
+      "id": "k8x2m9q4",
       "name": "Pig",
       "type": "combo",
       "slug": "pig"
     }
   ],
-  "orders": [
-    {
-      "userId": "25v3gKqwfz8",
-      "receiverName": "Đăng Nguyễn",
-      "phone": "0888993880",
-      "address": "Thai Binh",
-      "city": "London",
-      "zipCode": "zsd35s",
-      "totalPriceCart": 1800000,
-      "status": "PENDING",
-      "createdAt": "2026-06-07T10:29:56.866Z",
-      "id": "yXNG7SJKNAM"
-    }
-  ],
-  "reviews": [],
+  "orders": [],
   "cartItems": [],
-  "orderItems": [
-    {
-      "orderId": "yXNG7SJKNAM",
-      "productId": null,
-      "sizeId": "M",
-      "colorId": "milk_brown",
-      "quantity": 4,
-      "totalPrice": 1800000,
-      "id": "jX1nUmDcQ8Y"
-    }
-  ],
+  "orderItems": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
