@@ -192,7 +192,56 @@
       "slug": "pig"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "userId": "25v3gKqwfz8",
+      "receiverName": "Đăng Nguyễn",
+      "phone": "0888993880",
+      "address": "Thai Binh",
+      "city": "London",
+      "zipCode": "zsd35s",
+      "totalPriceCart": 1800000,
+      "status": "PENDING",
+      "createdAt": "2026-06-07T10:29:56.866Z",
+      "id": "yXNG7SJKNAM"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Bùi Đỉnh",
+      "phone": "0862158523",
+      "address": "Trung yên thị trấn yên thịnh yên mô ninh bình",
+      "city": "Ninh Bình",
+      "zipCode": "086065275GH3",
+      "totalPriceCart": 250000,
+      "status": "SHIPPING",
+      "createdAt": "2026-06-08T08:51:18.541Z",
+      "id": "0BWv6tiQ0BU"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Doris",
+      "phone": "0877887462",
+      "address": "Trọ Mạnh Tuyến",
+      "city": "Hòa Lạc",
+      "zipCode": "029018425",
+      "totalPriceCart": 2275000,
+      "status": "DELIVERED",
+      "createdAt": "2026-06-08T09:05:44.183Z",
+      "id": "WQwl7--n1FY"
+    },
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Anh Tú Atus",
+      "phone": "098765",
+      "address": "dbfbfbdfdb",
+      "city": "dfbdbf",
+      "zipCode": "09876gf",
+      "totalPriceCart": 1485000,
+      "status": "CANCELLED",
+      "createdAt": "2026-06-08T09:21:23.684Z",
+      "id": "DqlQa2zzwJQ"
+    }
+  ],
   "cartItems": [],
   "orderItems": [],
   "$schema": "./node_modules/json-server/schema.json"
