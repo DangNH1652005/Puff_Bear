@@ -91,14 +91,8 @@
       "stock": 10,
       "sold": 54,
       "status": "active",
-      "sizeIds": [
-        "r4h8c2y5k1",
-        "b3v8n5r6t2"
-      ],
-      "colorIds": [
-        "k6p2d8m3q5",
-        "w2t5n8f1j4"
-      ],
+      "sizeIds": ["r4h8c2y5k1", "b3v8n5r6t2"],
+      "colorIds": ["k6p2d8m3q5", "w2t5n8f1j4"],
       "rating": 4.6,
       "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg",
       "images": [
@@ -130,7 +124,8 @@
       "roleId": "0eLmcbt9W-M",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "25v3gKqwfz8"
+      "id": "25v3gKqwfz8",
+      "isActive": true
     },
     {
       "fullName": "Pham Anh Tuan",
@@ -139,7 +134,8 @@
       "roleId": "R6pfGXfVYrc",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "U352jew445"
+      "id": "U352jew445",
+      "isActive": true
     },
     {
       "fullName": "Pham Hoang Anh",
@@ -148,7 +144,8 @@
       "roleId": "zJUF8HyGSzo",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "kjer345DFGR"
+      "id": "kjer345DFGR",
+      "isActive": true
     },
     {
       "fullName": "Bùi Cửu Đỉnh",
@@ -157,7 +154,8 @@
       "roleId": "R6pfGXfVYrc",
       "createdAt": "2026-06-08T06:39:35.115Z",
       "avatar": "/profile.png",
-      "id": "btZwU7D10Fw"
+      "id": "btZwU7D10Fw",
+      "isActive": true
     }
   ],
   "categories": [
@@ -192,7 +190,31 @@
       "slug": "pig"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "99001",
+      "userId": "25v3gKqwfz8",
+      "customer": {
+        "name": "Nguyen Hai Dang",
+        "email": "nguyenhaidang1652005@gmail.com"
+       
+      },
+      "items": [
+        {
+          "productId": "asdf32ssfj",
+          "name": "Gấu Heo Hồng Cute",
+          "price": 250000,
+          "qty": 1,
+          "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg"
+        }
+      ],
+      "total": 250000,
+      "status": "delivered",
+      "paymentMethod": "COD",
+      "note": "",
+      "createdAt": "2026-06-10T09:00:00Z"
+    }
+  ],
   "cartItems": [],
   "orderItems": [],
   "$schema": "./node_modules/json-server/schema.json"

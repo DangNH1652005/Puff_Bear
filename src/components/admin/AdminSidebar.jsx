@@ -21,7 +21,7 @@ const menuItems = [
   { icon: Home, label: "Dashboard", path: "/admin" },
   { icon: Package, label: "Sản phẩm", path: "/admin/products" },
   { icon: ShoppingCart, label: "Đơn hàng", path: "/admin/orders" },
-  { icon: Users, label: "Khách hàng", path: "/admin/customers" },
+  { icon: Users, label: "Khách hàng", path: "/admin/users" },
   { icon: Tag, label: "Danh mục", path: "/admin/categories" },
   { icon: Heart, label: "Yêu thích", path: "/admin/favorites" },
   { icon: BarChart3, label: "Thống kê", path: "/admin/analytics" },
