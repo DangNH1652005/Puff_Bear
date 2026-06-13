@@ -29,6 +29,11 @@
   min-height: 130px;
 }
 
+.staff-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(242, 167, 187, 0.22);
+}
+
 .staff-stat-card p {
   font-size: 14px;
   color: #374151;

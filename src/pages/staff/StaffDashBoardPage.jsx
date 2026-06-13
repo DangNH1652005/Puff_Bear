@@ -158,8 +158,8 @@ const StaffDashBoardPage = () => {
                 <th>Mã đơn</th>
                 <th>Khách hàng</th>
                 <th>Sản phẩm</th>
-                <th  className="text-center">Giá trị</th>
-                <th  className="text-center">Trạng thái</th>
+                <th className="text-center">Giá trị</th>
+                <th className="text-center">Trạng thái</th>
               </tr>
             </thead>
 
@@ -169,8 +169,8 @@ const StaffDashBoardPage = () => {
                   <td>#{order.id.slice(0, 5)}</td>
                   <td>{order.receiverName}</td>
                   <td>{getOrderProductName(order.id)}</td>
-                  <td  className="text-center">{fmt(order.totalPriceCart)}</td>
-                  <td  className="text-center">
+                  <td className="text-center">{fmt(order.totalPriceCart)}</td>
+                  <td className="text-center">
                     <span className={`status ${order.status.toLowerCase()}`}>
                       {getStatusText(order.status)}
                     </span>
