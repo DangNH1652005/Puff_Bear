@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
-import api from "../../services/api";
+import instance from "../../libs/axios";
 import "./AdminDashBoardPage.css";
 
 
@@ -22,10 +22,10 @@ const AdminDashBoardPage = () => {
 
       const [productsRes, ordersRes, usersRes, orderItemsRes] =
         await Promise.all([
-          api.get("/products"),
-          api.get("/orders"),
-          api.get("/users"),
-          api.get("/orderItems"),
+          instance.get("/products"),
+          instance.get("/orders"),
+          instance.get("/users"),
+          instance.get("/orderItems"),
         ]);
 
 

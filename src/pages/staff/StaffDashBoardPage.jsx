@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
-import api from "../../services/api";
+import instance from "../../libs/axios";
 import "./StaffDashBoardPage.css";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
@@ -18,10 +18,10 @@ const StaffDashBoardPage = () => {
 
       const [productsRes, ordersRes, usersRes, orderItemsRes] =
         await Promise.all([
-          api.get("/products"),
-          api.get("/orders"),
-          api.get("/users"),
-          api.get("/orderItems"),
+          instance.get("/products"),
+          instance.get("/orders"),
+          instance.get("/users"),
+          instance.get("/orderItems"),
         ]);
 
       setProducts(productsRes.data);

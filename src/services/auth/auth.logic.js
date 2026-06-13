@@ -37,6 +37,7 @@ export const registerRequest = async({ fullName, email, password }) => {
     email,
     password,
     roleId: customerRole.id,
+    balance: 0,
     createdAt: new Date().toISOString(),
     avatar: "/profile.png"
   };

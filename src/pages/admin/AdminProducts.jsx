@@ -6,7 +6,7 @@ import {
   deleteProduct,
   getProductStats,
 } from "../../store/productStore";
-import api from "../../services/api";
+import instance from "../../libs/axios";
 import "./AdminProducts.css";
 
 const EMPTY_FORM = {
@@ -57,10 +57,10 @@ export default function AdminProducts() {
         await Promise.all([
           getProducts(),
           getProductStats(),
-          api.get("/categories"),
-          api.get("/sizes"),
-          api.get("/colors"),
-          api.get("/collections"),
+          instance.get("/categories"),
+          instance.get("/sizes"),
+          instance.get("/colors"),
+          instance.get("/collections"),
         ]);
       setProducts(prods);
       setStats(st);
