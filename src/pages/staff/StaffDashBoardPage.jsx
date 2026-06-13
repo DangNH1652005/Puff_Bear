@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import instance from "../../libs/axios";
-import "./StaffDashBoardPage.css";
+import "../../styles/staff/StaffDashBoardPage.css";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 

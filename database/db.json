@@ -130,7 +130,8 @@
       "roleId": "0eLmcbt9W-M",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "25v3gKqwfz8"
+      "id": "25v3gKqwfz8",
+      "isActive": true
     },
     {
       "fullName": "Pham Anh Tuan",
@@ -139,7 +140,8 @@
       "roleId": "R6pfGXfVYrc",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "U352jew445"
+      "id": "U352jew445",
+      "isActive": true
     },
     {
       "fullName": "Pham Hoang Anh",
@@ -148,7 +150,8 @@
       "roleId": "zJUF8HyGSzo",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "kjer345DFGR"
+      "id": "kjer345DFGR",
+      "isActive": true
     },
     {
       "fullName": "Bùi Cửu Đỉnh",
@@ -157,7 +160,8 @@
       "roleId": "R6pfGXfVYrc",
       "createdAt": "2026-06-08T06:39:35.115Z",
       "avatar": "/profile.png",
-      "id": "btZwU7D10Fw"
+      "id": "btZwU7D10Fw",
+      "isActive": true
     }
   ],
   "categories": [

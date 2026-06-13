@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Row, Col, Image, Badge } from "react-bootstrap";
 import { Heart } from "lucide-react";
-import { useProductDetailStore } from "../../store/useProductDetailStore";
+import { useProductDetailStore } from "../../store/product.store";
 
 const ProductGallery = ({ onFavoriteToggle }) => {
   const { product, loading, error } = useProductDetailStore();

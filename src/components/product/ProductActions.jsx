@@ -3,7 +3,7 @@ import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/auth.store";
 import { useNavigate } from "react-router-dom";
-import { useProductDetailStore } from "../../store/useProductDetailStore";
+import { useProductDetailStore } from "../../store/product.store";
 import { addCartItemLogic } from "../../services/cart/cart.logic";
 import { useCartStore } from "../../store/cart.store";
 

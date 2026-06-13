@@ -5,9 +5,9 @@ import {
   updateProduct,
   deleteProduct,
   getProductStats,
-} from "../../store/productStore";
+} from "../../services/product/product.service";
 import instance from "../../libs/axios";
-import "./AdminProducts.css";
+import "../../styles/admin/AdminProducts.css";
 
 const EMPTY_FORM = {
   name: "",
