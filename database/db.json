@@ -88,12 +88,12 @@
       "price": 250000,
       "categoryId": "a7f3d9c2",
       "collectionId": "a7f3c9d1",
-      "stock": 10,
+      "stock": 7,
       "sold": 54,
       "status": "active",
       "sizeIds": [
-        "r4h8c2y5k1",
-        "b3v8n5r6t2"
+        "f8d3a7c2b1",
+        "k4m9x2v8q6"
       ],
       "colorIds": [
         "k6p2d8m3q5",
@@ -192,8 +192,41 @@
       "slug": "pig"
     }
   ],
-  "orders": [],
-  "cartItems": [],
-  "orderItems": [],
+  "orders": [
+    {
+      "userId": "btZwU7D10Fw",
+      "receiverName": "Đăng Nguyễn",
+      "phone": "0888993880",
+      "address": "Ho Chi Minh",
+      "city": "Thai Binh",
+      "zipCode": "zsd35s",
+      "totalPriceCart": 750000,
+      "status": "PENDING",
+      "createdAt": "2026-06-10T04:04:38.522Z",
+      "id": "Tnr8UYyIFSc"
+    }
+  ],
+  "cartItems": [
+    {
+      "userId": "btZwU7D10Fw",
+      "productId": "asdf32ssfj",
+      "sizeId": "k4m9x2v8q6",
+      "colorId": "w2t5n8f1j4",
+      "quantity": 4,
+      "totalPrice": 1000000,
+      "id": "k95lOOa0Uzw"
+    }
+  ],
+  "orderItems": [
+    {
+      "orderId": "Tnr8UYyIFSc",
+      "productId": "asdf32ssfj",
+      "sizeId": "k4m9x2v8q6",
+      "colorId": "w2t5n8f1j4",
+      "quantity": 3,
+      "totalPrice": 750000,
+      "id": "8Tui8pDH-48"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
