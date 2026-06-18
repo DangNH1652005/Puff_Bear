@@ -3,16 +3,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import {
-  getCollections,
+  getCategories,
   getColors,
   getSizes,
 } from "../../services/product/productService";
 
-function ProductFilter({
-  filters,
-  setFilters,
-}) {
-  const [collections, setCollections] = useState([]);
+function ProductFilter({ filters, setFilters }) {
+  const [categories, setCategories] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
 
@@ -21,62 +18,67 @@ function ProductFilter({
   }, []);
 
   const loadData = async () => {
-    const [collectionData, sizeData, colorData] =
-      await Promise.all([
-        getCollections(),
-        getSizes(),
-        getColors(),
-      ]);
+    try {
+      const [categoryData, sizeData, colorData] =
+        await Promise.all([
+          getCategories(),
+          getSizes(),
+          getColors(),
+        ]);
 
-    setCollections(collectionData);
-    setSizes(sizeData);
-    setColors(colorData);
+      setCategories(categoryData);
+      setSizes(sizeData);
+      setColors(colorData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const clearFilter = () => {
     setFilters({
-      collectionId: "",
+      categoryId: "",
       sizeId: "",
       colorIds: [],
-      maxPrice: 500000,
+      maxPrice: 1000000,
     });
   };
 
   return (
     <div className="product-filter">
-
       <h3 className="filter-title">
         Bộ lọc
       </h3>
 
-      {/* COLLECTION */}
+      {/* CATEGORY */}
       <div className="filter-section">
-        <h5>Bộ sưu tập</h5>
+        <h5>Thể loại</h5>
 
         <Form.Check
           type="radio"
+          name="category"
           label="Tất cả"
-          checked={filters.collectionId === ""}
+          checked={filters.categoryId === ""}
           onChange={() =>
             setFilters({
               ...filters,
-              collectionId: "",
+              categoryId: "",
             })
           }
         />
 
-        {collections.map((item) => (
+        {categories.map((item) => (
           <Form.Check
             key={item.id}
             type="radio"
+            name="category"
             label={item.name}
             checked={
-              filters.collectionId === item.id
+              filters.categoryId === item.id
             }
             onChange={() =>
               setFilters({
                 ...filters,
-                collectionId: item.id,
+                categoryId: item.id,
               })
             }
           />
@@ -153,6 +155,7 @@ function ProductFilter({
         <Form.Range
           min={0}
           max={1000000}
+          step={50000}
           value={filters.maxPrice}
           onChange={(e) =>
             setFilters({
@@ -175,12 +178,12 @@ function ProductFilter({
       </div>
 
       <Button
-        className="clear-filter-btn"
+        variant="outline-secondary"
+        className="w-100 clear-filter-btn"
         onClick={clearFilter}
       >
         Xóa bộ lọc
       </Button>
-
     </div>
   );
 }

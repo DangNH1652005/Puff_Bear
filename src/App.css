@@ -42,30 +42,29 @@
 }
 
 .size-btn {
-  width: 58px;
-  height: 58px;
-
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 1px solid #eadfd7;
-
+  border: 1px solid #f3d9d9;
   background: #fff;
-  color: #4b3a2f;
-
-  font-size: 24px;
-  font-weight: 500;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  transition: 0.3s;
+  color: #444;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .size-btn:hover {
-  background: #ffd6e3;
-  border-color: #ffb3cb;
+  border-color: #f8a5b8;
+  color: #f472b6;
 }
 
+/* Khi được chọn */
+.size-btn.active {
+  background: #f8a5b8;
+  border-color: #f8a5b8;
+  color: white;
+  box-shadow: 0 4px 12px rgba(248, 165, 184, 0.3);
+}
 /* ===== PRICE ===== */
 
 .price-labels {

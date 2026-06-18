@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductFilter from "../../components/product/ProductFilter";
 import ProductCard from "../../components/public/ProductCard";
 
-import { getProducts} from "../../services/product/productService"
+import { getProducts } from "../../services/product/productService"
 
 function ProductListPage() {
   const [products, setProducts] =
@@ -11,7 +11,7 @@ function ProductListPage() {
 
   const [filters, setFilters] =
     useState({
-      collectionId: "",
+      categoryId: "",
       sizeId: "",
       colorIds: [],
       maxPrice: 500000,
@@ -35,9 +35,9 @@ function ProductListPage() {
   const filteredProducts =
     products.filter((product) => {
       if (
-        filters.collectionId &&
-        product.collectionId !==
-          filters.collectionId
+        filters.categoryId &&
+        product.categoryId !==
+        filters.categoryId
       ) {
         return false;
       }
@@ -53,8 +53,8 @@ function ProductListPage() {
 
       if (
         filters.colorIds.length > 0 &&
-        !filters.colorIds.some((c) =>
-          product.colorIds.includes(c)
+        !filters.colorIds.some((colorId) =>
+          product.colorIds.includes(colorId)
         )
       ) {
         return false;

@@ -5,8 +5,8 @@ export const getProducts = async () => {
   return res.data;
 };
 
-export const getCollections = async () => {
-  const res = await axios.get("/collections");
+export const getCategories = async () => {
+  const res = await axios.get("/categories");
   return res.data;
 };
 
