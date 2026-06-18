@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import OrderHistoryPage from "../pages/order/OrderHistoryPage";
 import HomePage from "../pages/HomePage";
 import Layout from "../layouts/Layout";
 import LoginPage from "../pages/auth/LoginPage";
@@ -26,6 +26,7 @@ const AppRoutes = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/orders" element={<OrderHistoryPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
