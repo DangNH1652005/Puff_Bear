@@ -141,3 +141,7 @@
   background: #ffb3cb;
   color: white;
 }
+
+body {
+  margin: 0;
+}
