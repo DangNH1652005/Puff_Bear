@@ -61,7 +61,7 @@ const MainNavbar = () => {
           <Nav className="mx-auto text-center">
             <Nav.Link href="/">Trang chủ</Nav.Link>
             <Nav.Link href="/products">Sản phẩm</Nav.Link>
-            <Nav.Link href="#">Giảm giá</Nav.Link>
+            <Nav.Link href="/orders">Lịch sử đặt hàng</Nav.Link>
             <Nav.Link href="#">Liên hệ</Nav.Link>
           </Nav>
 

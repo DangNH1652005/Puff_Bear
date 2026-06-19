@@ -96,8 +96,8 @@
         "k4m9x2v8q6"
       ],
       "colorIds": [
-        "k6p2d8m3q5",
-        "w2t5n8f1j4"
+        "x7m4q9k2p1",
+        "b3v8n5r6t2"
       ],
       "rating": 4.6,
       "image": "https://i.pinimg.com/736x/13/5a/8f/135a8f92f2f4094f23177b61a6a81366.jpg",
@@ -158,7 +158,7 @@
       "role": "customer",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "U352jew445",
+      "id": "U352jew445"
     },
     {
       "fullName": "Pham Hoang Anh",
@@ -167,7 +167,7 @@
       "role": "admin",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
-      "id": "kjer345DFGR",
+      "id": "kjer345DFGR"
     },
     {
       "fullName": "Bùi Cửu Đỉnh",
@@ -176,8 +176,8 @@
       "role": "staff",
       "createdAt": "2026-06-08T06:39:35.115Z",
       "avatar": "/profile.png",
-      "id": "btZwU7D10Fw",
-    },
+      "id": "btZwU7D10Fw"
+    }
   ],
   "orders": [],
   "cartItems": [],

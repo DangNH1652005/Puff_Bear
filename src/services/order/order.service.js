@@ -25,5 +25,19 @@ export const getOrderById = async (orderId) => {
 
 export const getOrderItemsByOrderId = async (orderId) => {
   const res = await instance.get(`/orderItems?orderId=${orderId}`);
+  return res.data; 
+};
+export const getOrdersByUserId = async (userId) => {
+  const res = await instance.get(`/orders?userId=${userId}`);
+  return res.data;
+};
+
+export const getAllOrders = async () => {
+  const res = await instance.get("/orders");
+  return res.data;
+};
+
+export const getProductById = async (id) => {
+  const res = await instance.get(`/products/${id}`);
   return res.data;
 };
