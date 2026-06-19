@@ -140,26 +140,12 @@
       "slug": "pig"
     }
   ],
-  "roles": [
-    {
-      "name": "admin",
-      "id": "zJUF8HyGSzo"
-    },
-    {
-      "name": "staff",
-      "id": "R6pfGXfVYrc"
-    },
-    {
-      "name": "customer",
-      "id": "0eLmcbt9W-M"
-    }
-  ],
   "users": [
     {
       "fullName": "Nguyen Hai Dang",
       "email": "nguyenhaidang1652005@gmail.com",
       "password": "123456",
-      "roleId": "0eLmcbt9W-M",
+      "role": "customer",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
       "id": "25v3gKqwfz8",
@@ -169,32 +155,29 @@
       "fullName": "Pham Anh Tuan",
       "email": "phamanhtuan@gmail.com",
       "password": "123456",
-      "roleId": "R6pfGXfVYrc",
+      "role": "customer",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
       "id": "U352jew445",
-      "isActive": true
     },
     {
       "fullName": "Pham Hoang Anh",
       "email": "yenn65995@gmail.com",
       "password": "123456",
-      "roleId": "zJUF8HyGSzo",
+      "role": "admin",
       "createdAt": "2026-06-06T17:31:18.730Z",
       "avatar": "/profile.png",
       "id": "kjer345DFGR",
-      "isActive": true
     },
     {
       "fullName": "Bùi Cửu Đỉnh",
       "email": "buidinhyt@gmail.com",
       "password": "123456",
-      "roleId": "R6pfGXfVYrc",
+      "role": "staff",
       "createdAt": "2026-06-08T06:39:35.115Z",
       "avatar": "/profile.png",
       "id": "btZwU7D10Fw",
-      "isActive": true
-    }
+    },
   ],
   "orders": [],
   "cartItems": [],

@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/auth.store";
+import { role } from "../../constants/role.constant";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -28,17 +29,17 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { role } = await register(fullName, email, password);
-      toast.success("Đăng ký thành công");
+      const user = await register(fullName, email, password);
+      toast.success("Registration successful");
 
-      if (role.name === "customer") {
+      if (user.role === role.CUSTOMER) {
         navigate("/");
-      } else if (role.name === "admin") {
+      } else if (user.role === role.ADMIN) {
         navigate("/admin");
-      } else if (role.name === "staff") {
+      } else if (user.role === role.STAFF) {
         navigate("/staff");
       } else {
-        toast.error("Role không tồn tại");
+        toast.error("Role does not exist");
       }
     } catch (err) {
       toast.error(err.message);
@@ -132,32 +133,6 @@ const RegisterPage = () => {
                           )}
                         </Button>
                       </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3">
-                      <Form.Check
-                        required
-                        type="checkbox"
-                        id="terms"
-                        label={
-                          <span className="text-muted">
-                            Tôi đồng ý với{" "}
-                            <a
-                              href="#"
-                              className="text-decoration-none fw-semibold text-danger"
-                            >
-                              Điều khoản dịch vụ
-                            </a>{" "}
-                            và{" "}
-                            <a
-                              href="#"
-                              className="text-decoration-none fw-semibold text-danger"
-                            >
-                              Chính sách bảo mật
-                            </a>
-                          </span>
-                        }
-                      />
                     </Form.Group>
                     {/* BUTTON */}
                     <Button className="w-100 py-2" variant="dark" type="submit">

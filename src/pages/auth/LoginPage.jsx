@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/auth.store";
+import { role } from "../../constants/role.constant";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,26 +23,20 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [remember, setRemember] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { role } = await login(email, password);
-      toast.success("Đăng nhập thành công");
-
-      if (!role) {
-        return;
-      }
-
-      if (role.name === "customer") {
+      const user = await login(email, password);
+      toast.success("Login successful");
+      if (user.role === role.CUSTOMER) {
         navigate("/");
-      } else if (role.name === "admin") {
+      } else if (user.role === role.ADMIN) {
         navigate("/admin");
-      } else if (role.name === "staff") {
+      } else if (role.role === role.STAFF) {
         navigate("/staff");
       } else {
-        toast.error("không có role mà bạn tìm");
+        toast.error("Role does not exist");
       }
     } catch (err) {
       toast.error(err.message);
@@ -119,20 +114,6 @@ const LoginPage = () => {
                         </Button>
                       </InputGroup>
                     </Form.Group>
-
-                    {/* OPTIONS */}
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <Form.Check
-                        type="checkbox"
-                        label="Ghi nhớ đăng nhập"
-                        checked={remember}
-                        onChange={(e) => setRemember(e.target.checked)}
-                      />
-
-                      <a href="#" className="text-decoration-none text-danger">
-                        Quên mật khẩu?
-                      </a>
-                    </div>
 
                     {/* BUTTON */}
                     <Button className="w-100 py-2" variant="dark" type="submit">

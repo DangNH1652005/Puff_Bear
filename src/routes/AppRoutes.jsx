@@ -16,6 +16,7 @@ import AdminProducts from "../pages/admin/AdminProducts";
 import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
+import { role } from "../constants/role.constant";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -34,7 +35,7 @@ const AppRoutes = () => {
 
 
       {/* ADMIN ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["zJUF8HyGSzo"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={[role.ADMIN]} />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashBoardPage />} />
           <Route path="products" element={<AdminProducts />} />
@@ -43,7 +44,7 @@ const AppRoutes = () => {
       </Route>
 
       {/* STAFF ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["R6pfGXfVYrc"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={[role.STAFF]} />}>
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
         </Route>
