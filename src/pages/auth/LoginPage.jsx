@@ -33,7 +33,7 @@ const LoginPage = () => {
         navigate("/");
       } else if (user.role === role.ADMIN) {
         navigate("/admin");
-      } else if (role.role === role.STAFF) {
+      } else if (user.role === role.STAFF) {
         navigate("/staff");
       } else {
         toast.error("Role does not exist");

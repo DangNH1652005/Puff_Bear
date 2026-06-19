@@ -44,12 +44,10 @@ const AdminDashBoardPage = () => {
     loadDashboard();
   }, [loadDashboard]);
 
-
-  const totalRevenue = orders.reduce(
-    (sum, order) => sum + Number(order.totalPriceCart || 0),
-    0,
-  );
-
+  const totalRevenue = orders.reduce((sum, order) => {
+    if (order.status !== "DELIVERED") return sum;
+    return sum + Number(order.totalPriceCart || 0);
+  }, 0);
 
   const totalProducts = products.length;
   const totalOrders = orders.length;
@@ -57,21 +55,17 @@ const AdminDashBoardPage = () => {
     (user) => user.roleId === "0eLmcbt9W-M",
   ).length;
 
-
   const pendingOrders = orders.filter(
     (order) => order.status === "PENDING",
   ).length;
-
 
   const lowStockProducts = products.filter(
     (product) => Number(product.stock) <= 15,
   ).length;
 
-
   const activeProducts = products.filter(
     (product) => product.status === "active",
   ).length;
-
 
   const bestSellingProducts = [...products]
     .sort((a, b) => Number(b.sold || 0) - Number(a.sold || 0))
@@ -169,8 +163,8 @@ const AdminDashBoardPage = () => {
                 <th>Mã đơn</th>
                 <th>Khách hàng</th>
                 <th>Sản phẩm</th>
-                <th  className="text-center">Giá trị</th>
-                <th  className="text-center">Trạng thái</th>
+                <th className="text-center">Giá trị</th>
+                <th className="text-center">Trạng thái</th>
               </tr>
             </thead>
 
@@ -181,8 +175,8 @@ const AdminDashBoardPage = () => {
                   <td>#{order.id.slice(0, 5)}</td>
                   <td>{order.receiverName}</td>
                   <td>{getOrderProductName(order.id)}</td>
-                  <td  className="text-center">{fmt(order.totalPriceCart)}</td>
-                  <td  className="text-center">
+                  <td className="text-center">{fmt(order.totalPriceCart)}</td>
+                  <td className="text-center">
                     <span className={`status ${order.status.toLowerCase()}`}>
                       {getStatusText(order.status)}
                     </span>
@@ -241,18 +235,6 @@ const AdminDashBoardPage = () => {
             <span>Doanh thu hôm nay</span>
             <strong className="success">{fmt(totalRevenue)}</strong>
           </div>
-        </div>
-
-
-        <div className="admin-card promo-card">
-          <h5>🎉 Khuyến mãi đặc biệt</h5>
-          <p>Tăng doanh số với chương trình mới</p>
-          <span>
-            Tạo chương trình khuyến mãi để thu hút khách hàng mua sắm nhiều hơn.
-          </span>
-
-
-          <button>Tạo khuyến mãi mới</button>
         </div>
       </div>
     </div>
