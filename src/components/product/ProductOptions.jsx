@@ -4,7 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import { getAllSizes } from "../../services/size/size.service";
 import { getAllColors } from "../../services/color/color.service";
 import { getProductSizes } from "../../services/size/size.logic";
-import { useProductDetailStore } from "../../store/useProductDetailStore";
+import { useProductDetailStore } from "../../store/product.store";
 
 const ProductOptions = () => {
   const { product, selection, setSelection } = useProductDetailStore();

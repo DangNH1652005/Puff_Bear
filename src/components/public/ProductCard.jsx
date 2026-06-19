@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
       <Card className="product-card border-0 shadow-sm rounded-4 overflow-hidden h-100">
         {/* Image */}
         <div className="position-relative product-image-wrapper">
-          <Link to="/product/1">
+          <Link to={`/product/${product.id}`}>
             <Card.Img
               variant="top"
               src={product.image}

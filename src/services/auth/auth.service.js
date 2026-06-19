@@ -10,7 +10,7 @@ export const createUser = async (data) => {
   return res.data;
 }
 
-export const getRoleById = async (roleId) => {
-  const res = await instance.get(`/roles/${roleId}`);
-  return res.data;
-}
+// export const getRoleById = async (roleId) => {
+//  const res = await instance.get(`/roles/${roleId}`);
+//  return res.data;
+// }

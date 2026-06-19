@@ -18,6 +18,11 @@ export const placeOrder = async (
     throw new Error("Vui lòng điền đầy đủ thông tin giao hàng.");
   }
 
+  // check
+  if(user.balace < totalPriceCart) {
+    throw new Error("Số tiền trong tài khoản không đủ")
+  }
+
   const orderPayload = {
     userId: user.id || null,
     receiverName: orderForm.receiverName,

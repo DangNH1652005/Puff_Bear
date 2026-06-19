@@ -8,7 +8,7 @@ import ProductInfo from "../components/product/ProductInfo";
 import ProductOptions from "../components/product/ProductOptions";
 import ProductActions from "../components/product/ProductActions";
 import ProductFeatures from "../components/product/ProductFeatures";
-import { useProductDetailStore } from "../store/useProductDetailStore";
+import { useProductDetailStore } from "../store/product.store";
 
 const ProductDetailPage = () => {
   const { id } = useParams();

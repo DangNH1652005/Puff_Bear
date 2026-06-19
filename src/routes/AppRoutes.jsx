@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import OrderHistoryPage from "../pages/order/OrderHistoryPage";
 import HomePage from "../pages/HomePage";
 import Layout from "../layouts/Layout";
 import LoginPage from "../pages/auth/LoginPage";
@@ -15,6 +15,8 @@ import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
 import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
+import AdminUserManager from "../pages/admin/AdminUserManager";
+import { role } from "../constants/role.constant";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -26,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/orders" element={<OrderHistoryPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
@@ -33,15 +36,16 @@ const AppRoutes = () => {
 
 
       {/* ADMIN ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["zJUF8HyGSzo"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={[role.ADMIN]} />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashBoardPage />} />
           <Route path="products" element={<AdminProducts />} />
+          <Route path="users" element={<AdminUserManager />} />
         </Route>
       </Route>
 
       {/* STAFF ONLY */}
-      <Route element={<ProtectedRoute allowedRoles={["staff"]} />}>
+      <Route element={<ProtectedRoute allowedRoles={[role.STAFF]} />}>
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
         </Route>

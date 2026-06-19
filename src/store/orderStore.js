@@ -1,22 +1,22 @@
-import api from "../services/api";
+import instance from "../libs/axios"
 
 export async function getOrders(params = {}) {
-  const res = await api.get("/orders", { params });
+  const res = await instance.get("/orders", { params });
   return res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
 
 export async function getOrderById(id) {
-  const res = await api.get(`/orders/${id}`);
+  const res = await instance.get(`/orders/${id}`);
   return res.data;
 }
 
 export async function updateOrderStatus(id, status) {
-  const res = await api.patch(`/orders/${id}`, { status });
+  const res = await instance.patch(`/orders/${id}`, { status });
   return res.data;
 }
 
 export async function deleteOrder(id) {
-  await api.delete(`/orders/${id}`);
+  await instance.delete(`/orders/${id}`);
 }
 
 export async function getOrderStats() {

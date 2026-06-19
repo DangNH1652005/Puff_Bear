@@ -3,7 +3,7 @@ import { Badge } from "react-bootstrap";
 import { Star } from "lucide-react";
 import { getCategoryById } from "../../services/category/category.service";
 import { getCollectionById } from "../../services/collection/collection.service";
-import { useProductDetailStore } from "../../store/useProductDetailStore";
+import { useProductDetailStore } from "../../store/product.store";
 
 const ProductInfo = () => {
   const { product } = useProductDetailStore();

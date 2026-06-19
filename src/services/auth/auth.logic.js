@@ -1,5 +1,5 @@
 import { createUser, getUsers } from "./auth.service";
-import { getRoles } from "../role/role.service";
+import { role } from "../../constants/role.constant";
 
 export const loginRequest = async ({ email, password }) => {
   const users = await getUsers();
@@ -9,36 +9,31 @@ export const loginRequest = async ({ email, password }) => {
   );
 
   if (!user) {
-    throw new Error("Sai email hoặc mật khẩu");
+    throw new Error("Invalid email or password");
   }
 
   return user;
 };
 
-export const registerRequest = async({ fullName, email, password }) => {
+export const registerRequest = async ({ fullName, email, password }) => {
   const users = await getUsers();
 
   const existingUser = users.find((u) => u.email === email);
 
   if (existingUser) {
-    throw new Error("Email đã tồn tại");
-  }
-
-  // Get dynamic roleId for customer
-  const roles = await getRoles();
-  const customerRole = roles.find(r => r.name === "customer");
-  
-  if (!customerRole) {
-    throw new Error("Hệ thống chưa khởi tạo role customer");
+    throw new Error("Email already exists");
   }
 
   const userData = {
     fullName,
     email,
     password,
-    roleId: customerRole.id,
+    avatar: "/profile.png",
+    role: role.CUSTOMER,
+    address: "",
+    phone: "",
     createdAt: new Date().toISOString(),
-    avatar: "/profile.png"
+    updatedAt: new Date().toISOString()
   };
 
   const newUser = await createUser(userData);
