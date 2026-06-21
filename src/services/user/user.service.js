@@ -1,3 +1,4 @@
+import { role } from "../../constants/role.constant";
 import instance from "../../libs/axios";
 
 // ─── GET ALL ──────────────────────────────────────────────────────────────────
@@ -12,18 +13,6 @@ export async function getUserById(id) {
   return res.data;
 }
 
-// ─── KHOÁ / MỞ KHOÁ ──────────────────────────────────────────────────────────
-export async function toggleUserActive(id, isActive) {
-  const res = await instance.patch(`/users/${id}`, { isActive });
-  return res.data;
-}
-
-// ─── LẤY ROLES ────────────────────────────────────────────────────────────────
-export async function getRoles() {
-  const res = await instance.get("/roles");
-  return res.data;
-}
-
 // ─── LẤY ĐƠN HÀNG CỦA USER ───────────────────────────────────────────────────
 export async function getUserOrders(userId) {
   const res = await instance.get("/orders", { params: { userId } });
@@ -32,19 +21,13 @@ export async function getUserOrders(userId) {
 
 // ─── STATS ────────────────────────────────────────────────────────────────────
 export async function getUserStats() {
-  const [users, roles] = await Promise.all([getUsers(), getRoles()]);
-
-  const roleNameById = {};
-  roles.forEach((r) => { roleNameById[r.id] = r.name; });
-
-  const countByRole = (name) =>
-    users.filter((u) => roleNameById[u.roleId] === name).length;
-
+  const users = await getUsers();
+  const countByRole = (role) =>
+    users.filter((u) => u.role === role).length;
   return {
-    total:    users.length,
-    admin:    countByRole("admin"),
-    staff:    countByRole("staff"),
-    customer: countByRole("customer"),
-    locked:   users.filter((u) => u.isActive === false).length,
+    total: users.length,
+    admin: countByRole(role.ADMIN),
+    staff: countByRole(role.STAFF),
+    customer: countByRole(role.CUSTOMER),
   };
 }

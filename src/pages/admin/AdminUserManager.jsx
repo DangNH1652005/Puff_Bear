@@ -3,12 +3,12 @@ import { Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
 import {
   getUsers,
-  getRoles,
-  toggleUserActive,
   getUserOrders,
   getUserStats,
 } from "../../services/user/user.service";
 import "../../styles/admin/AdminUserManager.css";
+import { role } from "../../constants/role.constant";
+import { ORDER_STATUS } from "../../constants/orderStatus";
 
 const PER_PAGE = 8;
 
@@ -25,7 +25,6 @@ function formatDate(iso) {
 export default function AdminUserManager() {
 
   const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +37,6 @@ export default function AdminUserManager() {
   const [modalType, setModalType] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [userOrders, setUserOrders] = useState([]);
-  const [saving, setSaving] = useState(false);
 
   // load data
   useEffect(() => {
@@ -49,10 +47,8 @@ export default function AdminUserManager() {
     try {
       setLoading(true);
       const usersData = await getUsers();
-      const rolesData = await getRoles();
       const statsData = await getUserStats();
       setUsers(usersData);
-      setRoles(rolesData);
       setStats(statsData);
     } catch (error) {
       toast.error("Không thể kết nối server. Hãy chạy: npm run server");
@@ -63,15 +59,13 @@ export default function AdminUserManager() {
 
   // get role
   function getRoleName(user) {
-    const role = roles.find((r) => r.id === user.roleId);
-    if (role) return role.name;
-    return "customer";
+    return user.role || role.CUSTOMER;
   }
 
   // get role's color
   function getRoleBadgeClass(name) {
-    if (name === "admin") return "au-role-admin";
-    if (name === "staff") return "au-role-staff";
+    if (name === role.ADMIN) return "au-role-admin";
+    if (name === role.STAFF) return "au-role-staff";
     return "au-role-customer";
   }
   // get index 0 of name for avatar fallback (if user haven't set avatar)
@@ -92,34 +86,8 @@ export default function AdminUserManager() {
     }
   }
 
-  function openLockModal(user) {
-    setSelectedUser(user);
-    setModalType("lock");
-  }
-
   function closeModal() {
     setModalType("");
-  }
-
-  // lock or unlock user
-  async function handleToggleLock() {
-    setSaving(true);
-    try {  
-      const locked = selectedUser.isActive === false;
-      await toggleUserActive(selectedUser.id, locked);
-
-      if (locked) {
-        toast.success("Đã mở khoá tài khoản!");
-      } else {
-        toast.success("Đã khoá tài khoản!");
-      }
-
-      await loadData();
-      closeModal();
-    } catch {
-      toast.error("Lỗi server!");
-    }
-    setSaving(false);
   }
 
   // loc và filter users theo search + tab
@@ -131,13 +99,7 @@ export default function AdminUserManager() {
     const matchSearch =
       name.includes(q) || email.includes(q) || phone.includes(q);
 
-    let matchTab = true;
-    if (tab === "locked") {
-      matchTab = user.isActive === false;
-    } else if (tab !== "all") {
-      matchTab = getRoleName(user) === tab;
-    }
-
+    const matchTab = tab === "all" || getRoleName(user) === tab;
     return matchSearch && matchTab;
   });
 
@@ -147,13 +109,10 @@ export default function AdminUserManager() {
   // toltalSpent 
   let totalSpent = 0;
   userOrders.forEach((order) => {
-    if (order.status === "delivered") {
+    if (order.status === ORDER_STATUS.DELIVERED) {
       totalSpent += order.total || 0;
     }
   });
-
-  // user is locked or not for showing in lock/unlock modal
-  const selectedIsLocked = selectedUser && selectedUser.isActive === false;
 
   // render
   return (
@@ -221,11 +180,7 @@ export default function AdminUserManager() {
           onClick={() => { setTab("customer"); setPage(1); }}>
           Customer
         </button>
-        <button
-          className={tab === "locked" ? "au-tab-btn active" : "au-tab-btn"}
-          onClick={() => { setTab("locked"); setPage(1); }}>
-          Đã khoá
-        </button>
+
       </div>
 
       {/* search */}
@@ -262,7 +217,6 @@ export default function AdminUserManager() {
                     <th>SĐT</th>
                     <th>Vai trò</th>
                     <th>Ngày tạo</th>
-                    <th>Trạng thái</th>
                     <th style={{ width: 90 }}>Thao tác</th>
                   </tr>
                 </thead>
@@ -278,7 +232,6 @@ export default function AdminUserManager() {
 
                   {pagedUsers.map((user) => {
                     const roleName = getRoleName(user);
-                    const isLocked = user.isActive === false;
 
                     return (
                       <tr key={user.id} className="au-table-row">
@@ -298,13 +251,7 @@ export default function AdminUserManager() {
                           </span>
                         </td>
                         <td className="au-cell-muted">{formatDate(user.createdAt)}</td>
-                        <td>
-                          {isLocked ? (
-                            <span className="au-badge-status locked">Đã khoá</span>
-                          ) : (
-                            <span className="au-badge-status active">Hoạt động</span>
-                          )}
-                        </td>
+
                         <td>
                           <div className="d-flex gap-1">
                             {/* Nút xem chi tiết */}
@@ -315,13 +262,7 @@ export default function AdminUserManager() {
                               <i className="bi bi-eye"></i>
                             </button>
 
-                            {/* Nút khoá / mở khoá */}
-                            <button
-                              className={isLocked ? "au-action-btn unlock" : "au-action-btn lock"}
-                              title={isLocked ? "Mở khoá" : "Khoá tài khoản"}
-                              onClick={() => openLockModal(user)}>
-                              <i className={isLocked ? "bi bi-unlock" : "bi bi-lock"}></i>
-                            </button>
+
                           </div>
                         </td>
                       </tr>
@@ -377,7 +318,7 @@ export default function AdminUserManager() {
                 </span>
               </div>
 
-              
+
               <div className="col-md-8">
                 <div className="au-detail-box mb-3">
                   <div className="au-detail-box-title">
@@ -429,53 +370,6 @@ export default function AdminUserManager() {
           <button className="btn au-btn-cancel" onClick={closeModal}>Đóng</button>
         </Modal.Footer>
       </Modal>
-
-      {/* lock/unlock */}
-      <Modal
-        show={modalType === "lock"}
-        onHide={closeModal}
-        centered
-        contentClassName="au-modal">
-        <Modal.Header closeButton className="au-modal-header">
-          <Modal.Title>
-            {selectedIsLocked ? (
-              <><i className="bi bi-unlock me-2"></i>Mở khoá tài khoản</>
-            ) : (
-              <><i className="bi bi-lock me-2"></i>Khoá tài khoản</>
-            )}
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          {selectedUser && (
-            <div className="text-center py-3">
-              <div className={selectedIsLocked ? "au-lock-icon unlock mb-3" : "au-lock-icon mb-3"}>
-                <i className={selectedIsLocked ? "bi bi-unlock-fill" : "bi bi-lock-fill"}></i>
-              </div>
-              <h6>
-                {selectedIsLocked ? "Mở khoá tài khoản này?" : "Khoá tài khoản này?"}
-              </h6>
-              <p className="text-muted mb-0">
-                <strong>{selectedUser.fullName}</strong>{" "}
-                {selectedIsLocked
-                  ? "sẽ đăng nhập lại được bình thường."
-                  : "sẽ không thể đăng nhập cho đến khi được mở khoá."}
-              </p>
-            </div>
-          )}
-        </Modal.Body>
-
-        <Modal.Footer>
-          <button className="btn au-btn-cancel" onClick={closeModal} disabled={saving}>
-            Đóng
-          </button>
-          <button className="btn au-btn-save" onClick={handleToggleLock} disabled={saving}>
-            {saving && <span className="spinner-border spinner-border-sm me-1"></span>}
-            {selectedIsLocked ? "Mở khoá" : "Khoá tài khoản"}
-          </button>
-        </Modal.Footer>
-      </Modal>
-
     </div>
   );
 }

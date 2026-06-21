@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import {
-  getCollections,
-  getColors,
-  getSizes,
-} from "../../services/product/productService";
+import { getAllColors } from "../../services/color/color.service";
+import { getAllSizes } from "../../services/size/size.service";
+import { getAllCollections } from "../../services/collection/collection.service";
 
 function ProductFilter({
   filters,
@@ -23,9 +21,9 @@ function ProductFilter({
   const loadData = async () => {
     const [collectionData, sizeData, colorData] =
       await Promise.all([
-        getCollections(),
-        getSizes(),
-        getColors(),
+        getAllCollections(),
+        getAllSizes(),
+        getAllColors(),
       ]);
 
     setCollections(collectionData);
@@ -91,11 +89,10 @@ function ProductFilter({
           {sizes.map((size) => (
             <button
               key={size.id}
-              className={`size-btn ${
-                filters.sizeId === size.id
-                  ? "active"
-                  : ""
-              }`}
+              className={`size-btn ${filters.sizeId === size.id
+                ? "active"
+                : ""
+                }`}
               onClick={() =>
                 setFilters({
                   ...filters,
@@ -134,12 +131,12 @@ function ProductFilter({
                 ...filters,
                 colorIds: exists
                   ? filters.colorIds.filter(
-                      (c) => c !== color.id
-                    )
+                    (c) => c !== color.id
+                  )
                   : [
-                      ...filters.colorIds,
-                      color.id,
-                    ],
+                    ...filters.colorIds,
+                    color.id,
+                  ],
               });
             }}
           />

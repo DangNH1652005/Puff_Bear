@@ -13,6 +13,7 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
+import StaffProducts from "../pages/staff/StaffProducts"
 import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
@@ -48,6 +49,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute allowedRoles={[role.STAFF]} />}>
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
+          <Route path="products" element={<StaffProducts />} />
         </Route>
       </Route>
     </Routes>

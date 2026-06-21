@@ -1,0 +1,184 @@
+{
+  "sizes": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "S"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "name": "M"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "name": "L"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440004",
+      "name": "XL"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440005",
+      "name": "XXL"
+    }
+  ],
+  "categories": [
+    {
+      "id": "7d9b2d91-3f45-4a0f-9c81-446655440001",
+      "type": "animal"
+    },
+    {
+      "id": "7d9b2d91-3f45-4a0f-9c81-446655440002",
+      "type": "cartoon"
+    },
+    {
+      "id": "7d9b2d91-3f45-4a0f-9c81-446655440003",
+      "type": "anime"
+    },
+    {
+      "id": "7d9b2d91-3f45-4a0f-9c81-446655440004",
+      "type": "fruit"
+    }
+  ],
+  "colors": [
+    {
+      "id": "1f4d8c8d-4a3f-4c8b-9c5a-123456789001",
+      "name": "White"
+    },
+    {
+      "id": "1f4d8c8d-4a3f-4c8b-9c5a-123456789002",
+      "name": "Pink"
+    },
+    {
+      "id": "1f4d8c8d-4a3f-4c8b-9c5a-123456789003",
+      "name": "Brown"
+    },
+    {
+      "id": "1f4d8c8d-4a3f-4c8b-9c5a-123456789004",
+      "name": "Blue"
+    },
+    {
+      "id": "1f4d8c8d-4a3f-4c8b-9c5a-123456789005",
+      "name": "Yellow"
+    }
+  ],
+  "products": [
+    {
+      "name": "Doraemon Plush Toy",
+      "price": 300000,
+      "stock": 10,
+      "categoryId": "7d9b2d91-3f45-4a0f-9c81-446655440002",
+      "status": "active",
+      "mainImageUrl": "https://down-vn.img.susercontent.com/file/ae6d4715ceea86fc85995fd022ee17d2",
+      "imageUrl": [],
+      "description": "Bring home the charm of Doraemon, the beloved robotic cat from the future! This soft and cuddly plush features Doraemon's iconic blue body, white face, red nose, and cheerful smile. Made from high-quality plush fabric with a fluffy filling, it is perfect for hugging, decorating a bedroom, or gifting to anime fans of all ages. Inspired by the famous character who travels from the 22nd century to help Nobita with futuristic gadgets, this plush captures the friendly and lovable personality that has delighted generations worldwide.",
+      "sizeIds": [
+        "550e8400-e29b-41d4-a716-446655440004",
+        "550e8400-e29b-41d4-a716-446655440003"
+      ],
+      "colorIds": [
+        "1f4d8c8d-4a3f-4c8b-9c5a-123456789004",
+        "1f4d8c8d-4a3f-4c8b-9c5a-123456789005"
+      ],
+      "sold": 0,
+      "createdAt": "2026-06-21T05:14:30.865Z",
+      "id": "ekmiGZ5HkNk"
+    },
+    {
+      "name": "Coco the Capybara",
+      "price": 50000,
+      "stock": 20,
+      "categoryId": "7d9b2d91-3f45-4a0f-9c81-446655440001",
+      "status": "active",
+      "mainImageUrl": "https://cdn-tp4.mozu.com/27977-44902/cms/44902/files/0047b846-a75d-4ab4-886d-135a48589995",
+      "imageUrl": [],
+      "description": "Coco the Capybara is a charming and cuddly plush companion inspired by the world's largest rodent. Made from ultra-soft fabric and filled with premium cotton, Coco features a round body, tiny ears, and a gentle smile that brings warmth and comfort to any space. Perfect for children, collectors, and animal lovers, this adorable plush is ideal for hugging, decorating a room, or gifting on special occasions.",
+      "sizeIds": [
+        "550e8400-e29b-41d4-a716-446655440002",
+        "550e8400-e29b-41d4-a716-446655440004"
+      ],
+      "colorIds": [
+        "1f4d8c8d-4a3f-4c8b-9c5a-123456789003"
+      ],
+      "sold": 0,
+      "createdAt": "2026-06-21T06:21:53.079Z",
+      "id": "02eoZPyi1U4"
+    },
+    {
+      "name": "Mochi the Red Panda",
+      "price": 200000,
+      "stock": 30,
+      "categoryId": "7d9b2d91-3f45-4a0f-9c81-446655440001",
+      "status": "active",
+      "mainImageUrl": "https://assets.langhamhotels.com/is/image/langhamhotelsstage/CDHKG_bring_cody_and_coco_home:Medium?wid=674&hei=379",
+      "imageUrl": [],
+      "description": "Mochi the Red Panda is an irresistibly cute plush toy with soft fur, a bushy tail, and a playful personality. Crafted from high-quality materials, Mochi is perfect for cuddling, collecting, or displaying as a charming room decoration.",
+      "sizeIds": [
+        "550e8400-e29b-41d4-a716-446655440002"
+      ],
+      "colorIds": [
+        "1f4d8c8d-4a3f-4c8b-9c5a-123456789003"
+      ],
+      "sold": 0,
+      "createdAt": "2026-06-21T06:23:05.547Z",
+      "id": "2pIqR9rSLuw"
+    },
+    {
+      "name": "Mango Buddy",
+      "price": 100000,
+      "stock": 30,
+      "categoryId": "7d9b2d91-3f45-4a0f-9c81-446655440004",
+      "status": "active",
+      "mainImageUrl": "https://pos.nvncdn.com/71a8b2-3946/ps/20191231_86KmUhuhNfZgv2B4S2qeBMrR.jpg?v=1673714108",
+      "imageUrl": [],
+      "description": "Mango Buddy is a cheerful plush inspired by the sweet and tropical mango fruit. Featuring a bright yellow body, soft fabric, and an adorable smiling face, this cuddly companion brings warmth and happiness wherever it goes. Perfect for children, collectors, and anyone who loves cute fruit-themed plushies.",
+      "sizeIds": [
+        "550e8400-e29b-41d4-a716-446655440004"
+      ],
+      "colorIds": [
+        "1f4d8c8d-4a3f-4c8b-9c5a-123456789005"
+      ],
+      "sold": 0,
+      "createdAt": "2026-06-21T06:26:26.641Z",
+      "id": "QvSBzb7m-Ms"
+    }
+  ],
+  "users": [
+    {
+      "id": "970a56c8-2ec7-4b01-a02b-101873f003eb",
+      "fullName": "Nguyen Van A",
+      "email": "admin@example.com",
+      "password": "123456",
+      "role": "admin",
+      "address": "Thai Binh",
+      "phone": "04952864395",
+      "createdAt": "2026-06-14T08:00:00Z",
+      "updatedAt": "2026-06-14T08:00:00Z"
+    },
+    {
+      "id": "4d61a9e5-c0d7-4fd3-bfcf-9c6b4efc6a11",
+      "fullName": "Tran Thi B",
+      "email": "staff@example.com",
+      "password": "123456",
+      "role": "staff",
+      "address": "Ha Noi",
+      "phone": "0912345678",
+      "createdAt": "2026-06-14T08:10:00Z",
+      "updatedAt": "2026-06-14T08:10:00Z"
+    },
+    {
+      "id": "f89ab7a2-2a72-4c6d-a7f2-5f4f7e2d8c91",
+      "fullName": "Le Van C",
+      "email": "customer@example.com",
+      "password": "123456",
+      "role": "customer",
+      "address": "Hai Phong",
+      "phone": "0987654321",
+      "createdAt": "2026-06-14T08:20:00Z",
+      "updatedAt": "2026-06-14T08:20:00Z"
+    }
+  ],
+  "cartItems": [],
+  "orders": [],
+  "orderItems": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

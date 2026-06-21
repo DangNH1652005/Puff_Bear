@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductFilter from "../../components/product/ProductFilter";
 import ProductCard from "../../components/public/ProductCard";
 
-import { getProducts} from "../../services/product/productService"
+import { getAllProducts } from "../../services/product/product.service";
 
 function ProductListPage() {
   const [products, setProducts] =
@@ -22,7 +22,7 @@ function ProductListPage() {
   }, []);
 
   const loadProducts = async () => {
-    const data = await getProducts();
+    const data = await getAllProducts();
 
     setProducts(
       data.filter(
@@ -37,7 +37,7 @@ function ProductListPage() {
       if (
         filters.collectionId &&
         product.collectionId !==
-          filters.collectionId
+        filters.collectionId
       ) {
         return false;
       }

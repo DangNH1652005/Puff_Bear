@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/auth.store";
@@ -7,26 +6,18 @@ import {
   Package,
   ShoppingCart,
   Users,
-  Settings,
-  BarChart3,
-  Heart,
   Tag,
-  MessageSquare,
   LogOut,
 } from "lucide-react";
 
-import { Nav, Button, Container } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 
 const menuItems = [
   { icon: Home, label: "Dashboard", path: "/admin" },
   { icon: Package, label: "Sản phẩm", path: "/admin/products" },
   { icon: ShoppingCart, label: "Đơn hàng", path: "/admin/orders" },
   { icon: Users, label: "Khách hàng", path: "/admin/users" },
-  { icon: Tag, label: "Danh mục", path: "/admin/categories" },
-  { icon: Heart, label: "Yêu thích", path: "/admin/favorites" },
-  { icon: BarChart3, label: "Thống kê", path: "/admin/analytics" },
-  { icon: MessageSquare, label: "Đánh giá", path: "/admin/reviews" },
-  { icon: Settings, label: "Cài đặt", path: "/admin/settings" },
+  { icon: Tag, label: "Thể loại", path: "/admin/categories" },
 ];
 
 const AdminSidebar = () => {
@@ -70,11 +61,10 @@ const AdminSidebar = () => {
               as={Link}
               to={item.path}
               key={item.path}
-              className={`d-flex align-items-center gap-2 px-3 py-2 rounded ${
-                isActive
-                  ? "bg-light text-primary fw-semibold"
-                  : "text-dark hover-bg-light"
-              }`}
+              className={`d-flex align-items-center gap-2 px-3 py-2 rounded ${isActive
+                ? "bg-light text-primary fw-semibold"
+                : "text-dark hover-bg-light"
+                }`}
               style={{ cursor: "pointer" }}
             >
               <Icon size={18} />
