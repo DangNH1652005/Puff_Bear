@@ -6,7 +6,7 @@ const CartItem = ({ item }) => {
             <Card.Body>
                 <div className="d-flex gap-3">
                     <Image
-                        src={item.product?.image || item.product?.images?.[0]}
+                        src={item.product?.mainImageUrl || item.product?.imageUrl?.[0]}
                         alt={item.product?.name}
                         rounded
                         width={120}
@@ -20,7 +20,7 @@ const CartItem = ({ item }) => {
                         </h5>
 
                         <p className="text-muted mb-1">
-                            <strong>Size:</strong> {item.size.label}
+                            <strong>Size:</strong> {item.size.name}
                         </p>
 
                         <p className="text-muted mb-1">

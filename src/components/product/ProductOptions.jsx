@@ -62,7 +62,11 @@ const ProductOptions = () => {
       {sizes.length > 0 && (
         <div className="mb-4">
           <h6 className="fw-semibold mb-2">
-            Kích thước: <span className="text-danger">{selectedSize}</span>
+            Kích thước:{" "}
+            <span className="text-danger">
+              {" "}
+              {sizes.find((s) => s.id === selectedSize)?.name}
+            </span>
           </h6>
           <div className="d-flex flex-wrap gap-2">
             {sizes.map((size) => (
@@ -74,7 +78,7 @@ const ProductOptions = () => {
                 className="px-3"
                 onClick={() => handleSizeChange(size.id)}
               >
-                {size.label}
+                {size.name}
               </Button>
             ))}
           </div>

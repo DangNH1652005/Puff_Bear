@@ -1,16 +1,78 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getOrderById, getOrderItemsByOrderId } from "../../services/order/order.service";
+import {
+  getOrderById,
+  getOrderItemsByOrderId,
+} from "../../services/order/order.service";
 import { getProductById } from "../../services/product/product.service";
-import { Container, Spinner, Alert, Button, Card, Badge, Row, Col } from "react-bootstrap";
-import { BsBoxSeam, BsCheckCircleFill, BsGeoAltFill, BsPersonFill, BsTelephoneFill } from "react-icons/bs";
+import {
+  Container,
+  Spinner,
+  Alert,
+  Button,
+  Card,
+  Badge,
+  Row,
+  Col,
+} from "react-bootstrap";
+import {
+  BsBoxSeam,
+  BsCheckCircleFill,
+  BsGeoAltFill,
+  BsPersonFill,
+  BsTelephoneFill,
+} from "react-icons/bs";
+import { getColorById } from "../../services/color/color.service";
+import { getSizeById } from "../../services/size/size.service";
 
 const OrderSuccessPage = () => {
   const { orderId } = useParams();
+
   const [order, setOrder] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const fetchProductSafe = async (productId) => {
+    try {
+      return await getProductById(productId);
+    } catch (err) {
+      console.error("Lỗi lấy product:", productId, err);
+      return null;
+    }
+  };
+
+  const fetchSizeSafe = async (sizeId) => {
+    try {
+      return await getSizeById(sizeId);
+    } catch (err) {
+      console.error("Lỗi lấy size:", sizeId, err);
+      return null;
+    }
+  };
+
+  const fetchColorSafe = async (colorId) => {
+    try {
+      return await getColorById(colorId);
+    } catch (err) {
+      console.error("Lỗi lấy color:", colorId, err);
+      return null;
+    }
+  };
+
+  const enrichOrderItems = async (itemsData) => {
+    return Promise.all(
+      itemsData.map(async (item) => {
+        const [product, size, color] = await Promise.all([
+          fetchProductSafe(item.productId),
+          fetchSizeSafe(item.sizeId),
+          fetchColorSafe(item.colorId),
+        ]);
+
+        return { ...item, product, size, color };
+      }),
+    );
+  };
 
   useEffect(() => {
     const fetchOrderData = async () => {
@@ -19,20 +81,10 @@ const OrderSuccessPage = () => {
         const orderData = await getOrderById(orderId);
         const itemsData = await getOrderItemsByOrderId(orderId);
 
-        // Fetch product info (image + name) cho mỗi order item
-        const itemsWithProduct = await Promise.all(
-          itemsData.map(async (item) => {
-            try {
-              const product = await getProductById(item.productId);
-              return { ...item, product };
-            } catch {
-              return item;
-            }
-          })
-        );
+        const itemsWithDetails = await enrichOrderItems(itemsData);
 
         setOrder(orderData);
-        setOrderItems(itemsWithProduct);
+        setOrderItems(itemsWithDetails);
       } catch (err) {
         setError(err.message || "Failed to load order details");
       } finally {
@@ -71,19 +123,14 @@ const OrderSuccessPage = () => {
 
   return (
     <Container className="py-4">
-
       {/* SUCCESS HEADER */}
       <Card className="text-center shadow-sm border-0 mb-4">
         <Card.Body className="py-5">
           <BsCheckCircleFill size={70} className="text-success mb-3" />
 
-          <h3 className="fw-bold text-success">
-            Đặt hàng thành công
-          </h3>
+          <h3 className="fw-bold text-success">Đặt hàng thành công</h3>
 
-          <p className="text-muted mb-3">
-            Cảm ơn bạn đã mua hàng tại cửa hàng
-          </p>
+          <p className="text-muted mb-3">Cảm ơn bạn đã mua hàng tại cửa hàng</p>
 
           <Badge bg="dark" className="px-3 py-2 fs-6">
             Order ID: {order.id}
@@ -92,7 +139,6 @@ const OrderSuccessPage = () => {
       </Card>
 
       <Row className="g-3">
-
         {/* LEFT - SHIPPING INFO */}
         <Col lg={4}>
           <Card className="shadow-sm border-0 h-100">
@@ -120,9 +166,7 @@ const OrderSuccessPage = () => {
 
               <div className="d-flex justify-content-between">
                 <span>Ngày đặt</span>
-                <span>
-                  {new Date(order.createdAt).toLocaleString("vi-VN")}
-                </span>
+                <span>{new Date(order.createdAt).toLocaleString("vi-VN")}</span>
               </div>
 
               <div className="d-flex justify-content-between mt-3">
@@ -151,9 +195,8 @@ const OrderSuccessPage = () => {
                 >
                   {/* LEFT PRODUCT */}
                   <div className="d-flex align-items-center gap-3">
-
                     <img
-                      src={item.product?.image}
+                      src={item.product?.mainImageUrl}
                       alt={item.product?.name}
                       width={70}
                       height={70}
@@ -162,16 +205,14 @@ const OrderSuccessPage = () => {
                     />
 
                     <div>
-                      <div className="fw-semibold">
-                        {item.product?.name}
-                      </div>
+                      <div className="fw-semibold">{item.product?.name}</div>
 
                       <small className="text-muted d-block">
-                        Size: {item.sizeId}
+                        Size: {item.size?.name || "—"}
                       </small>
 
                       <small className="text-muted d-block">
-                        Màu: {item.colorId}
+                        Màu: {item.color?.name || "—"}
                       </small>
 
                       <small className="text-muted d-block">
@@ -201,7 +242,6 @@ const OrderSuccessPage = () => {
           </Button>
         </Link>
       </div>
-
     </Container>
   );
 };

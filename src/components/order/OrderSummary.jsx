@@ -1,6 +1,11 @@
 import { Card, Button } from "react-bootstrap";
 
 const OrderSummary = ({ totalPriceCart, cartItems }) => {
+  const totalQuantity = cartItems.reduce(
+    (sum, item) => sum + (item.quantity || 0),
+    0,
+  );
+
   return (
     <Card className="p-4 shadow-sm border-0 rounded-4">
       <h5 className="mb-3">Order Summary</h5>
@@ -9,7 +14,7 @@ const OrderSummary = ({ totalPriceCart, cartItems }) => {
         <div key={item.id} className="d-flex justify-content-between mb-3">
           <div className="d-flex gap-2 align-items-center">
             <img
-              src={item.product?.image}
+              src={item.product?.mainImageUrl}
               alt={item.product?.name}
               width="60"
               height="60"
@@ -23,7 +28,7 @@ const OrderSummary = ({ totalPriceCart, cartItems }) => {
               <div className="fw-semibold">{item.product?.name}</div>
 
               <small className="text-muted d-block">
-                Size: {item.size?.label}
+                Size: {item.size?.name}
                 
               </small>
 
@@ -47,7 +52,7 @@ const OrderSummary = ({ totalPriceCart, cartItems }) => {
 
       <div className="d-flex justify-content-between mb-2">
         <span>Tổng sản phẩm</span>
-        <span>{cartItems.length}</span>
+        <span>{totalQuantity}</span>
       </div>
 
       <div className="d-flex justify-content-between fw-bold fs-5">

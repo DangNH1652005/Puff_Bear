@@ -39,7 +39,7 @@ export const useCartStore = create((set, get) => ({
         );
 
         const totalPriceCart = itemsWithProduct.reduce(
-          (sum, item) => sum + (item.totalPrice || 0),
+          (sum, item) => sum + (item.totalPrice || 0) * (item.quantity || 1),
           0,
         );
         set({ cartItems: itemsWithProduct, totalPriceCart });

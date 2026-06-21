@@ -23,10 +23,7 @@ const menuItems = [
   { icon: ShoppingCart, label: "Đơn hàng", path: "/staff/orders" },
   { icon: Users, label: "Khách hàng", path: "/staff/customers" },
   { icon: Tag, label: "Danh mục", path: "/staff/categories" },
-  { icon: Heart, label: "Yêu thích", path: "/staff/favorites" },
-  { icon: BarChart3, label: "Thống kê", path: "/staff/analytics" },
-  { icon: MessageSquare, label: "Đánh giá", path: "/staff/reviews" },
-  { icon: Settings, label: "Cài đặt", path: "/staff/settings" },
+
 ];
 
 const StaffSidebar = () => {

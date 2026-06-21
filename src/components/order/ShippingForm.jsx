@@ -54,21 +54,12 @@ const ShippingForm = ({ shippingInfo, onChange }) => {
                     />
                 </Col>
 
-                <Col md={6}>
+                <Col md={12}>
                     <Form.Label>Thành phố</Form.Label>
                     <Form.Control 
                         required 
                         name="city"
                         value={shippingInfo.city || ""}
-                        onChange={handleChange}
-                    />
-                </Col>
-
-                <Col md={6}>
-                    <Form.Label>Mã bưu điện</Form.Label>
-                    <Form.Control 
-                        name="zipCode"
-                        value={shippingInfo.zipCode || ""}
                         onChange={handleChange}
                     />
                 </Col>

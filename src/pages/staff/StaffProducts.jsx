@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import instance from "../../libs/axios";
 import "../../styles/staff/StaffProduct.css";
+import { getAllProducts } from "../../services/product/product.service";
+import { getAllCategories } from "../../services/category/category.service";
+import { getAllSizes } from "../../services/size/size.service";
+import { getAllColors } from "../../services/color/color.service";
+import { productStatus } from "../../constants/productStatus.constant";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 
 const StaffProduct = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [collections, setCollections] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [colors, setColors] = useState([]);
 
@@ -27,22 +31,19 @@ const StaffProduct = () => {
             const [
                 productsRes,
                 categoriesRes,
-                collectionsRes,
                 sizesRes,
                 colorsRes,
             ] = await Promise.all([
-                instance.get("/products"),
-                instance.get("/categories"),
-                instance.get("/collections"),
-                instance.get("/sizes"),
-                instance.get("/colors"),
+                getAllProducts(),
+                getAllCategories(),
+                getAllSizes(),
+                getAllColors(),
             ]);
 
-            setProducts(productsRes.data);
-            setCategories(categoriesRes.data);
-            setCollections(collectionsRes.data);
-            setSizes(sizesRes.data);
-            setColors(colorsRes.data);
+            setProducts(productsRes);
+            setCategories(categoriesRes);
+            setSizes(sizesRes);
+            setColors(colorsRes);
         } catch (error) {
             console.error("Cannot load staff products:", error);
             alert("Không thể tải danh sách sản phẩm");
@@ -56,16 +57,12 @@ const StaffProduct = () => {
     }, [loadProducts]);
 
     const getCategoryName = (categoryId) => {
-        return categories.find((item) => item.id === categoryId)?.name || "N/A";
-    };
-
-    const getCollectionName = (collectionId) => {
-        return collections.find((item) => item.id === collectionId)?.name || "N/A";
+        return categories.find((item) => item.id === categoryId)?.type || "N/A";
     };
 
     const getSizeLabels = (sizeIds = []) => {
         const result = sizeIds
-            .map((id) => sizes.find((item) => item.id === id)?.label)
+            .map((id) => sizes.find((item) => item.id === id)?.name)
             .filter(Boolean)
             .join(", ");
 
@@ -82,8 +79,8 @@ const StaffProduct = () => {
     };
 
     const getStatusText = (status) => {
-        if (status === "active") return "Đang bán";
-        if (status === "inactive") return "Ngừng bán";
+        if (status === productStatus.ACTIVE) return "Đang bán";
+        if (status === productStatus.INACTIVE) return "Ngừng bán";
         return status || "N/A";
     };
 
@@ -245,8 +242,8 @@ const StaffProduct = () => {
                         <thead>
                             <tr>
                                 <th className="text-center">#</th>
-                                <th>Sản phẩm</th>
-                                <th>Danh mục</th>
+                                <th> Sản phẩm </th>
+                                <th> Thể loại</th>
                                 <th className="text-center">Giá bán</th>
                                 <th className="text-center">Tồn kho</th>
                                 <th className="text-center">Đã bán</th>
@@ -273,7 +270,7 @@ const StaffProduct = () => {
                                             <div className="product-info-cell">
                                                 <img
                                                     className="product-thumb"
-                                                    src={product.image}
+                                                    src={product.mainImageUrl}
                                                     alt={product.name}
                                                 />
 
@@ -361,7 +358,7 @@ const StaffProduct = () => {
 
                         <div className="product-detail-grid">
                             <div className="product-detail-image">
-                                <img src={selectedProduct.image} alt={selectedProduct.name} />
+                                <img src={selectedProduct.mainImageUrl} alt={selectedProduct.name} />
                             </div>
 
                             <div className="product-detail-info">
@@ -374,13 +371,8 @@ const StaffProduct = () => {
                                 </div>
 
                                 <div className="detail-row">
-                                    <span>Danh mục</span>
+                                    <span>Thể loại</span>
                                     <strong>{getCategoryName(selectedProduct.categoryId)}</strong>
-                                </div>
-
-                                <div className="detail-row">
-                                    <span>Collection</span>
-                                    <strong>{getCollectionName(selectedProduct.collectionId)}</strong>
                                 </div>
 
                                 <div className="detail-row">
@@ -401,11 +393,6 @@ const StaffProduct = () => {
                                 <div className="detail-row">
                                     <span>Đã bán</span>
                                     <strong>{selectedProduct.sold || 0}</strong>
-                                </div>
-
-                                <div className="detail-row">
-                                    <span>Rating</span>
-                                    <strong>{selectedProduct.rating || "N/A"}</strong>
                                 </div>
 
                                 <div className="detail-row">
@@ -438,7 +425,7 @@ const StaffProduct = () => {
 
                         <form onSubmit={handleUpdateProduct}>
                             <div className="locked-product-box">
-                                <img src={editingProduct.image} alt={editingProduct.name} />
+                                <img src={editingProduct.mainImageUrl} alt={editingProduct.name} />
 
                                 <div>
                                     <strong>{editingProduct.name}</strong>
@@ -468,7 +455,7 @@ const StaffProduct = () => {
                             </div>
 
                             <div className="staff-warning">
-                                Các thông tin như tên, giá, ảnh, danh mục, collection không được
+                                Các thông tin như tên, giá, ảnh, danh mục không được
                                 phép chỉnh sửa ở tài khoản Staff.
                             </div>
 

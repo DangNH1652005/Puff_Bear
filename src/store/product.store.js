@@ -36,6 +36,16 @@ export const useProductDetailStore = create((set, get) => ({
       },
     }));
   },
-  
-  clearStore: () => set({ product: null, loading: false, error: null, selection: { size: null, color: null, quantity: 1 } })
+
+  clearStore: () =>
+    set({
+      product: null,
+      loading: false,
+      error: null,
+      selection: {
+        size: null,
+        color: null,
+        quantity: 1,
+      },
+    }),
 }));

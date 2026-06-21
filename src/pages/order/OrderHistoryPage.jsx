@@ -2,6 +2,49 @@ import { useEffect, useState } from "react";
 import { getOrdersByUserId, getOrderItemsByOrderId } from "../../services/order/order.service";
 import { getProductById } from "../../services/product/product.service";
 import OrderCard from "../../components/order/OrderCard";
+import { getSizeById } from "../../services/size/size.service";
+import { getColorById } from "../../services/color/color.service";
+
+const fetchProductSafe = async (productId) => {
+  try {
+    return await getProductById(productId);
+  } catch (err) {
+    console.error("Lỗi lấy product:", productId, err);
+    return null;
+  }
+};
+
+const fetchSizeSafe = async (sizeId) => {
+  try {
+    return await getSizeById(sizeId);
+  } catch (err) {
+    console.error("Lỗi lấy size:", sizeId, err);
+    return null;
+  }
+};
+
+const fetchColorSafe = async (colorId) => {
+  try {
+    return await getColorById(colorId);
+  } catch (err) {
+    console.error("Lỗi lấy color:", colorId, err);
+    return null;
+  }
+};
+
+const enrichOrderItems = async (orderItems) => {
+  return Promise.all(
+    orderItems.map(async (item) => {
+      const [product, size, color] = await Promise.all([
+        fetchProductSafe(item.productId),
+        fetchSizeSafe(item.sizeId),
+        fetchColorSafe(item.colorId),
+      ]);
+
+      return { ...item, product, size, color };
+    })
+  );
+};
 
 function OrderHistoryPage() {
   const [orders, setOrders] = useState([]);
@@ -20,17 +63,7 @@ function OrderHistoryPage() {
       const ordersWithItems = await Promise.all(
         orderList.map(async (order) => {
           const orderItems = await getOrderItemsByOrderId(order.id);
-
-          const itemsWithProduct = await Promise.all(
-            orderItems.map(async (item) => {
-              const product = await getProductById(item.productId);
-
-              return {
-                ...item,
-                product,
-              };
-            })
-          );
+          const itemsWithProduct = await enrichOrderItems(orderItems);
 
           return {
             ...order,

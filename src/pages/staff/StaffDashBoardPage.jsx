@@ -2,6 +2,15 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import instance from "../../libs/axios";
 import "../../styles/staff/StaffDashBoardPage.css";
+import { getAllProducts } from "../../services/product/product.service";
+import {
+  getAllOrderItems,
+  getAllOrders,
+} from "../../services/order/order.service";
+import { getUsers } from "../../services/user/user.service";
+import { ORDER_STATUS } from "../../constants/orderStatus";
+import { role } from "../../constants/role.constant";
+import { productStatus } from "../../constants/productStatus.constant";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 
@@ -18,16 +27,16 @@ const StaffDashBoardPage = () => {
 
       const [productsRes, ordersRes, usersRes, orderItemsRes] =
         await Promise.all([
-          instance.get("/products"),
-          instance.get("/orders"),
-          instance.get("/users"),
-          instance.get("/orderItems"),
+          getAllProducts(),
+          getAllOrders(),
+          getUsers(),
+          getAllOrderItems(),
         ]);
-
-      setProducts(productsRes.data);
-      setOrders(ordersRes.data);
-      setUsers(usersRes.data);
-      setOrderItems(orderItemsRes.data);
+        
+      setProducts(productsRes);
+      setOrders(ordersRes);
+      setUsers(usersRes);
+      setOrderItems(orderItemsRes);
     } catch (error) {
       console.error("Cannot load staff dashboard:", error);
     } finally {
@@ -40,30 +49,30 @@ const StaffDashBoardPage = () => {
   }, [loadDashboard]);
 
   const totalRevenue = orders.reduce((sum, order) => {
-    if (order.status !== "DELIVERED") return sum;
+    if (order.status !== ORDER_STATUS.DELIVERED) return sum;
     return sum + Number(order.totalPriceCart || 0);
   }, 0);
 
   const totalProducts = products.length;
   const totalOrders = orders.length;
   const totalCustomers = users.filter(
-    (user) => user.roleId === "0eLmcbt9W-M",
+    (user) => user.role === role.CUSTOMER,
   ).length;
 
   const pendingOrders = orders.filter(
-    (order) => order.status === "PENDING",
+    (order) => order.status === ORDER_STATUS.PENDING,
   ).length;
 
   const packedOrders = orders.filter(
-    (order) => order.status === "DELIVERED",
+    (order) => order.status === ORDER_STATUS.DELIVERED,
   ).length;
 
   const shippingOrders = orders.filter(
-    (order) => order.status === "SHIPPING",
+    (order) => order.status === ORDER_STATUS.SHIPPING,
   ).length;
 
   const cancelledOrders = orders.filter(
-    (order) => order.status === "CANCELLED",
+    (order) => order.status === ORDER_STATUS.CANCELLED,
   ).length;
 
   const lowStockProducts = products.filter(
@@ -71,7 +80,7 @@ const StaffDashBoardPage = () => {
   ).length;
 
   const activeProducts = products.filter(
-    (product) => product.status === "active",
+    (product) => product.status === productStatus.ACTIVE,
   ).length;
 
   const bestSellingProducts = [...products]
@@ -84,16 +93,18 @@ const StaffDashBoardPage = () => {
 
   const getOrderProductName = (orderId) => {
     const item = orderItems.find((i) => i.orderId === orderId);
-    const product = products.find((p) => String(p.id) === String(item?.productId));
+    const product = products.find(
+      (p) => String(p.id) === String(item?.productId),
+    );
 
     return product?.name || "Sản phẩm chưa xác định";
   };
 
   const getStatusText = (status) => {
-    if (status === "PENDING") return "Đang xử lý";
-    if (status === "DELIVERED") return "Đã giao";
-    if (status === "SHIPPING") return "Đang giao";
-    if (status === "CANCELLED") return "Đã huỷ";
+    if (status === ORDER_STATUS.PENDING) return "Đang xử lý";
+    if (status === ORDER_STATUS.DELIVERED) return "Đã giao";
+    if (status === ORDER_STATUS.SHIPPING) return "Đang giao";
+    if (status === ORDER_STATUS.CANCELLED) return "Đã huỷ";
     return status;
   };
 
@@ -166,7 +177,7 @@ const StaffDashBoardPage = () => {
             <tbody>
               {recentOrders.map((order) => (
                 <tr key={order.id}>
-                  <td>#{order.id.slice(0, 5)}</td>
+                  <td>#{order.id}</td>
                   <td>{order.receiverName}</td>
                   <td>{getOrderProductName(order.id)}</td>
                   <td className="text-center">{fmt(order.totalPriceCart)}</td>
@@ -187,12 +198,14 @@ const StaffDashBoardPage = () => {
 
           {bestSellingProducts.map((product) => (
             <div className="best-item" key={product.id}>
-              <img src={product.image} alt={product.name} />
+              <img src={product.mainImageUrl} alt={product.name} />
               <div className="best-info">
                 <strong>{product.name}</strong>
                 <span>Đã bán: {product.sold}</span>
               </div>
-              <div className="best-price">{fmt(product.price * product.sold)}</div>
+              <div className="best-price">
+                {fmt(product.price * product.sold)}
+              </div>
             </div>
           ))}
         </div>

@@ -3,7 +3,6 @@ import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { getProductById } from "../../services/product/product.service";
 import { placeOrder } from "../../services/order/order.logic";
 import OrderSummary from "../../components/order/OrderSummary";
-import PaymentMethod from "../../components/order/PaymentMethod";
 import ShippingForm from "../../components/order/ShippingForm";
 import { Alert, Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
@@ -22,7 +21,6 @@ const CheckoutPage = () => {
     email: "",
     address: "",
     city: "",
-    zipCode: "",
   });
 
   const { user } = useAuthStore();
@@ -46,7 +44,7 @@ const CheckoutPage = () => {
   const handlePlaceOrder = async () => {
     try {
       const res = await placeOrder(user, shippingInfo, totalPriceCart, cartItems)
-      console.log(res.id);
+      
       if (res) {
         navigate(`/order-success/${res.id}`)
       }
@@ -81,7 +79,6 @@ const CheckoutPage = () => {
             shippingInfo={shippingInfo}
             onChange={handleShippingChange}
           />
-          <PaymentMethod />
         </Col>
 
         <Col lg={4}>

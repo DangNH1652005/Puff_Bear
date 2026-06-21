@@ -3,15 +3,18 @@ import { Card, Row, Col, Image, Badge } from "react-bootstrap";
 import { Heart } from "lucide-react";
 import { useProductDetailStore } from "../../store/product.store";
 
-const ProductGallery = ({ onFavoriteToggle }) => {
+const ProductGallery = ({ onFavoriteToggle, isFavorite = false }) => {
   const { product, loading, error } = useProductDetailStore();
   const [selectedImage, setSelectedImage] = useState(0);
 
-  console.log(product)
-  
+  console.log(product);
+
   if (loading) {
     return (
-      <Card className="border-0 shadow-sm overflow-hidden d-flex align-items-center justify-content-center" style={{ height: "480px", backgroundColor: "#f8f9fa" }}>
+      <Card
+        className="border-0 shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
+        style={{ height: "480px", backgroundColor: "#f8f9fa" }}
+      >
         <div className="spinner-border text-danger" role="status"></div>
       </Card>
     );
@@ -19,23 +22,18 @@ const ProductGallery = ({ onFavoriteToggle }) => {
 
   if (error || !product) {
     return (
-      <Card className="border-0 shadow-sm overflow-hidden d-flex align-items-center justify-content-center" style={{ height: "480px", backgroundColor: "#f8f9fa" }}>
+      <Card
+        className="border-0 shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
+        style={{ height: "480px", backgroundColor: "#f8f9fa" }}
+      >
         <span className="text-muted">Không tải được hình ảnh</span>
       </Card>
     );
   }
 
-  const {
-    images = [],
-    image,
-    name,
-    isBestSeller,
-    isNew,
-    discount,
-    favorite,
-  } = product;
+  const { imageUrl = [], mainImageUrl, name } = product;
 
-  const displayImages = images.length > 0 ? images : [image].filter(Boolean);
+  const displayImages = [mainImageUrl, ...imageUrl].filter(Boolean);
 
   return (
     <>
@@ -58,7 +56,6 @@ const ProductGallery = ({ onFavoriteToggle }) => {
             </div>
           )}
 
-
           {/* Favorite button */}
           <button
             className="position-absolute top-0 end-0 m-3 btn btn-light rounded-circle p-2 shadow-sm"
@@ -67,8 +64,8 @@ const ProductGallery = ({ onFavoriteToggle }) => {
           >
             <Heart
               size={20}
-              fill={favorite ? "#e91e63" : "none"}
-              color={favorite ? "#e91e63" : "#666"}
+              fill={isFavorite ? "#e91e63" : "none"}
+              color={isFavorite ? "#e91e63" : "#666"}
             />
           </button>
         </div>

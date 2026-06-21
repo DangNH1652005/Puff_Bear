@@ -2,34 +2,19 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
+import { ORDER_STATUS } from "../../constants/orderStatus";
 
 function OrderCard({ order }) {
   const [showDetail, setShowDetail] = useState(false);
-
-  const getStatusText = (status) => {
-    switch (status) {
-      case "PENDING":
-        return "Đang xử lý";
-      case "SHIPPING":
-        return "Đang giao";
-      case "DELIVERED":
-        return "Đã giao";
-      case "CANCELLED":
-        return "Đã hủy";
-      default:
-        return status;
-    }
-  };
-
   const getStatusColor = (status) => {
     switch (status) {
-      case "PENDING":
+      case ORDER_STATUS.PENDING:
         return "warning";
-      case "SHIPPING":
+      case ORDER_STATUS.SHIPPING:
         return "primary";
-      case "DELIVERED":
+      case ORDER_STATUS.DELIVERED:
         return "success";
-      case "CANCELLED":
+      case ORDER_STATUS.CANCELLED:
         return "danger";
       default:
         return "secondary";
@@ -41,28 +26,20 @@ function OrderCard({ order }) {
       <Card.Header className="bg-white py-3">
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <div className="text-muted small">
-              Mã đơn hàng
-            </div>
+            <div className="text-muted small">Mã đơn hàng</div>
 
-            <h5 className="mb-0 fw-bold">
-              {order.id}
-            </h5>
+            <h5 className="mb-0 fw-bold">{order.id}</h5>
           </div>
 
           <div className="text-end">
-            <div className="text-muted small">
-              Ngày đặt
-            </div>
+            <div className="text-muted small">Ngày đặt</div>
 
             <div className="fw-semibold">
               {new Date(order.createdAt).toLocaleDateString("vi-VN")}
             </div>
           </div>
 
-          <Badge bg={getStatusColor(order.status)}>
-            {getStatusText(order.status)}
-          </Badge>
+          <Badge bg={getStatusColor(order.status)}>{order.status}</Badge>
         </div>
       </Card.Header>
 
@@ -73,7 +50,7 @@ function OrderCard({ order }) {
             className="d-flex align-items-center mb-3 pb-3 border-bottom"
           >
             <img
-              src={item.product?.image}
+              src={item.product?.mainImageUrl}
               alt={item.product?.name}
               width="90"
               height="90"
@@ -84,21 +61,13 @@ function OrderCard({ order }) {
             />
 
             <div className="ms-3 flex-grow-1">
-              <h5 className="mb-1">
-                {item.product?.name}
-              </h5>
+              <h5 className="mb-1">{item.product?.name}</h5>
 
-              <div className="text-muted">
-                Size: {item.sizeId}
-              </div>
+              <div className="text-muted">Size: {item.size?.name}</div>
 
-              <div className="text-muted">
-                Màu: {item.colorId}
-              </div>
+              <div className="text-muted">Màu: {item.color?.name}</div>
 
-              <div className="text-muted">
-                Số lượng: {item.quantity}
-              </div>
+              <div className="text-muted">Số lượng: {item.quantity}</div>
             </div>
 
             <div className="fw-bold text-danger fs-5">
@@ -115,9 +84,7 @@ function OrderCard({ order }) {
 
         <div className="d-flex justify-content-between align-items-center mt-4">
           <div>
-            <div className="text-muted">
-              Tổng thanh toán
-            </div>
+            <div className="text-muted">Tổng thanh toán</div>
 
             <h3 className="text-danger fw-bold mb-0">
               {order.totalPriceCart?.toLocaleString()}đ
@@ -136,9 +103,7 @@ function OrderCard({ order }) {
           <div className="mt-4 pt-4 border-top">
             <div className="row">
               <div className="col-md-6">
-                <div className="text-muted mb-2">
-                  Địa chỉ nhận hàng
-                </div>
+                <div className="text-muted mb-2">Địa chỉ nhận hàng</div>
 
                 <div className="fw-semibold">
                   📍 {order.address}
@@ -146,13 +111,9 @@ function OrderCard({ order }) {
                   {order.city && `, ${order.city}`}
                 </div>
 
-                <div className="mt-2 text-muted">
-                  📞 {order.phone}
-                </div>
+                <div className="mt-2 text-muted">📞 {order.phone}</div>
 
-                <div className="mt-2">
-                  Người nhận: {order.receiverName}
-                </div>
+                <div className="mt-2">Người nhận: {order.receiverName}</div>
               </div>
             </div>
           </div>

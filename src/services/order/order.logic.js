@@ -7,6 +7,28 @@ import {
   updateProductStock,
 } from "./order.service";
 
+const createOrderItemFromCart = async (orderId, item) => {
+  const product = await getProductById(item.productId);
+
+  if (product.stock < item.quantity) {
+    throw new Error(
+      `${product.name} chỉ còn ${product.stock} sản phẩm trong kho`,
+    );
+  }
+
+  const orderItemPayload = {
+    orderId,
+    productId: item.productId,
+    sizeId: item.sizeId,
+    colorId: item.colorId,
+    quantity: item.quantity,
+    totalPrice: item.totalPrice,
+  };
+
+  await createOrderItem(orderItemPayload);
+  await updateProductStock(item.productId, product.stock - item.quantity);
+};
+
 export const placeOrder = async (
   user,
   orderForm,
@@ -18,18 +40,13 @@ export const placeOrder = async (
     throw new Error("Vui lòng điền đầy đủ thông tin giao hàng.");
   }
 
-  // check
-  if(user.balace < totalPriceCart) {
-    throw new Error("Số tiền trong tài khoản không đủ")
-  }
-
   const orderPayload = {
     userId: user.id || null,
     receiverName: orderForm.receiverName,
     phone: orderForm.phone,
     address: orderForm.address,
     city: orderForm.city,
-    zipCode: orderForm.zipCode,
+    email: orderForm.email,
     totalPriceCart: totalPriceCart,
     status: ORDER_STATUS.PENDING,
     createdAt: new Date().toISOString(),
@@ -39,25 +56,7 @@ export const placeOrder = async (
   const createdOrder = await createOrder(orderPayload);
 
   for (const item of cartItems) {
-    const orderItemPayload = {
-      orderId: createdOrder.id,
-      productId: item.productId,
-      sizeId: item.sizeId,
-      colorId: item.colorId,
-      quantity: item.quantity,
-      totalPrice: item.totalPrice,
-    };
-
-    await createOrderItem(orderItemPayload);
-
-    const product = await getProductById(item.productId);
-
-    if (product.stock < item.quantity) {
-      throw new Error(
-        `${product.name} chỉ còn ${product.stock} sản phẩm trong kho`,
-      );
-    }
-    await updateProductStock(item.productId, product.stock - item.quantity);
+    await createOrderItemFromCart(createdOrder.id, item);
   }
 
   await clearCartByUserId(user.id);
@@ -79,3 +78,5 @@ export const clearCartByUserId = async (userId) => {
     return error;
   }
 };
+
+

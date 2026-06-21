@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import instance from "../../libs/axios";
 import "../../styles/admin/AdminDashBoardPage.css";
+import { ORDER_STATUS } from "../../constants/orderStatus";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 
@@ -45,7 +46,7 @@ const AdminDashBoardPage = () => {
   }, [loadDashboard]);
 
   const totalRevenue = orders.reduce((sum, order) => {
-    if (order.status !== "DELIVERED") return sum;
+    if (order.status !== ORDER_STATUS.DELIVERED) return sum;
     return sum + Number(order.totalPriceCart || 0);
   }, 0);
 
@@ -56,7 +57,7 @@ const AdminDashBoardPage = () => {
   ).length;
 
   const pendingOrders = orders.filter(
-    (order) => order.status === "PENDING",
+    (order) => order.status === ORDER_STATUS.PENDING,
   ).length;
 
   const lowStockProducts = products.filter(
@@ -87,10 +88,10 @@ const AdminDashBoardPage = () => {
 
 
   const getStatusText = (status) => {
-    if (status === "PENDING") return "Đang xử lý";
-    if (status === "DELIVERED") return "Đã giao";
-    if (status === "SHIPPING") return "Đang giao";
-    if (status === "CANCELLED") return "Đã huỷ";
+    if (status === ORDER_STATUS.PENDING) return "Đang xử lý";
+    if (status === ORDER_STATUS.DELIVERED) return "Đã giao";
+    if (status === ORDER_STATUS.SHIPPING) return "Đang giao";
+    if (status === ORDER_STATUS.CANCELLED) return "Đã huỷ";
     return status;
   };
 
