@@ -6,20 +6,23 @@ import {
   deleteProduct,
   getProductStats,
 } from "../../services/product/product.service";
-import instance from "../../libs/axios";
 import "../../styles/admin/AdminProducts.css";
+import { getAllCategories } from "../../services/category/category.service";
+import { getAllSizes } from "../../services/size/size.service";
+import { getAllColors } from "../../services/color/color.service";
+import { productStatus } from "../../constants/productStatus.constant";
 
 const EMPTY_FORM = {
   name: "",
   price: "",
   stock: "",
-  categoryId: 1,
-  status: "active",
-  image: "",
+  categoryId: "",
+  status: productStatus.ACTIVE,
+  mainImageUrl: "",
+  imageUrl: [],
   description: "",
   sizeIds: [],
   colorIds: [],
-  collectionId: "",
 };
 
 const fmt = (n) => Number(n).toLocaleString("vi-VN") + "đ";
@@ -31,7 +34,6 @@ export default function AdminProducts() {
   const [categories, setCategories] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
-  const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filterCat, setFilterCat] = useState("all");
@@ -53,21 +55,19 @@ export default function AdminProducts() {
   const reload = useCallback(async () => {
     try {
       setLoading(true);
-      const [prods, st, catsRes, sizesRes, colorsRes, collectionsRes] =
+      const [prods, st, catsRes, sizesRes, colorsRes] =
         await Promise.all([
           getProducts(),
           getProductStats(),
-          instance.get("/categories"),
-          instance.get("/sizes"),
-          instance.get("/colors"),
-          instance.get("/collections"),
+          getAllCategories(),
+          getAllSizes(),
+          getAllColors()
         ]);
       setProducts(prods);
       setStats(st);
-      setCategories(catsRes.data);
-      setSizes(sizesRes.data);
-      setColors(colorsRes.data);
-      setCollections(collectionsRes.data);
+      setCategories(catsRes);
+      setSizes(sizesRes);
+      setColors(colorsRes);
     } catch {
       showToast(
         "❌ Không thể kết nối server. Hãy chạy: npm run server",
@@ -183,7 +183,8 @@ export default function AdminProducts() {
 
   const catName = (p) => {
     const c = categories.find((c) => String(c.id) === String(p.categoryId));
-    return c ? c.name : "—";
+    console.log(c);
+    return c ? c.type : "—";
   };
 
   const filtered = products
@@ -288,10 +289,10 @@ export default function AdminProducts() {
               setPage(1);
             }}
           >
-            <option value="all">Tất cả danh mục</option>
+            <option value="all">Tất cả Thể loại</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>
-                {c.name}
+                {c.type}
               </option>
             ))}
           </select>
@@ -304,8 +305,8 @@ export default function AdminProducts() {
             }}
           >
             <option value="all">Tất cả trạng thái</option>
-            <option value="active">Đang bán</option>
-            <option value="inactive">Ngừng bán</option>
+            <option value={productStatus.ACTIVE}>Đang bán</option>
+            <option value={productStatus.INACTIVE}>Ngừng bán</option>
           </select>
           <select
             className="form-select ap-filter-select"
@@ -343,7 +344,7 @@ export default function AdminProducts() {
                   <tr>
                     <th style={{ width: 50 }}>#</th>
                     <th>Sản phẩm</th>
-                    <th>Danh mục</th>
+                    <th>Thể loại</th>
                     <th>Giá bán</th>
                     <th>Tồn kho</th>
                     <th>Đã bán</th>
@@ -368,7 +369,7 @@ export default function AdminProducts() {
                       <td>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={p.image || "https://via.placeholder.com/40"}
+                            src={p.mainImageUrl || "https://via.placeholder.com/40"}
                             alt={p.name}
                             className="ap-product-img"
                             onError={(e) => {
@@ -525,7 +526,7 @@ export default function AdminProducts() {
                 <div className="row g-3">
                   <div className="col-md-4 text-center">
                     <img
-                      src={selected.image || "https://via.placeholder.com/200"}
+                      src={selected.mainImageUrl || "https://via.placeholder.com/200"}
                       alt={selected.name}
                       className="ap-view-img"
                       onError={(e) => {
@@ -609,20 +610,21 @@ export default function AdminProducts() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="ap-label">Danh mục</label>
+                    <label className="ap-label">Thể loại</label>
                     <select
                       className="form-select ap-input"
                       name="categoryId"
                       value={form.categoryId}
                       onChange={handleChange}
                     >
+                      <option value="">-- Chọn thể loại --</option>
+
                       {categories.map((c) => (
                         <option key={c.id} value={c.id}>
-                          {c.name}
+                          {c.type}
                         </option>
                       ))}
-                    </select>
-                  </div>
+                    </select>                  </div>
                   <div className="col-md-6">
                     <label className="ap-label">Trạng thái</label>
                     <select
@@ -639,14 +641,14 @@ export default function AdminProducts() {
                     <label className="ap-label">URL hình ảnh</label>
                     <input
                       className="form-control ap-input"
-                      name="image"
-                      value={form.image}
+                      name="mainImageUrl"
+                      value={form.mainImageUrl}
                       onChange={handleChange}
                       placeholder="https://..."
                     />
-                    {form.image && (
+                    {form.mainImageUrl && (
                       <img
-                        src={form.image}
+                        src={form.mainImageUrl}
                         alt="preview"
                         className="ap-img-preview mt-2"
                         onError={(e) => {
@@ -685,7 +687,7 @@ export default function AdminProducts() {
                               setForm((f) => ({ ...f, sizeIds: updated }));
                             }}
                           />
-                          {s.label}
+                          {s.name}
                         </label>
                       ))}
                     </div>
@@ -714,24 +716,6 @@ export default function AdminProducts() {
                         </label>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Collection */}
-                  <div className="col-12">
-                    <label className="ap-label">Bộ sưu tập</label>
-                    <select
-                      className="form-select ap-input"
-                      name="collectionId"
-                      value={form.collectionId}
-                      onChange={handleChange}
-                    >
-                      <option value="">-- Chọn bộ sưu tập --</option>
-                      {collections.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
                   </div>
                 </div>
               )}

@@ -128,7 +128,7 @@
 
 .admin-bottom-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   margin-top: 20px;
 }
@@ -297,38 +297,6 @@
 
 .success {
   color: #4b9b8a !important;
-}
-
-/* Promo */
-.promo-card {
-  background: linear-gradient(135deg, var(--pink-light), var(--pink-pale));
-  border: 1px solid var(--border);
-}
-
-.promo-card span {
-  display: block;
-  margin: 24px 0 18px;
-  color: var(--text-main);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.promo-card button {
-  width: 100%;
-  border: none;
-  background: var(--pink);
-  color: white;
-  padding: 13px;
-  border-radius: 16px;
-  font-weight: 600;
-  font-family: var(--font-body);
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-.promo-card button:hover {
-  background: #e78da8;
-  transform: translateY(-2px);
 }
 
 /* Responsive */

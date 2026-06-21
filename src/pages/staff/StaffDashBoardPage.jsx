@@ -39,10 +39,10 @@ const StaffDashBoardPage = () => {
     loadDashboard();
   }, [loadDashboard]);
 
-  const totalRevenue = orders.reduce(
-    (sum, order) => sum + Number(order.totalPriceCart || 0),
-    0,
-  );
+  const totalRevenue = orders.reduce((sum, order) => {
+    if (order.status !== "DELIVERED") return sum;
+    return sum + Number(order.totalPriceCart || 0);
+  }, 0);
 
   const totalProducts = products.length;
   const totalOrders = orders.length;
@@ -222,16 +222,6 @@ const StaffDashBoardPage = () => {
             <span>Doanh thu hôm nay</span>
             <strong className="success">{fmt(totalRevenue)}</strong>
           </div>
-        </div>
-
-        <div className="staff-card promo-card">
-          <h5>🎉 Khuyến mãi đặc biệt</h5>
-          <p>Tăng doanh số với chương trình mới</p>
-          <span>
-            Tạo chương trình khuyến mãi để thu hút khách hàng mua sắm nhiều hơn.
-          </span>
-
-          <button>Tạo khuyến mãi mới</button>
         </div>
       </div>
     </div>

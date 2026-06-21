@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import {
-  getCategories,
-  getColors,
-  getSizes,
-} from "../../services/product/productService";
+import { getAllColors } from "../../services/color/color.service";
+import { getAllSizes } from "../../services/size/size.service";
+import { getAllCategories } from "../../services/category/category.service";
 
 function ProductFilter({ filters, setFilters }) {
   const [categories, setCategories] = useState([]);
@@ -19,13 +17,14 @@ function ProductFilter({ filters, setFilters }) {
 
   const loadData = async () => {
     try {
-      const [categoryData, sizeData, colorData] =
-        await Promise.all([
-          getCategories(),
-          getSizes(),
-          getColors(),
-        ]);
-
+    
+    const [categoryData, sizeData, colorData] =
+      await Promise.all([
+        getAllCategories(),
+        getAllSizes(),
+        getAllColors(),
+      ]);
+      
       setCategories(categoryData);
       setSizes(sizeData);
       setColors(colorData);
@@ -71,7 +70,7 @@ function ProductFilter({ filters, setFilters }) {
             key={item.id}
             type="radio"
             name="category"
-            label={item.name}
+            label={item.type}
             checked={
               filters.categoryId === item.id
             }
@@ -93,11 +92,10 @@ function ProductFilter({ filters, setFilters }) {
           {sizes.map((size) => (
             <button
               key={size.id}
-              className={`size-btn ${
-                filters.sizeId === size.id
-                  ? "active"
-                  : ""
-              }`}
+              className={`size-btn ${filters.sizeId === size.id
+                ? "active"
+                : ""
+                }`}
               onClick={() =>
                 setFilters({
                   ...filters,
@@ -108,7 +106,7 @@ function ProductFilter({ filters, setFilters }) {
                 })
               }
             >
-              {size.label}
+              {size.name}
             </button>
           ))}
         </div>
@@ -136,12 +134,12 @@ function ProductFilter({ filters, setFilters }) {
                 ...filters,
                 colorIds: exists
                   ? filters.colorIds.filter(
-                      (c) => c !== color.id
-                    )
+                    (c) => c !== color.id
+                  )
                   : [
-                      ...filters.colorIds,
-                      color.id,
-                    ],
+                    ...filters.colorIds,
+                    color.id,
+                  ],
               });
             }}
           />

@@ -1,7 +1,7 @@
 export const ORDER_STATUS = {
-  PENDING: "PENDING", // Đang xử lý / Chờ xác nhận
-  CONFIRMED: "CONFIRMED", // Đã xác nhận đơn hàng
-  SHIPPING: "SHIPPING",         // Đang giao hàng
-  DELIVERED: "DELIVERED", // Đã giao hàng thành công
-  CANCELLED: "CANCELLED", // Đã hủy
+  PENDING: "pending", // Đang xử lý / Chờ xác nhận
+  CONFIRMED: "confirmed", // Đã xác nhận đơn hàng
+  SHIPPING: "shipping",         // Đang giao hàng
+  DELIVERED: "delivered", // Đã giao hàng thành công
+  CANCELLED: "cancelled", // Đã hủy
 };

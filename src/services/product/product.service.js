@@ -12,6 +12,11 @@ export const getProductById = async (proId) => {
   }
 };
 
+export const getAllProducts = async () => {
+  const res = await instance.get("/products");
+  return res.data;
+}
+
 export async function getProducts(params = {}) {
   const res = await instance.get("/products", { params });
   return res.data;

@@ -7,6 +7,8 @@ const ProductGallery = ({ onFavoriteToggle }) => {
   const { product, loading, error } = useProductDetailStore();
   const [selectedImage, setSelectedImage] = useState(0);
 
+  console.log(product)
+  
   if (loading) {
     return (
       <Card className="border-0 shadow-sm overflow-hidden d-flex align-items-center justify-content-center" style={{ height: "480px", backgroundColor: "#f8f9fa" }}>
@@ -56,24 +58,6 @@ const ProductGallery = ({ onFavoriteToggle }) => {
             </div>
           )}
 
-          {/* Badges overlay */}
-          <div className="position-absolute top-0 start-0 m-3 d-flex flex-column gap-2">
-            {isBestSeller && (
-              <Badge bg="danger" className="px-2 py-1">
-                Best Seller
-              </Badge>
-            )}
-            {isNew && (
-              <Badge bg="success" className="px-2 py-1">
-                Mới
-              </Badge>
-            )}
-            {discount && (
-              <Badge bg="warning" text="dark" className="px-2 py-1">
-                -{discount}%
-              </Badge>
-            )}
-          </div>
 
           {/* Favorite button */}
           <button

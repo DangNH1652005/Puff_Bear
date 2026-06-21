@@ -15,23 +15,11 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${product.id}`}>
             <Card.Img
               variant="top"
-              src={product.image}
+              src={product.mainImageUrl}
               className="product-image"
             />
           </Link>
-
-          {/* Discount */}
-          <Badge
-            className="position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill border-0"
-            style={{
-              background: "linear-gradient(135deg, #ff5c93, #ff8fb1)",
-              color: "white",
-              fontSize: "14px",
-              boxShadow: "0 4px 12px rgba(255, 92, 147, 0.35)",
-            }}
-          >
-            -25%
-          </Badge>
+          
           {/* Favorite */}
           <Button
             variant="light"
@@ -52,28 +40,12 @@ const ProductCard = ({ product }) => {
             {product.name}
           </Card.Title>
 
-          {/* Rating */}
-          <div className="d-flex align-items-center gap-1 mb-3">
-            {[...Array(5)].map((_, i) => (
-              <FaStar
-                key={i}
-                size={13}
-                className={i < 4 ? "text-warning" : "text-secondary"}
-              />
-            ))}
-
-            <span className="rating-text ms-1">{product.rating}</span>
-          </div>
-
           {/* Bottom */}
           <div className="d-flex justify-content-between align-items-end">
             {/* Price */}
-            <div>
-              <div className="price-text fw-semibold">{product.price.toLocaleString()}đ</div>
 
-              <div className="old-price text-decoration-line-through">
-                399.000đ
-              </div>
+            <div className="price-text fw-semibold">
+              {product.price.toLocaleString()}đ
             </div>
 
             {/* Cart */}
