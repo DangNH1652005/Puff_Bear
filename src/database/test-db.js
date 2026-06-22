@@ -152,6 +152,7 @@ const users = [
     email: "admin@example.com",
     password: "123456",
     role: "admin",
+    avatar: "",
     address: "Thai Binh",
     phone: "04952864395",
     createdAt: "2026-06-14T08:00:00Z",

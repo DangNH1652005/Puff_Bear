@@ -1,5 +1,5 @@
-import { createUser, getUsers } from "./auth.service";
 import { role } from "../../constants/role.constant";
+import { createUser, getUsers } from "../user/user.service";
 
 export const loginRequest = async ({ email, password }) => {
   const users = await getUsers();

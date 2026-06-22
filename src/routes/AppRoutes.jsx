@@ -18,6 +18,7 @@ import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
 import { role } from "../constants/role.constant";
+import AdminSizeColor from "../pages/admin/AdminSizeColor";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -42,6 +43,7 @@ const AppRoutes = () => {
           <Route index element={<AdminDashBoardPage />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="users" element={<AdminUserManager />} />
+          <Route path="size-color" element={<AdminSizeColor />} />
         </Route>
       </Route>
 

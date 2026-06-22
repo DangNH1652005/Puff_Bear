@@ -1,7 +1,6 @@
-import React from "react";
 import { Outlet } from "react-router";
 import { useState } from "react";
-import { NavbarBrand, Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "react-bootstrap";
 
 import AdminSidebar from "../components/admin/AdminSidebar";
 import AdminNavbar from "../components/admin/AdminNavbar";

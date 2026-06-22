@@ -31,3 +31,17 @@ export async function getUserStats() {
     customer: countByRole(role.CUSTOMER),
   };
 }
+
+export const createUser = async (data) => {
+  const res = await instance.post("/users", data)
+  return res.data;
+}
+
+export const getUserByRole = async (role) => {
+  const res = await instance.get("/users", {
+    params: { role }
+  })
+  return res.data;
+}
+
+
