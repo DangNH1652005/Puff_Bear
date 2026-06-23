@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useSizeStore } from "../../store/size.store";
+import "../../styles/admin/AdminSizeColor.css";
 
 const SizeRow = ({ id, size }) => {
   const { removeSize } = useSizeStore();
@@ -9,10 +10,14 @@ const SizeRow = ({ id, size }) => {
   };
 
   return (
-    <div>
-      <div>{size}</div>
+    <div className="size-row-item">
+      <div className="size-row-left">
+        <span className="drag-dot">⋮⋮</span>
+        <span className="size-name">Size {size}</span>
+      </div>
 
       <Button
+        className="size-delete-btn"
         variant="danger"
         onClick={handleDelete}
       >

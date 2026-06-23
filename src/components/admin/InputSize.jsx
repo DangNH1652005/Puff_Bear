@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap"
 import { useSizeStore } from "../../store/size.store";
 import { useState } from "react";
+import "../../styles/admin/AdminSizeColor.css";
 
 const InputSize = () => {
   const [size, setSize] = useState("");
@@ -14,10 +15,12 @@ const InputSize = () => {
     setSize("");
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3">
+    <Form className="size-add-form" onSubmit={handleSubmit}>
+      <Form.Group className="size-input-group">
         <Form.Label>Size</Form.Label>
+
         <Form.Control
+          className="size-input"
           type="text"
           placeholder="Enter size"
           value={size}
@@ -25,7 +28,7 @@ const InputSize = () => {
         />
       </Form.Group>
 
-      <Button type="submit" variant="primary">
+      <Button className="size-add-btn" type="submit" variant="primary">
         Add Size
       </Button>
     </Form>
