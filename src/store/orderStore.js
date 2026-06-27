@@ -22,13 +22,13 @@ export async function deleteOrder(id) {
 export async function getOrderStats() {
   const orders = await getOrders();
   return {
-    total:      orders.length,
-    pending:    orders.filter((o) => o.status === "pending").length,
+    total: orders.length,
+    pending: orders.filter((o) => o.status === "pending").length,
     processing: orders.filter((o) => o.status === "processing").length,
-    shipping:   orders.filter((o) => o.status === "shipping").length,
-    delivered:  orders.filter((o) => o.status === "delivered").length,
-    cancelled:  orders.filter((o) => o.status === "cancelled").length,
-    revenue:    orders
+    shipping: orders.filter((o) => o.status === "shipping").length,
+    delivered: orders.filter((o) => o.status === "delivered").length,
+    cancelled: orders.filter((o) => o.status === "cancelled").length,
+    revenue: orders
       .filter((o) => o.status === "delivered")
       .reduce((s, o) => s + o.total, 0),
   };

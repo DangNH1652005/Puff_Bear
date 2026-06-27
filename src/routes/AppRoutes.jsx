@@ -19,6 +19,7 @@ import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
 import { role } from "../constants/role.constant";
 import AdminSizeColor from "../pages/admin/AdminSizeColor";
+import StaffOrderManagerPage from "../pages/staff/StaffOrderManagerPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -52,6 +53,7 @@ const AppRoutes = () => {
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
           <Route path="products" element={<StaffProducts />} />
+          <Route path="orders" element={<StaffOrderManagerPage />}/>
         </Route>
       </Route>
     </Routes>
