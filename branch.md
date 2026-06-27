@@ -8,12 +8,13 @@
 ## Dinh
 - feature/admin-dashboard
 - [x] feature/staff-dashboard
-- [] feature/ordermanager-staff
+- [x] feature/staff-products-manager
+
 
 ## Linh
 - [x] new-branch
 - [x] feature/product-history
-- [] feature/staff-products-manager
+- [] feature/ordermanager-staff
 
 ## Yen 
 - [x] feature/admin-user-manager
