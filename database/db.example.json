@@ -1,10 +1,11 @@
 {
-    "sizes": [],
-    "categories": [], 
-    "colors": [],
-    "products": [],
-    "users": [],
-    "cartItems": [],
-    "orders": [],
-    "orderItems": []
+  "sizes": [],
+  "categories": [],
+  "colors": [],
+  "products": [],
+  "users": [],
+  "cartItems": [],
+  "orders": [],
+  "orderItems": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

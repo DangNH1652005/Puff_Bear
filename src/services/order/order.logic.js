@@ -50,6 +50,8 @@ export const placeOrder = async (
     totalPriceCart: totalPriceCart,
     status: ORDER_STATUS.PENDING,
     createdAt: new Date().toISOString(),
+    updatedAt: null,
+    reason: null,
   };
 
   // 5. Tạo Order
