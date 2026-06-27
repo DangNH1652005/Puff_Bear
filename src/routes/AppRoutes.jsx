@@ -17,6 +17,7 @@ import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
 import { role } from "../constants/role.constant";
+import StaffOrderManagerPage from "../pages/staff/StaffOrderManagerPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -48,6 +49,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute allowedRoles={[role.STAFF]} />}>
         <Route path="/staff" element={<StaffLayout />}>
           <Route index element={<StaffDashBoardPage />} />
+          <Route path="orders" element={<StaffOrderManagerPage />} />
         </Route>
       </Route>
     </Routes>
