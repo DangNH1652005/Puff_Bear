@@ -8,7 +8,7 @@ import {
 } from "../../services/user/user.service";
 import "../../styles/admin/AdminUserManager.css";
 import { role } from "../../constants/role.constant";
-import { ORDER_STATUS } from "../../constants/orderStatus";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 const PER_PAGE = 8;
 

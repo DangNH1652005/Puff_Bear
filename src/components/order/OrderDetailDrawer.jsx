@@ -1,6 +1,6 @@
 import { Offcanvas, Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { ORDER_STATUS } from "../../constants/orderStatus";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 function OrderDetailDrawer({ show, onHide, order, onSave }) {
   const [status, setStatus] = useState(order?.status || ORDER_STATUS.PENDING);

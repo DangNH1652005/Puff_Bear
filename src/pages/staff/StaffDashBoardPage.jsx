@@ -8,7 +8,7 @@ import {
   getAllOrders,
 } from "../../services/order/order.service";
 import { getUsers } from "../../services/user/user.service";
-import { ORDER_STATUS } from "../../constants/orderStatus";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import { role } from "../../constants/role.constant";
 import { productStatus } from "../../constants/productStatus.constant";
 

@@ -1,13 +1,11 @@
 import { role } from "../../constants/role.constant";
 import instance from "../../libs/axios";
 
-// ─── GET ALL ──────────────────────────────────────────────────────────────────
 export async function getUsers() {
   const res = await instance.get("/users");
   return res.data;
 }
 
-// ─── GET ONE ──────────────────────────────────────────────────────────────────
 export async function getUserById(id) {
   const res = await instance.get(`/users/${id}`);
   return res.data;
@@ -41,6 +39,11 @@ export const getUserByRole = async (role) => {
   const res = await instance.get("/users", {
     params: { role }
   })
+  return res.data;
+}
+
+export const updateUser = async (userId, data) => {
+  const res = await instance.patch(`/users/${userId}`, data);
   return res.data;
 }
 

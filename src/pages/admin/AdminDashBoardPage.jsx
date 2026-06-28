@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import instance from "../../libs/axios";
 import "../../styles/admin/AdminDashBoardPage.css";
-import { ORDER_STATUS } from "../../constants/orderStatus";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 const fmt = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 

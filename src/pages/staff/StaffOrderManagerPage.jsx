@@ -3,7 +3,7 @@ import { Button, InputGroup, Form } from "react-bootstrap";
 import { Search } from "lucide-react";
 import StaffOrderTable from "../../components/order/StaffOrderTable";
 import OrderDetailDrawer from "../../components/order/OrderDetailDrawer";
-import { getOrdersForStaff } from "../../services/order/ordermanager.logic";
+import { getOrdersForStaff } from "../../services/order/order.logic";
 import { updateOrderStatus } from "../../services/order/order.service";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
