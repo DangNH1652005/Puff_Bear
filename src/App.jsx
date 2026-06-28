@@ -10,10 +10,10 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div>
       <AppRoutes />
       <Toaster position="top-right" reverseOrder={false} />
-    </>
+    </div>
   );
 }
 

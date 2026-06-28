@@ -113,7 +113,7 @@ const MainNavbar = () => {
             {user ? (
               <div className="d-flex align-items-center gap-3">
                 {/* Avatar → click sang user detail */}
-                <Link to="/user-detail" className="d-flex align-items-center">
+                <Link to="/profile" className="d-flex align-items-center">
                   <img
                     src={user.avatar || "/profile.png"}
                     alt="avatar"

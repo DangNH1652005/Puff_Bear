@@ -60,22 +60,3 @@ export const updateOrderStatus = async (
 
   return res.data;
 };
-
-//Lấy userId 
-export const getUserById = async (
-  userId
-) => {
-  const res = await instance.get(
-    `/users/${userId}`
-  );
-
-  return res.data;
-};
-
-export const getProducts = async () => {
-  const res = await instance.get(
-    "/products"
-  );
-
-  return res.data;
-};

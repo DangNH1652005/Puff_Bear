@@ -13,13 +13,16 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
-import StaffProducts from "../pages/staff/StaffProducts"
+import StaffProducts from "../pages/staff/StaffProducts";
 import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
 import AdminUserManager from "../pages/admin/AdminUserManager";
 import { role } from "../constants/role.constant";
 import AdminSizeColor from "../pages/admin/AdminSizeColor";
 import StaffOrderManagerPage from "../pages/staff/StaffOrderManagerPage";
+import ProfileCustomerPage from "../pages/ProfileCustomerPage";
+import ProfileAdminPage from "../pages/admin/ProfileAdminPage";
+import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -28,15 +31,23 @@ const AppRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/product/:id" element={<ProductDetailPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/order-success/:orderId" element={<OrderSuccessPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/orders-history" element={<OrderHistoryPage />} />
       </Route>
 
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
 
+      <Route element={<ProtectedRoute allowedRoles={role.CUSTOMER} />}>
+        <Route element={<Layout />}>
+          <Route
+            path="/order-success/:orderId"
+            element={<OrderSuccessPage />}
+          />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/orders-history" element={<OrderHistoryPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/profile" element={<ProfileCustomerPage />} />
+        </Route>
+      </Route>
 
       {/* ADMIN ONLY */}
       <Route element={<ProtectedRoute allowedRoles={[role.ADMIN]} />}>
@@ -45,6 +56,7 @@ const AppRoutes = () => {
           <Route path="products" element={<AdminProducts />} />
           <Route path="users" element={<AdminUserManager />} />
           <Route path="size-color" element={<AdminSizeColor />} />
+          <Route path="profile" element={<ProfileAdminPage />} />
         </Route>
       </Route>
 
@@ -54,6 +66,7 @@ const AppRoutes = () => {
           <Route index element={<StaffDashBoardPage />} />
           <Route path="products" element={<StaffProducts />} />
           <Route path="orders" element={<StaffOrderManagerPage />} />
+          <Route path="profile" element={<ProfileStaffPage />}/>
         </Route>
       </Route>
     </Routes>

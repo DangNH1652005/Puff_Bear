@@ -2,7 +2,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
-import { ORDER_STATUS } from "../../constants/orderStatus";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 function OrderCard({ order }) {
   const [showDetail, setShowDetail] = useState(false);

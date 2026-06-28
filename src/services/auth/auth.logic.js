@@ -1,3 +1,4 @@
+import { ACCOUNT_STATUS } from "../../constants/accountStatus.constant";
 import { role } from "../../constants/role.constant";
 import { createUser, getUsers } from "../user/user.service";
 
@@ -10,6 +11,10 @@ export const loginRequest = async ({ email, password }) => {
 
   if (!user) {
     throw new Error("Invalid email or password");
+  }
+  
+  if(user.status === ACCOUNT_STATUS.INACTIVE) {
+    throw new Error("Account was locked")
   }
 
   return user;
@@ -33,7 +38,8 @@ export const registerRequest = async ({ fullName, email, password }) => {
     address: "",
     phone: "",
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
+    status: ACCOUNT_STATUS.ACTIVE
   };
 
   const newUser = await createUser(userData);
