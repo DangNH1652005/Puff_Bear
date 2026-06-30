@@ -10,8 +10,13 @@ export const checkAndCreateAdmin = async () => {
   try {
     const admins = await getUserByRole(role.ADMIN);
 
+    // FIX HERE: Return gracefully instead of throwing an error
     if (admins.length > 0) {
-      throw new Error("Admin already exists");
+      return {
+        success: true,
+        message: "Admin already exists. Skipping initialization.",
+        data: admins[0],
+      };
     }
 
     const userData = {
@@ -34,10 +39,10 @@ export const checkAndCreateAdmin = async () => {
       data: admin,
     };
   } catch (error) {
-    throw new Error("Error in checkAndCreateAdmin: " + error);
+    // Only log actual errors (e.g., Network failure, Database down)
+    console.error("System error during admin initialization:", error);
   }
 };
-
 export const updateProfileLogic = async (data) => {
   try {
     const { id, payload } = data;

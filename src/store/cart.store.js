@@ -32,7 +32,7 @@ export const useCartStore = create((set, get) => ({
                 size,
               };
             } catch (err) {
-              console.error(error);
+              console.error(err);
               return item;
             }
           }),

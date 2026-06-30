@@ -25,10 +25,6 @@ const CheckoutPage = () => {
 
   const { user } = useAuthStore();
 
-  if (!user) {
-    return <Navigate to="/auth/login" replace />;
-  }
-
   const { cartItems, totalPriceCart, fetchCart } = useCartStore();
 
   useEffect(() => {
@@ -36,6 +32,10 @@ const CheckoutPage = () => {
       fetchCart(user.id);
     }
   }, [user?.id, fetchCart]);
+
+  if (!user) {
+    return <Navigate to="/auth/login" replace />;
+  }
 
   const handleShippingChange = (name, value) => {
     setShippingInfo((prev) => ({ ...prev, [name]: value }));
