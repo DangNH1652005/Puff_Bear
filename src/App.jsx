@@ -6,8 +6,21 @@ import { checkAndCreateAdmin } from "./services/user/user.logic";
 
 function App() {
   useEffect(() => {
-    checkAndCreateAdmin();
-  }, [])
+    const initAdmin = async () => {
+      try {
+        const result = await checkAndCreateAdmin();
+        if (result) {
+          // This will log "Admin already exists..." in the console instead of crashing your UI
+          console.log(result.message);
+        }
+      } catch (err) {
+        console.error("Failed to initialize Admin:", err);
+      }
+    };
+
+    initAdmin();
+  }, []);
+
 
   return (
     <div>

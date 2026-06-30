@@ -7,7 +7,7 @@ import {
 } from "./user.service";
 
 export const checkAndCreateAdmin = async () => {
-  try {
+   try {
     const admins = await getUserByRole(role.ADMIN);
 
     // FIX HERE: Return gracefully instead of throwing an error
@@ -43,6 +43,7 @@ export const checkAndCreateAdmin = async () => {
     console.error("System error during admin initialization:", error);
   }
 };
+
 export const updateProfileLogic = async (data) => {
   try {
     const { id, payload } = data;
