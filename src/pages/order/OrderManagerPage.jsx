@@ -13,6 +13,7 @@ import {
 import {
   updateOrder,
 } from "../../services/order/order.service";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 function OrderManagementPage() {
   const [orders, setOrders] =
@@ -47,7 +48,7 @@ function OrderManagementPage() {
         selectedOrder.id,
         {
           status,
-          cancelReason,
+          reason: status === ORDER_STATUS.CANCELLED ? cancelReason || null : null,
         }
       );
 

@@ -5,6 +5,7 @@ import StaffOrderTable from "../../components/order/StaffOrderTable";
 import OrderDetailDrawer from "../../components/order/OrderDetailDrawer";
 import { getOrdersForStaff } from "../../services/order/order.logic";
 import { updateOrderStatus } from "../../services/order/order.service";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
 
@@ -66,11 +67,10 @@ function StaffOrderManagerPage() {
 
   const handleSaveOrder = async (status, cancelReason) => {
     try {
-      const updateData = { status };
-
-      if (status === "CANCELLED" && cancelReason) {
-        updateData.cancelReason = cancelReason;
-      }
+      const updateData = {
+        status,
+        reason: status === ORDER_STATUS.CANCELLED ? cancelReason || null : null,
+      };
 
       await updateOrderStatus(selectedOrder.id, updateData);
 
@@ -78,7 +78,7 @@ function StaffOrderManagerPage() {
       setAllOrders(
         allOrders.map((order) =>
           order.id === selectedOrder.id
-            ? { ...order, status, cancelReason }
+            ? { ...order, status, reason: updateData.reason }
             : order
         )
       );
@@ -96,6 +96,7 @@ function StaffOrderManagerPage() {
   const stats = {
     total: allOrders.length,
     PENDING: allOrders.filter((o) => o.status === "PENDING").length,
+    CONFIRMED: allOrders.filter((o) => o.status === "confirmed").length,
     SHIPPING: allOrders.filter((o) => o.status === "SHIPPING").length,
     DELIVERED: allOrders.filter((o) => o.status === "DELIVERED").length,
     CANCELLED: allOrders.filter((o) => o.status === "CANCELLED").length,
@@ -137,6 +138,14 @@ function StaffOrderManagerPage() {
 
         <div className="staff-stat-card">
           <div>
+            <p>Đã xác nhận đơn hàng</p>
+            <h4>{stats.CONFIRMED}</h4>
+          </div>
+          <div className="stat-icon blue">✅</div>
+        </div>
+
+        <div className="staff-stat-card">
+          <div>
             <p>Đơn đã đóng gói</p>
             <h4>{stats.DELIVERED}</h4>
           </div>
@@ -169,12 +178,20 @@ function StaffOrderManagerPage() {
         >
           Tất cả ({stats.total})
         </Button>
+
         <Button
           variant={filterStatus === "PENDING" ? "warning" : "outline-warning"}
           size="sm"
           onClick={() => setFilterStatus("PENDING")}
         >
           Đang xử lý ({stats.PENDING})
+        </Button>
+        <Button
+          variant={filterStatus === "confirmed" ? "primary" : "outline-primary"}
+          size="sm"
+          onClick={() => setFilterStatus("confirmed")}
+        >
+          Đã xác nhận đơn hàng ({stats.CONFIRMED})
         </Button>
         <Button
           variant={filterStatus === "SHIPPING" ? "info" : "outline-info"}
