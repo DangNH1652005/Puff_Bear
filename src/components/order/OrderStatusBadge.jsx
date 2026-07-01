@@ -8,6 +8,10 @@ function OrderStatusBadge({
       text: "Đang xử lý",
       bg: "warning",
     },
+    CONFIRMED: {
+      text: "Đã xác nhận",
+      bg: "info",
+    },
     SHIPPING: {
       text: "Đang giao",
       bg: "primary",
