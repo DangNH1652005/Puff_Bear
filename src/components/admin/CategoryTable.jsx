@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Button, Form } from "react-bootstrap";
 import "../../styles/admin/AdminCategory.css";
 
-const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts }) => {
+const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts, isStaff }) => {
     const [editId, setEditId] = useState(null);
     const [editName, setEditName] = useState("");
 
@@ -76,12 +76,16 @@ const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts }) => {
                                         <Button size="sm" className="me-2 action-btn view-btn" onClick={() => onViewProducts(cat)}>
                                             Xem SP
                                         </Button>
-                                        <Button size="sm" className="me-2 action-btn edit-btn" onClick={() => handleStartEdit(cat)}>
-                                            Sửa
-                                        </Button>
-                                        <Button size="sm" className="action-btn delete-btn" onClick={() => onDelete(cat.id)}>
-                                            Xóa
-                                        </Button>
+                                        {!isStaff && (
+                                            <>
+                                                <Button size="sm" className="me-2 action-btn edit-btn" onClick={() => handleStartEdit(cat)}>
+                                                    Sửa
+                                                </Button>
+                                                <Button size="sm" className="action-btn delete-btn" onClick={() => onDelete(cat.id)}>
+                                                    Xóa
+                                                </Button>
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </td>

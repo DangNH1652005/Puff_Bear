@@ -24,6 +24,7 @@ import ProfileCustomerPage from "../pages/ProfileCustomerPage";
 import ProfileAdminPage from "../pages/admin/ProfileAdminPage";
 import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
 import AdminCategory from "../pages/admin/AdminCategory";
+import StaffCategory from "../pages/staff/StaffCategory";
 
 const AppRoutes = () => {
   return (
@@ -70,6 +71,7 @@ const AppRoutes = () => {
           <Route path="products" element={<StaffProducts />} />
           <Route path="orders" element={<StaffOrderManagerPage />} />
           <Route path="profile" element={<ProfileStaffPage />}/>
+          <Route path="categories" element={<StaffCategory />} />
         </Route>
       </Route>
     </Routes>
