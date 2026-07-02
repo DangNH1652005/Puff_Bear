@@ -23,6 +23,7 @@ import StaffOrderManagerPage from "../pages/staff/StaffOrderManagerPage";
 import ProfileCustomerPage from "../pages/ProfileCustomerPage";
 import ProfileAdminPage from "../pages/admin/ProfileAdminPage";
 import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
+import StaffUserManager from "../pages/staff/StaffUserManager";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -67,6 +68,7 @@ const AppRoutes = () => {
           <Route path="products" element={<StaffProducts />} />
           <Route path="orders" element={<StaffOrderManagerPage />} />
           <Route path="profile" element={<ProfileStaffPage />}/>
+          <Route path="customers" element={<StaffUserManager />} />
         </Route>
       </Route>
     </Routes>
