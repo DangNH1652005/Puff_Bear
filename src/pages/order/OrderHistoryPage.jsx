@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getOrdersByUserId, getOrderItemsByOrderId } from "../../services/order/order.service";
+import { getOrdersByUserId, getOrderItemsByOrderId, updateOrder } from "../../services/order/order.service";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import { getProductById } from "../../services/product/product.service";
 import OrderCard from "../../components/order/OrderCard";
 import { getSizeById } from "../../services/size/size.service";
@@ -86,6 +87,17 @@ function OrderHistoryPage() {
     }
   };
 
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?")) return;
+    try {
+      await updateOrder(orderId, { status: ORDER_STATUS.CANCELLED, reason: "Khách hàng hủy" });
+      fetchOrders();
+    } catch (error) {
+      console.error("Lỗi khi hủy đơn hàng:", error);
+      alert("Không thể hủy đơn hàng");
+    }
+  };
+
   if (loading) {
     return (
       <div className="container py-5 text-center">
@@ -116,6 +128,7 @@ function OrderHistoryPage() {
           <OrderCard
             key={order.id}
             order={order}
+            onCancel={handleCancelOrder}
           />
         ))
       )}

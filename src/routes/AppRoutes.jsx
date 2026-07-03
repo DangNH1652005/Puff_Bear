@@ -24,6 +24,9 @@ import ProfileCustomerPage from "../pages/ProfileCustomerPage";
 import ProfileAdminPage from "../pages/admin/ProfileAdminPage";
 import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
 import StaffUserManager from "../pages/staff/StaffUserManager";
+import AdminCategory from "../pages/admin/AdminCategory";
+import StaffCategory from "../pages/staff/StaffCategory";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -58,6 +61,7 @@ const AppRoutes = () => {
           <Route path="users" element={<AdminUserManager />} />
           <Route path="size-color" element={<AdminSizeColor />} />
           <Route path="profile" element={<ProfileAdminPage />} />
+          <Route path="categories" element={<AdminCategory />} />
         </Route>
       </Route>
 
@@ -69,6 +73,7 @@ const AppRoutes = () => {
           <Route path="orders" element={<StaffOrderManagerPage />} />
           <Route path="profile" element={<ProfileStaffPage />}/>
           <Route path="customers" element={<StaffUserManager />} />
+          <Route path="categories" element={<StaffCategory />} />
         </Route>
       </Route>
     </Routes>
