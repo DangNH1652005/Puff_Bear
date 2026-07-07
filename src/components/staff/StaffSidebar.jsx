@@ -24,6 +24,7 @@ const menuItems = [
   { icon: ShoppingCart, label: "Đơn hàng", path: "/staff/orders" },
   { icon: Users, label: "Khách hàng", path: "/staff/customers" },
   { icon: Tag, label: "Danh mục", path: "/staff/categories" },
+  { icon: MessageSquare, label: "Đánh giá", path: "/staff/reviews" },
 ];
 
 const StaffSidebar = () => {
@@ -82,11 +83,10 @@ const StaffSidebar = () => {
               as={Link}
               to={item.path}
               key={item.path}
-              className={`d-flex align-items-center gap-2 px-3 py-2 rounded ${
-                isActive
+              className={`d-flex align-items-center gap-2 px-3 py-2 rounded ${isActive
                   ? "bg-light text-primary fw-semibold"
                   : "text-dark hover-bg-light"
-              }`}
+                }`}
               style={{ cursor: "pointer" }}
             >
               <Icon size={18} />
