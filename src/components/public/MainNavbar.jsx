@@ -3,24 +3,29 @@ import { Navbar, Nav, Container, Button, Form, Badge } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { useAuthStore } from "../../store/auth.store";
 import { useCartStore } from "../../store/cart.store";
+import { useFavoriteStore } from "../../store/favorite.store";
 import { Link, useNavigate } from "react-router-dom";
 
 const MainNavbar = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
   const { cartItems, fetchCart, clearCart } = useCartStore();
+  const { favorites, fetchFavorites, clearFavorites } = useFavoriteStore();
 
   useEffect(() => {
     if (user && user.id) {
       fetchCart(user.id);
+      fetchFavorites(user.id);
     } else {
       clearCart();
+      clearFavorites();
     }
-  }, [user, fetchCart, clearCart]);
+  }, [user, fetchCart, clearCart, fetchFavorites, clearFavorites]);
 
   const handleLogout = () => {
     logout();
     clearCart();
+    clearFavorites();
   };
 
   return (
@@ -85,10 +90,20 @@ const MainNavbar = () => {
             {/* Wishlist */}
             <Button
               variant="light"
-              className="rounded-circle d-flex align-items-center justify-content-center"
+              className="rounded-circle position-relative d-flex align-items-center justify-content-center"
               style={{ width: "45px", height: "45px" }}
+              onClick={() => navigate("/wishlist")}
             >
-              <Heart size={20} />
+              <Heart size={20} className={favorites.length > 0 ? "text-danger fill-danger" : "text-dark"} />
+              {favorites.length > 0 && (
+                <Badge
+                  bg="danger"
+                  className="position-absolute rounded-circle"
+                  style={{ top: "0", right: "0", transform: "translate(30%, -30%)" }}
+                >
+                  {favorites.length}
+                </Badge>
+              )}
             </Button>
 
             {/* Cart */}

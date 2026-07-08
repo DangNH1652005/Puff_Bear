@@ -2,12 +2,21 @@ import { useState } from "react";
 import { Card, Row, Col, Image, Badge } from "react-bootstrap";
 import { Heart } from "lucide-react";
 import { useProductDetailStore } from "../../store/product.store";
+import { useAuthStore } from "../../store/auth.store";
+import { useFavoriteStore } from "../../store/favorite.store";
 
-const ProductGallery = ({ onFavoriteToggle, isFavorite = false }) => {
+const ProductGallery = () => {
   const { product, loading, error } = useProductDetailStore();
   const [selectedImage, setSelectedImage] = useState(0);
 
-  console.log(product);
+  const user = useAuthStore((state) => state.user);
+  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
+  const isFavorite = useFavoriteStore((state) => product ? state.isFavorite(product.id) : false);
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    if (product) toggleFavorite(user?.id, product.id);
+  };
 
   if (loading) {
     return (
@@ -59,7 +68,7 @@ const ProductGallery = ({ onFavoriteToggle, isFavorite = false }) => {
           {/* Favorite button */}
           <button
             className="position-absolute top-0 end-0 m-3 btn btn-light rounded-circle p-2 shadow-sm"
-            onClick={onFavoriteToggle}
+            onClick={handleFavoriteClick}
             title="Yêu thích"
           >
             <Heart

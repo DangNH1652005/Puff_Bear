@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 import { FaStar } from "react-icons/fa";
+import { useAuthStore } from "../../store/auth.store";
+import { useFavoriteStore } from "../../store/favorite.store";
 
 const ProductCard = ({ product }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const toggleFavorite = useFavoriteStore((state) => state.toggleFavorite);
+  const isFavorite = useFavoriteStore((state) => state.isFavorite(product.id));
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    toggleFavorite(user?.id, product.id);
+  };
 
   return (
     <div>
@@ -21,16 +30,17 @@ const ProductCard = ({ product }) => {
           </Link>
           
           {/* Favorite */}
-          <Button
-            variant="light"
-            onClick={() => setIsFavorite(!isFavorite)}
-            className="favorite-btn position-absolute top-0 end-0 m-3 rounded-circle border-0 shadow-sm d-flex align-items-center justify-content-center"
+          <button
+            className="position-absolute top-0 end-0 m-3 btn btn-light rounded-circle p-2 shadow-sm favorite-btn d-flex align-items-center justify-content-center"
+            onClick={handleFavoriteClick}
+            title="Yêu thích"
           >
             <Heart
-              size={18}
-              className={isFavorite ? "text-danger fill-danger" : "text-dark"}
+              size={20}
+              fill={isFavorite ? "#e91e63" : "none"}
+              color={isFavorite ? "#e91e63" : "#666"}
             />
-          </Button>
+          </button>
         </div>
 
         {/* Content */}
