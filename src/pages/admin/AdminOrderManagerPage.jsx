@@ -9,7 +9,7 @@ import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
 
-function StaffOrderManagerPage() {
+function AdminOrderManagerPage() {
   const [allOrders, setAllOrders] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,18 +67,11 @@ function StaffOrderManagerPage() {
 
   const handleSaveOrder = async (status, cancelReason) => {
     try {
-<<<<<<< HEAD
       const updateData = { status };
 
       if (status === ORDER_STATUS.CANCELLED && cancelReason) {
         updateData.cancelReason = cancelReason;
       }
-=======
-      const updateData = {
-        status,
-        reason: status === ORDER_STATUS.CANCELLED ? cancelReason || null : null,
-      };
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
 
       await updateOrderStatus(selectedOrder.id, updateData);
 
@@ -86,7 +79,7 @@ function StaffOrderManagerPage() {
       setAllOrders(
         allOrders.map((order) =>
           order.id === selectedOrder.id
-            ? { ...order, status, reason: updateData.reason }
+            ? { ...order, status, cancelReason }
             : order
         )
       );
@@ -103,22 +96,12 @@ function StaffOrderManagerPage() {
   // Calculate statistics
   const stats = {
     total: allOrders.length,
-<<<<<<< HEAD
     PENDING: allOrders.filter((o) => o.status === ORDER_STATUS.PENDING).length,
     CONFIRMED: allOrders.filter((o) => o.status === ORDER_STATUS.CONFIRMED).length,
     SHIPPING: allOrders.filter((o) => o.status === ORDER_STATUS.SHIPPING).length,
     DELIVERED: allOrders.filter((o) => o.status === ORDER_STATUS.DELIVERED).length,
     CANCELLED: allOrders.filter((o) => o.status === ORDER_STATUS.CANCELLED).length,
-=======
-    PENDING: allOrders.filter((o) => o.status === "PENDING").length,
-    CONFIRMED: allOrders.filter((o) => o.status === "confirmed").length,
-    SHIPPING: allOrders.filter((o) => o.status === "SHIPPING").length,
-    DELIVERED: allOrders.filter((o) => o.status === "DELIVERED").length,
-    CANCELLED: allOrders.filter((o) => o.status === "CANCELLED").length,
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
   };
-
-
 
   if (loading) {
     return <div className="text-center py-5">Đang tải...</div>;
@@ -150,14 +133,6 @@ function StaffOrderManagerPage() {
             <h4>{stats.PENDING}</h4>
           </div>
           <div className="stat-icon green">🛒</div>
-        </div>
-
-        <div className="staff-stat-card">
-          <div>
-            <p>Đã xác nhận đơn hàng</p>
-            <h4>{stats.CONFIRMED}</h4>
-          </div>
-          <div className="stat-icon blue">✅</div>
         </div>
 
         <div className="staff-stat-card">
@@ -194,7 +169,6 @@ function StaffOrderManagerPage() {
         >
           Tất cả ({stats.total})
         </Button>
-
         <Button
           variant={filterStatus === ORDER_STATUS.PENDING ? "warning" : "outline-warning"}
           size="sm"
@@ -203,18 +177,7 @@ function StaffOrderManagerPage() {
           Đang xử lý ({stats.PENDING})
         </Button>
         <Button
-<<<<<<< HEAD
           variant={filterStatus === ORDER_STATUS.CONFIRMED ? "secondary" : "outline-secondary"}
-=======
-          variant={filterStatus === "confirmed" ? "primary" : "outline-primary"}
-          size="sm"
-          onClick={() => setFilterStatus("confirmed")}
-        >
-          Đã xác nhận đơn hàng ({stats.CONFIRMED})
-        </Button>
-        <Button
-          variant={filterStatus === "SHIPPING" ? "info" : "outline-info"}
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
           size="sm"
           onClick={() => setFilterStatus(ORDER_STATUS.CONFIRMED)}
         >
@@ -267,4 +230,4 @@ function StaffOrderManagerPage() {
   );
 }
 
-export default StaffOrderManagerPage;
+export default AdminOrderManagerPage;
