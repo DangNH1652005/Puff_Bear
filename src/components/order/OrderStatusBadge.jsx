@@ -9,11 +9,19 @@ function OrderStatusBadge({
       text: "Đang xử lý",
       bg: "warning",
     },
+<<<<<<< HEAD
     [ORDER_STATUS.CONFIRMED]: {
       text: "Đã xác nhận",
       bg: "secondary",
     },
     [ORDER_STATUS.SHIPPING]: {
+=======
+    CONFIRMED: {
+      text: "Đã xác nhận",
+      bg: "info",
+    },
+    SHIPPING: {
+>>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
       text: "Đang giao",
       bg: "primary",
     },

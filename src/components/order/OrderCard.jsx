@@ -118,8 +118,8 @@ function OrderCard({ order }) {
   const avgRating =
     reviews.length > 0
       ? (
-          reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
-        ).toFixed(1)
+        reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
+      ).toFixed(1)
       : null;
 
   const getStatusColor = (status) => {
@@ -134,6 +134,23 @@ function OrderCard({ order }) {
         return "danger";
       default:
         return "secondary";
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case ORDER_STATUS.PENDING:
+        return "Đang xử lý";
+      case ORDER_STATUS.CONFIRMED:
+        return "Đã xác nhận";
+      case ORDER_STATUS.SHIPPING:
+        return "Đang giao hàng";
+      case ORDER_STATUS.DELIVERED:
+        return "Đã giao hàng";
+      case ORDER_STATUS.CANCELLED:
+        return "Đã hủy";
+      default:
+        return status;
     }
   };
 

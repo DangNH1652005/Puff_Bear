@@ -27,6 +27,7 @@ export async function getUserStats() {
     admin: countByRole(role.ADMIN),
     staff: countByRole(role.STAFF),
     customer: countByRole(role.CUSTOMER),
+    locked: users.filter((u) => u.status === "inactive").length,
   };
 }
 

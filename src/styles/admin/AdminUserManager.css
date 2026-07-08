@@ -351,3 +351,39 @@
   from { opacity: 0; transform: translateX(30px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+.au-btn-add {
+  background: #f2a7bb;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 9px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(242,167,187,0.3);
+}
+.au-btn-add:hover { background: #e890a8; color: #fff; }
+
+/* input trong modal thêm/sửa */
+.au-input {
+  border-radius: 10px;
+  font-size: 13px;
+  border-color: #f0e4e8;
+  background: #fff5f8;
+}
+.au-input:focus {
+  border-color: #f2a7bb;
+  box-shadow: 0 0 0 3px rgba(242,167,187,0.2);
+  background: #fff;
+}
+.au-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9b8b8b;
+  margin-bottom: 5px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.au-action-btn.edit { background: #fdf0d5; color: #c9a84c; }
