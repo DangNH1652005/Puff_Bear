@@ -25,7 +25,7 @@ export const getOrderById = async (orderId) => {
 
 export const getOrderItemsByOrderId = async (orderId) => {
   const res = await instance.get(`/orderItems?orderId=${orderId}`);
-  return res.data; 
+  return res.data;
 };
 
 export const getOrdersByUserId = async (userId) => {
@@ -46,18 +46,11 @@ export const getProductById = async (id) => {
 export const getAllOrderItems = async () => {
   const res = await instance.get(`/orderItems`);
   return res.data;
-}
+};
 
-//Update order status
-export const updateOrderStatus = async (
-  orderId,
-  data
-) => {
-  const res = await instance.patch(
-    `/orders/${orderId}`,
-    data
-  );
-
+// Cập nhật trạng thái đơn hàng (bao gồm isReviewed)
+export const updateOrderStatus = async (orderId, data) => {
+  const res = await instance.patch(`/orders/${orderId}`, data);
   return res.data;
 };
 

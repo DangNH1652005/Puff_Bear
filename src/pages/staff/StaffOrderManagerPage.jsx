@@ -67,10 +67,18 @@ function StaffOrderManagerPage() {
 
   const handleSaveOrder = async (status, cancelReason) => {
     try {
+<<<<<<< HEAD
+      const updateData = { status };
+
+      if (status === ORDER_STATUS.CANCELLED && cancelReason) {
+        updateData.cancelReason = cancelReason;
+      }
+=======
       const updateData = {
         status,
         reason: status === ORDER_STATUS.CANCELLED ? cancelReason || null : null,
       };
+>>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
 
       await updateOrderStatus(selectedOrder.id, updateData);
 
@@ -95,11 +103,19 @@ function StaffOrderManagerPage() {
   // Calculate statistics
   const stats = {
     total: allOrders.length,
+<<<<<<< HEAD
+    PENDING: allOrders.filter((o) => o.status === ORDER_STATUS.PENDING).length,
+    CONFIRMED: allOrders.filter((o) => o.status === ORDER_STATUS.CONFIRMED).length,
+    SHIPPING: allOrders.filter((o) => o.status === ORDER_STATUS.SHIPPING).length,
+    DELIVERED: allOrders.filter((o) => o.status === ORDER_STATUS.DELIVERED).length,
+    CANCELLED: allOrders.filter((o) => o.status === ORDER_STATUS.CANCELLED).length,
+=======
     PENDING: allOrders.filter((o) => o.status === "PENDING").length,
     CONFIRMED: allOrders.filter((o) => o.status === "confirmed").length,
     SHIPPING: allOrders.filter((o) => o.status === "SHIPPING").length,
     DELIVERED: allOrders.filter((o) => o.status === "DELIVERED").length,
     CANCELLED: allOrders.filter((o) => o.status === "CANCELLED").length,
+>>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
   };
 
 
@@ -180,13 +196,16 @@ function StaffOrderManagerPage() {
         </Button>
 
         <Button
-          variant={filterStatus === "PENDING" ? "warning" : "outline-warning"}
+          variant={filterStatus === ORDER_STATUS.PENDING ? "warning" : "outline-warning"}
           size="sm"
-          onClick={() => setFilterStatus("PENDING")}
+          onClick={() => setFilterStatus(ORDER_STATUS.PENDING)}
         >
           Đang xử lý ({stats.PENDING})
         </Button>
         <Button
+<<<<<<< HEAD
+          variant={filterStatus === ORDER_STATUS.CONFIRMED ? "secondary" : "outline-secondary"}
+=======
           variant={filterStatus === "confirmed" ? "primary" : "outline-primary"}
           size="sm"
           onClick={() => setFilterStatus("confirmed")}
@@ -195,22 +214,30 @@ function StaffOrderManagerPage() {
         </Button>
         <Button
           variant={filterStatus === "SHIPPING" ? "info" : "outline-info"}
+>>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
           size="sm"
-          onClick={() => setFilterStatus("SHIPPING")}
+          onClick={() => setFilterStatus(ORDER_STATUS.CONFIRMED)}
+        >
+          Đã xác nhận ({stats.CONFIRMED})
+        </Button>
+        <Button
+          variant={filterStatus === ORDER_STATUS.SHIPPING ? "info" : "outline-info"}
+          size="sm"
+          onClick={() => setFilterStatus(ORDER_STATUS.SHIPPING)}
         >
           Đang giao ({stats.SHIPPING})
         </Button>
         <Button
-          variant={filterStatus === "DELIVERED" ? "success" : "outline-success"}
+          variant={filterStatus === ORDER_STATUS.DELIVERED ? "success" : "outline-success"}
           size="sm"
-          onClick={() => setFilterStatus("DELIVERED")}
+          onClick={() => setFilterStatus(ORDER_STATUS.DELIVERED)}
         >
           Đã giao ({stats.DELIVERED})
         </Button>
         <Button
-          variant={filterStatus === "CANCELLED" ? "danger" : "outline-danger"}
+          variant={filterStatus === ORDER_STATUS.CANCELLED ? "danger" : "outline-danger"}
           size="sm"
-          onClick={() => setFilterStatus("CANCELLED")}
+          onClick={() => setFilterStatus(ORDER_STATUS.CANCELLED)}
         >
           Đã hủy ({stats.CANCELLED})
         </Button>
