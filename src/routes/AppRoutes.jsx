@@ -13,6 +13,7 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CheckoutPage from "../pages/order/CheckoutPage";
 import OrderSuccessPage from "../pages/order/OrderSuccessPage";
 import AdminProducts from "../pages/admin/AdminProducts";
+import AdminOrderManagerPage from "../pages/admin/AdminOrderManagerPage";
 import StaffProducts from "../pages/staff/StaffProducts";
 import CartPage from "../pages/cart/CartPage";
 import ProductListPage from "../components/product/ProductListPage";
@@ -27,6 +28,7 @@ import StaffUserManager from "../pages/staff/StaffUserManager";
 import AdminCategory from "../pages/admin/AdminCategory";
 import StaffCategory from "../pages/staff/StaffCategory";
 import AdminReviews from "../pages/admin/AdminReviews";
+import StaffReviews from "../pages/staff/StaffReviews";
 
 const AppRoutes = () => {
   return (
@@ -59,6 +61,7 @@ const AppRoutes = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashBoardPage />} />
           <Route path="products" element={<AdminProducts />} />
+          <Route path="orders" element={<AdminOrderManagerPage />} />
           <Route path="users" element={<AdminUserManager />} />
           <Route path="size-color" element={<AdminSizeColor />} />
           <Route path="profile" element={<ProfileAdminPage />} />
@@ -76,6 +79,7 @@ const AppRoutes = () => {
           <Route path="profile" element={<ProfileStaffPage />}/>
           <Route path="customers" element={<StaffUserManager />} />
           <Route path="categories" element={<StaffCategory />} />
+          <Route path="reviews" element={<StaffReviews />} />
         </Route>
       </Route>
     </Routes>

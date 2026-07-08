@@ -8,6 +8,7 @@ import ProductInfo from "../components/product/ProductInfo";
 import ProductOptions from "../components/product/ProductOptions";
 import ProductActions from "../components/product/ProductActions";
 import ProductFeatures from "../components/product/ProductFeatures";
+import ProductReviews from "../components/product/ProductReviews";
 import { useProductDetailStore } from "../store/product.store";
 
 const ProductDetailPage = () => {
@@ -47,9 +48,14 @@ const ProductDetailPage = () => {
             <ProductFeatures />
           </Col>
         </Row>
+
+        {/* ── Reviews section — full width ── */}
+        <hr className="my-4" style={{ borderColor: "#f0f0f0" }} />
+        <ProductReviews />
       </Container>
     </div>
   );
 };
 
 export default ProductDetailPage;
+

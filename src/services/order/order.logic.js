@@ -85,8 +85,9 @@ export const clearCartByUserId = async (userId) => {
 };
 
 const normalizeStatus = (status) => {
-
-  return ORDER_STATUS[status?.toLowerCase()] || status?.toUpperCase() || "PENDING";
+  const lower = status?.toLowerCase();
+  const validStatus = Object.values(ORDER_STATUS).find((val) => val === lower);
+  return validStatus || ORDER_STATUS.PENDING;
 };
 
 export const getOrdersForStaff =
