@@ -27,6 +27,7 @@ import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
 import StaffUserManager from "../pages/staff/StaffUserManager";
 import AdminCategory from "../pages/admin/AdminCategory";
 import StaffCategory from "../pages/staff/StaffCategory";
+import StaffReviews from "../pages/staff/StaffReviews";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +77,7 @@ const AppRoutes = () => {
           <Route path="profile" element={<ProfileStaffPage />}/>
           <Route path="customers" element={<StaffUserManager />} />
           <Route path="categories" element={<StaffCategory />} />
+          <Route path="reviews" element={<StaffReviews />} />
         </Route>
       </Route>
     </Routes>
