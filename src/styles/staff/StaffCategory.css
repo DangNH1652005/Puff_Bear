@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap");
+
+/* ── Variables ─────────────────────────────────────────────────── */
+:root {
+  --pink: #f2a7bb;
+  --pink-light: #fde8ef;
+  --pink-pale: #fff5f8;
+  --mint: #b8ddd4;
+  --mint-light: #e8f5f2;
+  --beige: #f5efe6;
+  --beige-dark: #e8ddd0;
+  --lavender: #d4c5e8;
+  --lavender-light: #f0eaf8;
+  --yellow-soft: #fdf0d5;
+  --yellow: #f5d78e;
+  --text-main: #4a3f3f;
+  --text-muted: #9b8b8b;
+  --border: #f0e4e8;
+  --card-bg: #ffffff;
+  --page-bg: #fffbfc;
+  --font-display: "Lora", serif;
+  --font-body: "DM Sans", sans-serif;
+}
+
+/* ── Page ─────────────────────────────────────────────────── */
+.staff-category-page {
+  min-height: 100vh;
+  padding-bottom: 40px;
+  font-family: var(--font-body);
+  color: var(--text-main);
+}
+
+.staff-category-page .staff-header {
+  margin-bottom: 24px;
+}
+
+.staff-category-page .staff-header h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.staff-category-page .staff-header p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ── Cards ─────────────────────────────────────────────────── */
+.staff-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 12px 28px rgba(242, 167, 187, 0.12);
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.category-filter-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category-filter-card h5 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ── Filter ─────────────────────────────────────────────────── */
+.category-search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 300px;
+}
+
+.category-search-box input {
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 0 13px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-main);
+  outline: none;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.category-search-box input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(242, 167, 187, 0.18);
+}
+
+.category-total {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ── Table (Overrides for CategoryTable) ─────────────────────────────────────────────────── */
+.staff-category-page .category-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.staff-category-page .category-table thead th {
+  font-family: var(--font-body) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-muted) !important;
+  background-color: var(--pink-pale) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 10px 8px !important;
+  text-transform: uppercase;
+}
+
+.staff-category-page .category-table tbody td {
+  padding: 10px 8px !important;
+  border-bottom: 1px solid var(--border) !important;
+  font-size: 12px !important;
+  color: var(--text-main) !important;
+  background-color: transparent !important;
+}
+
+.staff-category-page .category-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.staff-category-page .category-table tbody tr:hover td {
+  background: var(--pink-pale) !important;
+}
+
+/* ── View Button ─────────────────────────────────────────────────── */
+.staff-category-page .action-btn.view-btn {
+  height: 30px;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0 12px !important;
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: var(--lavender-light) !important;
+  color: #7c6b95 !important;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.staff-category-page .action-btn.view-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}

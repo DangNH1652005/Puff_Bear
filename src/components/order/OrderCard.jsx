@@ -4,7 +4,7 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
-function OrderCard({ order }) {
+function OrderCard({ order, onCancel }) {
   const [showDetail, setShowDetail] = useState(false);
   const getStatusColor = (status) => {
     switch (status) {
@@ -18,6 +18,23 @@ function OrderCard({ order }) {
         return "danger";
       default:
         return "secondary";
+    }
+  };
+
+  const getStatusText = (status) => {
+    switch (status) {
+      case ORDER_STATUS.PENDING:
+        return "Đang xử lý";
+      case ORDER_STATUS.CONFIRMED:
+        return "Đã xác nhận";
+      case ORDER_STATUS.SHIPPING:
+        return "Đang giao hàng";
+      case ORDER_STATUS.DELIVERED:
+        return "Đã giao hàng";
+      case ORDER_STATUS.CANCELLED:
+        return "Đã hủy";
+      default:
+        return status;
     }
   };
 
@@ -39,7 +56,7 @@ function OrderCard({ order }) {
             </div>
           </div>
 
-          <Badge bg={getStatusColor(order.status)}>{order.status}</Badge>
+          <Badge bg={getStatusColor(order.status)}>{getStatusText(order.status)}</Badge>
         </div>
       </Card.Header>
 
@@ -76,12 +93,6 @@ function OrderCard({ order }) {
           </div>
         ))}
 
-        {order.status === "CANCELLED" && (
-          <div className="text-danger fw-semibold mb-3">
-            ❌ Đơn hàng đã bị hủy
-          </div>
-        )}
-
         <div className="d-flex justify-content-between align-items-center mt-4">
           <div>
             <div className="text-muted">Tổng thanh toán</div>
@@ -91,12 +102,22 @@ function OrderCard({ order }) {
             </h3>
           </div>
 
-          <Button
-            variant="outline-secondary"
-            onClick={() => setShowDetail(!showDetail)}
-          >
-            {showDetail ? "▲ Thu gọn" : "▼ Chi tiết"}
-          </Button>
+          <div className="d-flex gap-2">
+            {order.status === ORDER_STATUS.PENDING && onCancel && (
+              <Button
+                variant="outline-danger"
+                onClick={() => onCancel(order.id)}
+              >
+                Hủy đơn hàng
+              </Button>
+            )}
+            <Button
+              variant="outline-secondary"
+              onClick={() => setShowDetail(!showDetail)}
+            >
+              {showDetail ? "▲ Thu gọn" : "▼ Chi tiết"}
+            </Button>
+          </div>
         </div>
 
         {showDetail && (
@@ -114,6 +135,16 @@ function OrderCard({ order }) {
                 <div className="mt-2 text-muted">📞 {order.phone}</div>
 
                 <div className="mt-2">Người nhận: {order.receiverName}</div>
+                {order.status === ORDER_STATUS.CANCELLED && (
+                  <div className="text-danger fw-semibold mb-3">
+                    ❌ Đơn hàng đã bị hủy
+                    {(order.reason || order.cancelReason) && (
+                      <div className="small mt-2">
+                        <strong>Lý do hủy:</strong> {order.reason || order.cancelReason}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

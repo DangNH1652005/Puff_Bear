@@ -60,3 +60,7 @@ export const updateOrderStatus = async (
 
   return res.data;
 };
+
+export const updateOrder = async (orderId, data) => {
+  return updateOrderStatus(orderId, data);
+};
