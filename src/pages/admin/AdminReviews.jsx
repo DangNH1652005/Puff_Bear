@@ -198,7 +198,7 @@ const AdminReviews = () => {
                     <th>Thời gian</th>
                     <th style={{ width: "12%" }}>Khách hàng</th>
                     <th>Thông tin SP</th>
-                    <th>Đánh giá</th>
+                    <th className="text-center">Đánh giá</th>
                     <th>Nội dung</th>
                     <th>Hành động</th>
                   </tr>
