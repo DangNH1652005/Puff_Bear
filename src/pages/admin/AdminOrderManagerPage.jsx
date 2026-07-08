@@ -9,7 +9,7 @@ import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
 
-function StaffOrderManagerPage() {
+function AdminOrderManagerPage() {
   const [allOrders, setAllOrders] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -102,8 +102,6 @@ function StaffOrderManagerPage() {
     DELIVERED: allOrders.filter((o) => o.status === ORDER_STATUS.DELIVERED).length,
     CANCELLED: allOrders.filter((o) => o.status === ORDER_STATUS.CANCELLED).length,
   };
-
-
 
   if (loading) {
     return <div className="text-center py-5">Đang tải...</div>;
@@ -232,4 +230,4 @@ function StaffOrderManagerPage() {
   );
 }
 
-export default StaffOrderManagerPage;
+export default AdminOrderManagerPage;

@@ -1,30 +1,35 @@
 import Badge from "react-bootstrap/Badge";
+import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 function OrderStatusBadge({
   status,
 }) {
   const map = {
-    PENDING: {
+    [ORDER_STATUS.PENDING]: {
       text: "Đang xử lý",
       bg: "warning",
     },
-    SHIPPING: {
+    [ORDER_STATUS.CONFIRMED]: {
+      text: "Đã xác nhận",
+      bg: "secondary",
+    },
+    [ORDER_STATUS.SHIPPING]: {
       text: "Đang giao",
       bg: "primary",
     },
-    DELIVERED: {
+    [ORDER_STATUS.DELIVERED]: {
       text: "Đã giao",
       bg: "success",
     },
-    CANCELLED: {
+    [ORDER_STATUS.CANCELLED]: {
       text: "Đã hủy",
       bg: "danger",
     },
   };
 
   return (
-    <Badge bg={map[status]?.bg}>
-      {map[status]?.text}
+    <Badge bg={map[status]?.bg || "secondary"}>
+      {map[status]?.text || status}
     </Badge>
   );
 }

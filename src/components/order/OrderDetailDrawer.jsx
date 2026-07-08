@@ -1,11 +1,17 @@
 import { Offcanvas, Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 
 function OrderDetailDrawer({ show, onHide, order, onSave }) {
   const [status, setStatus] = useState(order?.status || ORDER_STATUS.PENDING);
-
   const [cancelReason, setCancelReason] = useState("");
+
+  useEffect(() => {
+    if (order) {
+      setStatus(order.status || ORDER_STATUS.PENDING);
+      setCancelReason(order.cancelReason || "");
+    }
+  }, [order]);
 
   if (!order) return null;
 
