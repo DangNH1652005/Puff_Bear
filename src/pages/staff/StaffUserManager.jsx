@@ -15,7 +15,7 @@ function getRoleBadgeClass(name) {
   return "au-role-customer";
 }
 
-export default function AdminUserManager() {
+export default function StaffUserManager() {
   // ===== STATE =====
   const [users, setUsers]     = useState([]);
   const [stats, setStats]     = useState({});
@@ -25,8 +25,8 @@ export default function AdminUserManager() {
   const [tab, setTab]       = useState("all");
   const [page, setPage]     = useState(1);
 
-  // Modal: "" = đóng, "view" | "add" | "edit" | "lock"
-  const [modalType, setModalType]     = useState("");
+  // Modal: "" = đóng, "view" | "lock"
+  const [modalType, setModalType]       = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
 
   // ===== LOAD DATA =====
@@ -48,27 +48,27 @@ export default function AdminUserManager() {
     }
   }
 
-  // Mở modal
+  // ===== MỞ MODAL =====
   function openView(user) { setSelectedUser(user); setModalType("view"); }
-  function openAdd()      { setSelectedUser(null); setModalType("add"); }
-  function openEdit(user) { setSelectedUser(user); setModalType("edit"); }
   function openLock(user) { setSelectedUser(user); setModalType("lock"); }
   function closeModal()   { setModalType(""); }
 
-  // Helper
+  // ===== HELPER =====
   function getRoleName(user) {
     return user.role || role.CUSTOMER;
   }
 
-  // Lọc
-  const filteredUsers = users.filter((user) => {
+  // ===== LỌC =====
+  // Staff chỉ xem customer và staff khác — KHÔNG thấy admin
+  const visibleUsers = users.filter((user) => getRoleName(user) !== role.ADMIN);
+
+  const filteredUsers = visibleUsers.filter((user) => {
     const q = search.toLowerCase();
     const name = (user.fullName || "").toLowerCase();
     const email = (user.email || "").toLowerCase();
     const phone = user.phone || "";
     const matchSearch = name.includes(q) || email.includes(q) || phone.includes(q);
 
-    // Tab locked lọc tài khoản bị khoá, còn lại lọc theo role
     let matchTab = true;
     if (tab === "locked") {
       matchTab = user.status === "inactive";
@@ -81,63 +81,42 @@ export default function AdminUserManager() {
   const totalPages = Math.max(1, Math.ceil(filteredUsers.length / PER_PAGE));
   const pagedUsers = filteredUsers.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
-  // Render
+  // ===== RENDER =====
   return (
     <div className="au-page">
 
-      {/* Tiêu đề + nút thêm staff */}
-      <div className="d-flex align-items-center justify-content-between mb-4">
-        <div>
-          <h4 className="au-title mb-0">Quản lý Người dùng</h4>
-          <p className="au-sub text-muted mb-0">Xem thông tin và quản lý trạng thái tài khoản</p>
-        </div>
-        <button className="btn au-btn-add" onClick={openAdd}>
-          <i className="bi bi-person-plus me-2"></i>Thêm nhân viên
-        </button>
+      {/* Tiêu đề (KHÔNG có nút thêm nhân viên) */}
+      <div className="mb-4">
+        <h4 className="au-title mb-0">Quản lý Người dùng</h4>
+        <p className="au-sub text-muted mb-0">Xem thông tin và khoá tài khoản khách hàng</p>
       </div>
 
-      {/* 4 ô thống kê */}
+      {/* Thống kê: chỉ Staff và Customer */}
       <div className="row g-3 mb-4">
-        <div className="col-md-3 col-sm-6">
-          <div className="au-stat-card">
-            <span className="au-stat-emoji">🧸</span>
-            <div className="au-stat-value">{stats.total ?? "…"}</div>
-            <div className="au-stat-label">Tổng người dùng</div>
-          </div>
-        </div>
-        <div className="col-md-3 col-sm-6">
-          <div className="au-stat-card">
-            <span className="au-stat-emoji">🌸</span>
-            <div className="au-stat-value">{stats.admin ?? "…"}</div>
-            <div className="au-stat-label">Admin</div>
-          </div>
-        </div>
-        <div className="col-md-3 col-sm-6">
+        <div className="col-md-6 col-sm-6">
           <div className="au-stat-card">
             <span className="au-stat-emoji">🌷</span>
             <div className="au-stat-value">{stats.staff ?? "…"}</div>
-            <div className="au-stat-label">Staff</div>
+            <div className="au-stat-label">Nhân viên</div>
           </div>
         </div>
-        <div className="col-md-3 col-sm-6">
+        <div className="col-md-6 col-sm-6">
           <div className="au-stat-card">
             <span className="au-stat-emoji">🌼</span>
             <div className="au-stat-value">{stats.customer ?? "…"}</div>
-            <div className="au-stat-label">Customer</div>
+            <div className="au-stat-label">Khách hàng</div>
           </div>
         </div>
       </div>
 
-      {/* Tabs lọc */}
+      {/* Tabs lọc (không có Admin) */}
       <div className="au-tabs mb-4">
         <button className={tab === "all" ? "au-tab-btn active" : "au-tab-btn"}
           onClick={() => { setTab("all"); setPage(1); }}>Tất cả</button>
-        <button className={tab === "admin" ? "au-tab-btn active" : "au-tab-btn"}
-          onClick={() => { setTab("admin"); setPage(1); }}>Admin</button>
         <button className={tab === "staff" ? "au-tab-btn active" : "au-tab-btn"}
-          onClick={() => { setTab("staff"); setPage(1); }}>Staff</button>
+          onClick={() => { setTab("staff"); setPage(1); }}>Nhân viên</button>
         <button className={tab === "customer" ? "au-tab-btn active" : "au-tab-btn"}
-          onClick={() => { setTab("customer"); setPage(1); }}>Customer</button>
+          onClick={() => { setTab("customer"); setPage(1); }}>Khách hàng</button>
         <button className={tab === "locked" ? "au-tab-btn active" : "au-tab-btn"}
           onClick={() => { setTab("locked"); setPage(1); }}>Đã khoá</button>
       </div>
@@ -174,7 +153,7 @@ export default function AdminUserManager() {
                     <th>Vai trò</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
-                    <th style={{ width: 120 }}>Thao tác</th>
+                    <th style={{ width: 90 }}>Thao tác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -190,8 +169,8 @@ export default function AdminUserManager() {
                   {pagedUsers.map((user) => {
                     const roleName = getRoleName(user);
                     const isLocked = user.status === "inactive";
-                    // Admin không cho khoá / sửa chính admin khác
-                    const isAdmin = roleName === role.ADMIN;
+                    // Staff CHỈ khoá được customer
+                    const canLock = roleName === role.CUSTOMER;
 
                     return (
                       <tr key={user.id} className="au-table-row">
@@ -216,26 +195,20 @@ export default function AdminUserManager() {
                         </td>
                         <td>
                           <div className="d-flex gap-1">
-                            {/* Xem chi tiết */}
+                            {/* Xem chi tiết — mọi user */}
                             <button className="au-action-btn view" title="Xem chi tiết"
                               onClick={() => openView(user)}>
                               <i className="bi bi-eye"></i>
                             </button>
 
-                            {/* Sửa + Khoá: không áp dụng cho admin */}
-                            {!isAdmin && (
-                              <>
-                                <button className="au-action-btn edit" title="Chỉnh sửa"
-                                  onClick={() => openEdit(user)}>
-                                  <i className="bi bi-pencil"></i>
-                                </button>
-                                <button
-                                  className={isLocked ? "au-action-btn unlock" : "au-action-btn lock"}
-                                  title={isLocked ? "Mở khoá" : "Khoá tài khoản"}
-                                  onClick={() => openLock(user)}>
-                                  <i className={isLocked ? "bi bi-unlock" : "bi bi-lock"}></i>
-                                </button>
-                              </>
+                            {/* Khoá — CHỈ customer */}
+                            {canLock && (
+                              <button
+                                className={isLocked ? "au-action-btn unlock" : "au-action-btn lock"}
+                                title={isLocked ? "Mở khoá" : "Khoá tài khoản"}
+                                onClick={() => openLock(user)}>
+                                <i className={isLocked ? "bi bi-unlock" : "bi bi-lock"}></i>
+                              </button>
                             )}
                           </div>
                         </td>
@@ -263,7 +236,7 @@ export default function AdminUserManager() {
         )}
       </div>
 
-      {/* Modal (component riêng) */}
+      {/* Modal — chỉ dùng view + lock */}
       <UserModal
         mode={modalType}
         user={selectedUser}
