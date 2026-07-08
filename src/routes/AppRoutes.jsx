@@ -27,6 +27,7 @@ import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
 import StaffUserManager from "../pages/staff/StaffUserManager";
 import AdminCategory from "../pages/admin/AdminCategory";
 import StaffCategory from "../pages/staff/StaffCategory";
+import AdminReviews from "../pages/admin/AdminReviews";
 import StaffReviews from "../pages/staff/StaffReviews";
 
 const AppRoutes = () => {
@@ -65,6 +66,7 @@ const AppRoutes = () => {
           <Route path="size-color" element={<AdminSizeColor />} />
           <Route path="profile" element={<ProfileAdminPage />} />
           <Route path="categories" element={<AdminCategory />} />
+          <Route path="reviews" element={<AdminReviews />} />
         </Route>
       </Route>
 

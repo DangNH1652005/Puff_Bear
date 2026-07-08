@@ -9,6 +9,7 @@ import {
   Tag,
   LogOut,
   CloudRain,
+  MessageSquare,
 } from "lucide-react";
 
 import { Nav, Button, Container, Spinner } from "react-bootstrap";
@@ -22,6 +23,7 @@ const menuItems = [
   { icon: Users, label: "Khách hàng", path: "/admin/users" },
   { icon: Tag, label: "Thể loại", path: "/admin/categories" },
   { icon: CloudRain, label: "Màu sắc và kích cỡ", path: "/admin/size-color" },
+  { icon: MessageSquare, label: "Đánh giá", path: "/admin/reviews" },
 ];
 
 const AdminSidebar = () => {
