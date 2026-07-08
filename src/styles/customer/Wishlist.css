@@ -1,0 +1,39 @@
+/* src/styles/customer/Wishlist.css */
+
+.wishlist-empty-state {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+
+.wishlist-empty-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff8fb1, #ffb6c1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.wishlist-title {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.wishlist-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 40px;
+  height: 4px;
+  background-color: #e91e63;
+  border-radius: 2px;
+}

@@ -23,6 +23,7 @@ import StaffOrderManagerPage from "../pages/staff/StaffOrderManagerPage";
 import ProfileCustomerPage from "../pages/ProfileCustomerPage";
 import ProfileAdminPage from "../pages/admin/ProfileAdminPage";
 import ProfileStaffPage from "../pages/staff/ProfileStaffPage";
+import WishlistPage from "../pages/customer/WishlistPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -43,6 +44,7 @@ const AppRoutes = () => {
             element={<OrderSuccessPage />}
           />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/orders-history" element={<OrderHistoryPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/profile" element={<ProfileCustomerPage />} />
