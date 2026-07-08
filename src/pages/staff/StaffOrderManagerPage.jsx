@@ -67,18 +67,11 @@ function StaffOrderManagerPage() {
 
   const handleSaveOrder = async (status, cancelReason) => {
     try {
-<<<<<<< HEAD
       const updateData = { status };
 
       if (status === ORDER_STATUS.CANCELLED && cancelReason) {
         updateData.cancelReason = cancelReason;
       }
-=======
-      const updateData = {
-        status,
-        reason: status === ORDER_STATUS.CANCELLED ? cancelReason || null : null,
-      };
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
 
       await updateOrderStatus(selectedOrder.id, updateData);
 
@@ -103,19 +96,11 @@ function StaffOrderManagerPage() {
   // Calculate statistics
   const stats = {
     total: allOrders.length,
-<<<<<<< HEAD
     PENDING: allOrders.filter((o) => o.status === ORDER_STATUS.PENDING).length,
     CONFIRMED: allOrders.filter((o) => o.status === ORDER_STATUS.CONFIRMED).length,
     SHIPPING: allOrders.filter((o) => o.status === ORDER_STATUS.SHIPPING).length,
     DELIVERED: allOrders.filter((o) => o.status === ORDER_STATUS.DELIVERED).length,
     CANCELLED: allOrders.filter((o) => o.status === ORDER_STATUS.CANCELLED).length,
-=======
-    PENDING: allOrders.filter((o) => o.status === "PENDING").length,
-    CONFIRMED: allOrders.filter((o) => o.status === "confirmed").length,
-    SHIPPING: allOrders.filter((o) => o.status === "SHIPPING").length,
-    DELIVERED: allOrders.filter((o) => o.status === "DELIVERED").length,
-    CANCELLED: allOrders.filter((o) => o.status === "CANCELLED").length,
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
   };
 
 
@@ -203,18 +188,7 @@ function StaffOrderManagerPage() {
           Đang xử lý ({stats.PENDING})
         </Button>
         <Button
-<<<<<<< HEAD
           variant={filterStatus === ORDER_STATUS.CONFIRMED ? "secondary" : "outline-secondary"}
-=======
-          variant={filterStatus === "confirmed" ? "primary" : "outline-primary"}
-          size="sm"
-          onClick={() => setFilterStatus("confirmed")}
-        >
-          Đã xác nhận đơn hàng ({stats.CONFIRMED})
-        </Button>
-        <Button
-          variant={filterStatus === "SHIPPING" ? "info" : "outline-info"}
->>>>>>> b802cf70d2433e8baabf3cab400ed966fce7aa11
           size="sm"
           onClick={() => setFilterStatus(ORDER_STATUS.CONFIRMED)}
         >

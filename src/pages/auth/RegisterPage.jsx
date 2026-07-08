@@ -66,7 +66,7 @@ const RegisterPage = () => {
               {/* Card */}
               <Card className="border-0 shadow-sm rounded-4">
                 <Card.Body className="p-4">
-                  <h3 className="mb-1">Đăng nhập</h3>
+                  <h3 className="mb-1">Đăng ký</h3>
                   <p className="text-muted small mb-4">
                     Nhập thông tin tài khoản để tiếp tục
                   </p>
