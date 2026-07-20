@@ -21,13 +21,14 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
       onHide={onHide}
       placement="end"
       style={{ width: "40%" }}
+      className="staff-drawer"
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>{order.id}</Offcanvas.Title>
       </Offcanvas.Header>
 
       <Offcanvas.Body>
-        <h5>Thông tin khách hàng</h5>
+        <div className="drawer-section-title">Thông tin khách hàng</div>
 
         <div className="mb-4">
           <strong>{order.customer?.fullName}</strong>
@@ -36,8 +37,7 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
 
           <div>{order.phone}</div>
         </div>
-        <hr />
-        <h5>Địa chỉ</h5>
+        <div className="drawer-section-title mt-4">Địa chỉ giao hàng</div>
 
         <div className="mb-4">
           <div>
@@ -55,12 +55,11 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
             </div>
           )}
         </div>
-
-        <h5>Sản phẩm ({order.items.length})</h5>
+        <div className="drawer-section-title mt-4">Sản phẩm ({order.items.length})</div>
 
         {order.items.map((item) => (
-          <div key={item.id} className="d-flex mb-3">
-            <img src={item.product?.mainImageUrl} width="70" />
+          <div key={item.id} className="d-flex align-items-center mb-3">
+            <img src={item.product?.mainImageUrl} className="drawer-item-img" alt={item.product?.name} />
 
             <div className="ms-3">
               <div>{item.product?.name}</div>
@@ -70,9 +69,7 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
           </div>
         ))}
 
-        <hr />
-
-        <h5>Cập nhật trạng thái</h5>
+        <div className="drawer-section-title mt-4">Cập nhật trạng thái</div>
 
         <Form.Select value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value={ORDER_STATUS.PENDING}>Đang xử lý</option>
@@ -99,12 +96,13 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
           </Form.Group>
         )}
 
-        <div className="d-flex gap-2 mt-4">
-          <Button variant="secondary" onClick={onHide}>
+        <div className="d-flex gap-2 mt-4 pt-3 border-top">
+          <Button variant="outline-secondary" className="rounded-pill px-4" onClick={onHide}>
             Đóng
           </Button>
 
-          <Button
+          <button
+            className="drawer-save-btn"
             onClick={() => {
               if (status === ORDER_STATUS.CANCELLED && !cancelReason.trim()) {
                 alert("Vui lòng nhập lý do hủy");
@@ -114,7 +112,7 @@ function OrderDetailDrawer({ show, onHide, order, onSave }) {
             }}
           >
             Lưu thay đổi
-          </Button>
+          </button>
         </div>
       </Offcanvas.Body>
     </Offcanvas>

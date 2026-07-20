@@ -7,30 +7,30 @@ function OrderStatusBadge({
   const map = {
     [ORDER_STATUS.PENDING]: {
       text: "Đang xử lý",
-      bg: "warning",
+      className: "status-pill pending",
     },
     [ORDER_STATUS.CONFIRMED]: {
       text: "Đã xác nhận",
-      bg: "secondary",
+      className: "status-pill confirmed",
     },
     [ORDER_STATUS.SHIPPING]: {
       text: "Đang giao",
-      bg: "primary",
+      className: "status-pill shipping",
     },
     [ORDER_STATUS.DELIVERED]: {
       text: "Đã giao",
-      bg: "success",
+      className: "status-pill delivered",
     },
     [ORDER_STATUS.CANCELLED]: {
       text: "Đã hủy",
-      bg: "danger",
+      className: "status-pill cancelled",
     },
   };
 
   return (
-    <Badge bg={map[status]?.bg || "secondary"}>
+    <span className={map[status]?.className || "status-pill"}>
       {map[status]?.text || status}
-    </Badge>
+    </span>
   );
 }
 

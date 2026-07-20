@@ -52,16 +52,18 @@ function ProductListPage() {
   return (
     <div className="container py-5">
       <div className="row">
-        <div className="col-lg-3">
+        {/* Bộ lọc (Filter Sidebar) */}
+        <div className="col-12 col-md-4 col-lg-3">
           <ProductFilter filters={filters} setFilters={setFilters} />
         </div>
 
-        <div className="col-lg-9">
-          <h5 className="mb-4">{filteredProducts.length} sản phẩm</h5>
+        {/* Danh sách sản phẩm (Product Grid) */}
+        <div className="col-12 col-md-8 col-lg-9">
+          <h5 className="mb-4 fw-semibold">{filteredProducts.length} sản phẩm</h5>
 
           <div className="row">
             {filteredProducts.map((product) => (
-              <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
+              <div className="col-12 col-sm-6 col-lg-4 mb-4" key={product.id}>
                 <ProductCard product={product} />
               </div>
             ))}
