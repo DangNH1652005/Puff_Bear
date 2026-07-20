@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
-import { Star } from "lucide-react";
+import { Star, Package, ShoppingBag } from "lucide-react";
 import { getCategoryById } from "../../services/category/category.service";
 import { useProductDetailStore } from "../../store/product.store";
 
@@ -21,6 +21,8 @@ const ProductInfo = () => {
 
   if (!product) return null;
 
+  const isOutOfStock = product.stock <= 0;
+
   return (
     <>
       {/* Category & Collection badges */}
@@ -40,6 +42,33 @@ const ProductInfo = () => {
         <h3 className="text-danger fw-bold d-inline me-3">
           ₫{product.price.toLocaleString("vi-VN")}
         </h3>
+      </div>
+
+      {/* Stock and Sold info */}
+      <div className="d-flex align-items-center gap-4 mb-4 text-muted" style={{ fontSize: "14px" }}>
+        <div className="d-flex align-items-center gap-2">
+          <span className="bg-light p-2 rounded-circle d-flex align-items-center justify-content-center" style={{ width: "36px", height: "36px" }}>
+            <Package size={18} className="text-secondary" />
+          </span>
+          <div>
+            <div className="text-uppercase font-monospace" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>Trong kho</div>
+            <strong className={isOutOfStock ? "text-danger" : "text-dark"}>
+              {isOutOfStock ? "Hết hàng" : `${product.stock} sản phẩm`}
+            </strong>
+          </div>
+        </div>
+
+        <div className="vr" style={{ height: "30px", opacity: 0.2 }}></div>
+
+        <div className="d-flex align-items-center gap-2">
+          <span className="bg-light p-2 rounded-circle d-flex align-items-center justify-content-center" style={{ width: "36px", height: "36px" }}>
+            <ShoppingBag size={18} className="text-secondary" />
+          </span>
+          <div>
+            <div className="text-uppercase font-monospace" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>Đã bán</div>
+            <strong className="text-dark">{product.sold || 0} sản phẩm</strong>
+          </div>
+        </div>
       </div>
 
       {/* Description */}

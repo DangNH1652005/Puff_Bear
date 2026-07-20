@@ -39,8 +39,24 @@ export const placeOrder = async (
   cartItems,
 ) => {
   // 1. Validate form input
-  if (!orderForm.receiverName || !orderForm.phone || !orderForm.address) {
+  if (
+    !orderForm.receiverName?.trim() ||
+    !orderForm.phone?.trim() ||
+    !orderForm.email?.trim() ||
+    !orderForm.address?.trim() ||
+    !orderForm.city?.trim()
+  ) {
     throw new Error("Vui lòng điền đầy đủ thông tin giao hàng.");
+  }
+
+  const phoneRegex = /^(0|\+84)[35789]\d{8}$/;
+  if (!phoneRegex.test(orderForm.phone.trim())) {
+    throw new Error("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam (ví dụ: 0912345678).");
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(orderForm.email.trim())) {
+    throw new Error("Email không hợp lệ. Vui lòng nhập đúng định dạng email (ví dụ: example@gmail.com).");
   }
 
   const orderPayload = {
