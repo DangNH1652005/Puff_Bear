@@ -6,5 +6,7 @@
   "users": [],
   "cartItems": [],
   "orders": [],
-  "orderItems": []
+  "orderItems": [],
+  "favorites": [],
+  "reviews": []
 }

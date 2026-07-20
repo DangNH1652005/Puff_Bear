@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ImageWithFallback from "./ImageWithFallback";
+import { Link } from "react-router-dom";
+import { getUsers } from "../../services/user/user.service";
+import { getProducts } from "../../services/product/product.service";
+import { getAllReviews } from "../../services/review/review.service";
 
 const Hero = () => {
+
+  const [statistics, setStatistics] = useState({
+    productCount: 0,
+    customerCount: 0,
+    reviewCount: 0,
+  });
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      try {
+        const [users, products, reviews] = await Promise.all([
+          getUsers(),
+          getProducts(),
+          getAllReviews(),
+        ]);
+
+        const customerCount = users.filter(
+          (user) => user.role === "customer"
+        ).length;
+
+        setStatistics({
+          productCount: products.length,
+          customerCount,
+          reviewCount: reviews.length,
+        });
+      } catch (error) {
+        console.error("Failed to load statistics:", error);
+      }
+    };
+
+    fetchStatistics();
+  }, []);
+
   return (
     <div className="hero-section py-5">
       <Container>
@@ -22,40 +59,38 @@ const Hero = () => {
             </p>
 
             <div className="d-flex gap-3 mb-5">
-              <Button
-                size="lg"
-                className="rounded-pill px-4"
+              <Link
+                to="/products"
+                className="btn btn-lg rounded-pill px-4"
                 style={{
                   background: "linear-gradient(45deg, #ff9a9e, #fad0c4)",
                   border: "none",
+                  color: "#fff",
                 }}
               >
                 Mua Ngay
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-pill px-4"
-                style={{ borderColor: "#FFB6C1", color: "#FFB6C1" }}
-              >
-                Xem Thêm
-              </Button>
+              </Link>
             </div>
 
             <Row className="g-4">
               <Col xs={4}>
-                <div className="display-6 fw-bold">500+</div>
+                <div className="display-6 fw-bold">
+                  {statistics.productCount}+
+                </div>
                 <div className="text-muted">Sản phẩm</div>
               </Col>
 
               <Col xs={4}>
-                <div className="display-6 fw-bold">10K+</div>
+                <div className="display-6 fw-bold">
+                  {statistics.customerCount}+
+                </div>
                 <div className="text-muted">Khách hàng</div>
               </Col>
 
               <Col xs={4}>
-                <div className="display-6 fw-bold">4.9★</div>
+                <div className="display-6 fw-bold">
+                  {statistics.reviewCount}+
+                </div>
                 <div className="text-muted">Đánh giá</div>
               </Col>
             </Row>

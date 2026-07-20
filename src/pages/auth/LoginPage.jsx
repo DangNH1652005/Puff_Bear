@@ -131,6 +131,13 @@ const LoginPage = () => {
                       Đăng ký ngay
                     </Link>
                   </div>
+
+                  {/* GO TO HOME PAGE */}
+                  <div className="text-center mt-3 small">
+                    <Link to="/" className="text-secondary text-decoration-none">
+                      ← Trở về Trang chủ
+                    </Link>
+                  </div>
                 </Card.Body>
               </Card>
             </div>

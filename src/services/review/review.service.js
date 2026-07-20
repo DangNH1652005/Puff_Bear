@@ -32,3 +32,8 @@ export const getReviewByUserAndProduct = async (userId, productId, orderId) => {
   );
   return res.data;
 };
+
+export const getAllReviews = async () => {
+  const res = await instance.get("/reviews");
+  return res.data;
+};
