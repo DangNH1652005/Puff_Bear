@@ -136,7 +136,7 @@ const RegisterPage = () => {
                     </Form.Group>
                     {/* BUTTON */}
                     <Button className="w-100 py-2" variant="dark" type="submit">
-                      Đăng nhập
+                      Đăng ký
                     </Button>
                   </Form>
 
@@ -145,6 +145,13 @@ const RegisterPage = () => {
                     Đã có tài khoản?{" "}
                     <Link to="/auth/login" className="text-danger fw-semibold">
                       Đăng nhập ngay
+                    </Link>
+                  </div>
+
+                  {/* GO TO HOME PAGE */}
+                  <div className="text-center mt-3 small">
+                    <Link to="/" className="text-secondary text-decoration-none">
+                      ← Trở về Trang chủ
                     </Link>
                   </div>
                 </Card.Body>

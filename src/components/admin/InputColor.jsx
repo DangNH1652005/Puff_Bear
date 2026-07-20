@@ -1,17 +1,27 @@
 import { Button, Form } from "react-bootstrap";
 import { useColorStore } from "../../store/color.store";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import "../../styles/admin/AdminSizeColor.css";
 
 const InputColor = () => {
   const [color, setColor] = useState("");
-  const { addColor } = useColorStore();
+  const { addColor, colors } = useColorStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await addColor({
-      name: color.toLowerCase()
-    });
+    const trimmed = color.trim();
+    if (!trimmed) return;
+
+    const isDuplicate = colors.some(
+      (c) => c.name.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (isDuplicate) {
+      toast.error(`Màu "${trimmed.toLowerCase()}" đã tồn tại!`);
+      return;
+    }
+
+    await addColor({ name: trimmed.toLowerCase() });
     setColor("");
   };
   return (
