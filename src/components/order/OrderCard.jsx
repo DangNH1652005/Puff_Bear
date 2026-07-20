@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import ReviewModal from "./ReviewModal";
 import { FaStar } from "react-icons/fa";
+import { Clock, Truck, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
 import { getReviewsByOrderId } from "../../services/review/review.service";
 import "../../styles/customer/OrderCard.css";
 
@@ -66,20 +66,16 @@ function ReviewBubble({ review }) {
   );
 }
 
-function OrderCard({ order }) {
+function OrderCard({ order, onCancel }) {
   const [showDetail, setShowDetail] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
-  // localOrder mirrors order but can be updated after submit without re-fetch
   const [localOrder, setLocalOrder] = useState(order);
-  // reviews: array of review objects enriched with product info
   const [reviews, setReviews] = useState([]);
 
-  // Sync if parent refreshes the prop
   useEffect(() => {
     setLocalOrder(order);
   }, [order]);
 
-  // If already reviewed, load reviews from API to show in detail panel
   useEffect(() => {
     if (localOrder.isReviewed) {
       fetchReviews();
@@ -89,7 +85,6 @@ function OrderCard({ order }) {
   const fetchReviews = async () => {
     try {
       const data = await getReviewsByOrderId(localOrder.id);
-      // Enrich with product info from order items
       const enriched = data.map((r) => {
         const matchItem = localOrder.items?.find(
           (i) => i.productId === r.productId
@@ -102,9 +97,7 @@ function OrderCard({ order }) {
     }
   };
 
-  // Called by ReviewModal after successful POST
   const handleSubmitSuccess = (ratings) => {
-    // Build local reviews from ratings + order items for instant UI update
     const localReviews = localOrder.items.map((item) => ({
       productId: item.productId,
       rating: ratings[item.id]?.rating || 0,
@@ -122,81 +115,100 @@ function OrderCard({ order }) {
       ).toFixed(1)
       : null;
 
-  const getStatusColor = (status) => {
+  const getThemeClass = (status) => {
+    switch (status) {
+      case ORDER_STATUS.PENDING: return "theme-pending";
+      case ORDER_STATUS.SHIPPING: return "theme-shipping";
+      case ORDER_STATUS.DELIVERED: return "theme-delivered";
+      case ORDER_STATUS.CANCELLED: return "theme-cancelled";
+      default: return "";
+    }
+  };
+
+  const getHeaderIcon = (status) => {
     switch (status) {
       case ORDER_STATUS.PENDING:
-        return "warning";
+        return <div className="header-icon-box icon-pending"><Clock size={20} /></div>;
       case ORDER_STATUS.SHIPPING:
-        return "primary";
+        return <div className="header-icon-box icon-shipping"><Truck size={20} /></div>;
       case ORDER_STATUS.DELIVERED:
-        return "success";
+        return <div className="header-icon-box icon-delivered"><CheckCircle2 size={20} /></div>;
       case ORDER_STATUS.CANCELLED:
-        return "danger";
+        return <div className="header-icon-box icon-cancelled"><XCircle size={20} /></div>;
       default:
-        return "secondary";
+        return <div className="header-icon-box"><Clock size={20} /></div>;
+    }
+  };
+
+  const getPillClass = (status) => {
+    switch (status) {
+      case ORDER_STATUS.PENDING: return "pill-pending";
+      case ORDER_STATUS.SHIPPING: return "pill-shipping";
+      case ORDER_STATUS.DELIVERED: return "pill-delivered";
+      case ORDER_STATUS.CANCELLED: return "pill-cancelled";
+      default: return "bg-secondary text-white";
     }
   };
 
   const getStatusText = (status) => {
     switch (status) {
-      case ORDER_STATUS.PENDING:
-        return "Đang xử lý";
-      case ORDER_STATUS.CONFIRMED:
-        return "Đã xác nhận";
-      case ORDER_STATUS.SHIPPING:
-        return "Đang giao hàng";
-      case ORDER_STATUS.DELIVERED:
-        return "Đã giao hàng";
-      case ORDER_STATUS.CANCELLED:
-        return "Đã hủy";
-      default:
-        return status;
+      case ORDER_STATUS.PENDING: return "Đang xử lý";
+      case ORDER_STATUS.CONFIRMED: return "Đã xác nhận";
+      case ORDER_STATUS.SHIPPING: return "Đang giao";
+      case ORDER_STATUS.DELIVERED: return "Đã giao";
+      case ORDER_STATUS.CANCELLED: return "Đã hủy";
+      default: return status;
     }
   };
 
+
   return (
     <>
-      <Card className="mb-4 shadow-sm border-0 overflow-hidden">
+      <Card className={`mb-4 shadow-sm order-card-container`}>
         {/* ── Header ── */}
-        <Card.Header className="bg-white py-3">
-          <div className="d-flex justify-content-between align-items-center">
+        <Card.Header className={`order-card-header ${getThemeClass(localOrder.status)}`}>
+          <div className="d-flex align-items-center">
+            {getHeaderIcon(localOrder.status)}
             <div>
               <div className="text-muted small">Mã đơn hàng</div>
-              <h5 className="mb-0 fw-bold">{localOrder.id}</h5>
+              <h6 className="mb-0 fw-bold">{localOrder.id}</h6>
             </div>
+          </div>
 
-            <div className="text-end">
+          <div className="d-flex align-items-center gap-4 text-end">
+            <div>
               <div className="text-muted small">Ngày đặt</div>
               <div className="fw-semibold">
                 {new Date(localOrder.createdAt).toLocaleDateString("vi-VN")}
               </div>
             </div>
-
-            <Badge bg={getStatusColor(localOrder.status)}>
-              {localOrder.status}
-            </Badge>
+            <span className={`status-pill ms-2 ${getPillClass(localOrder.status)}`}>
+              {getStatusText(localOrder.status)}
+            </span>
           </div>
         </Card.Header>
 
         {/* ── Body ── */}
-        <Card.Body>
+        <Card.Body className="pt-4">
           {/* Product list */}
           {localOrder.items?.map((item) => {
-            const itemReview = reviews.find(
-              (r) => r.productId === item.productId
-            );
+            const itemReview = reviews.find((r) => r.productId === item.productId);
+            const isCancelled = localOrder.status === ORDER_STATUS.CANCELLED;
             return (
               <div
                 key={item.id}
-                className="d-flex align-items-start mb-3 pb-3 border-bottom"
+                className={`d-flex align-items-start mb-3 pb-3 border-bottom ${isCancelled ? 'opacity-50' : ''}`}
               >
-                <img
-                  src={item.product?.mainImageUrl}
-                  alt={item.product?.name}
-                  width={90}
-                  height={90}
-                  className="order-item-img"
-                />
+                <div className="order-item-img-wrapper">
+                  <div className="order-item-qty-badge">{item.quantity}</div>
+                  <div className="order-item-img-inner">
+                    <img
+                      src={item.product?.mainImageUrl}
+                      alt={item.product?.name}
+                      className="order-item-img"
+                    />
+                  </div>
+                </div>
 
                 <div className="ms-3 flex-grow-1">
                   <h5 className="mb-1">{item.product?.name}</h5>
@@ -204,13 +216,12 @@ function OrderCard({ order }) {
                   <div className="text-muted small">Màu: {item.color?.name}</div>
                   <div className="text-muted small">Số lượng: {item.quantity}</div>
 
-                  {/* Mini review badge below product */}
                   {localOrder.isReviewed && itemReview && (
                     <MiniStars rating={itemReview.rating} />
                   )}
                 </div>
 
-                <div className="fw-bold text-danger fs-5 ms-2">
+                <div className="price-text fs-5 fw-semibold ms-2" style={{ color: "#ff8fb1" }}>
                   {item.totalPrice?.toLocaleString()}đ
                 </div>
               </div>
@@ -219,51 +230,63 @@ function OrderCard({ order }) {
 
           {/* Cancelled notice */}
           {localOrder.status === ORDER_STATUS.CANCELLED && (
-            <div className="text-danger fw-semibold mb-3">
-              ❌ Đơn hàng đã bị hủy
+            <div className="text-danger fw-semibold my-4 d-flex align-items-center gap-2">
+              <XCircle size={18} /> Đơn hàng đã bị hủy
             </div>
           )}
 
           {/* Footer row: total + action buttons */}
-          <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
-            <div>
-              <div className="text-muted small">Tổng thanh toán</div>
-              <h3 className="text-danger fw-bold mb-0">
+          <div className="d-flex justify-content-between align-items-center mt-2 flex-wrap gap-2 p-3 bg-light rounded-4" style={{ backgroundColor: "#f8fafc" }}>
+            <div className="d-flex align-items-baseline gap-2">
+              <span className="text-muted">Tổng thanh toán</span>
+              <h4 className="fw-bold mb-0" style={{ color: "#ff8fb1" }}>
                 {localOrder.totalPriceCart?.toLocaleString()}đ
-              </h3>
+              </h4>
             </div>
 
             <div className="d-flex align-items-center gap-2 flex-wrap">
-              {/* Review section — only for delivered orders */}
-              {localOrder.status === ORDER_STATUS.DELIVERED && (
-                localOrder.isReviewed ? (
-                  <div className="reviewed-badge">
-                    <FaStar size={14} />
-                    Đã đánh giá ✓
-                    {avgRating && (
-                      <span className="ms-1 px-2 rounded-pill avg-rating-pill">
-                        ⭐ {avgRating}
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  <Button
-                    className="review-trigger-btn rounded-pill px-4 fw-semibold d-flex align-items-center gap-2"
-                    onClick={() => setShowReviewModal(true)}
-                  >
-                    <FaStar size={14} />
-                    Đánh giá
-                  </Button>
-                )
-              )}
-
-              <Button
-                variant="outline-secondary"
-                className="rounded-pill px-3"
+              <button
+                className="btn btn-outline-secondary rounded-pill px-3"
+                style={{ backgroundColor: "#fff" }}
                 onClick={() => setShowDetail(!showDetail)}
               >
-                {showDetail ? "▲ Thu gọn" : "▼ Chi tiết"}
-              </Button>
+                {showDetail ? "▲ Ẩn bớt" : "▼ Chi tiết"}
+              </button>
+
+              {localOrder.status === ORDER_STATUS.PENDING && (
+                <button
+                  className="btn btn-outline-danger rounded-pill px-4"
+                  onClick={() => onCancel && onCancel(localOrder.id)}
+                >
+                  Hủy đơn
+                </button>
+              )}
+
+              {localOrder.status === ORDER_STATUS.SHIPPING && (
+                <button className="btn btn-outline-primary rounded-pill px-4 d-flex align-items-center gap-2">
+                  <Truck size={16} /> Theo dõi
+                </button>
+              )}
+
+              {localOrder.status === ORDER_STATUS.DELIVERED && (
+                <>
+                  {localOrder.isReviewed ? (
+                    <div 
+                      className="btn rounded-pill px-4 fw-semibold d-flex align-items-center gap-2"
+                      style={{ background: "#fef08a", color: "#a16207", cursor: "default" }}
+                    >
+                      <FaStar size={14} color="#eab308" /> Đã đánh giá
+                    </div>
+                  ) : (
+                    <button
+                      className="btn btn-solid-yellow rounded-pill px-4 fw-semibold d-flex align-items-center gap-2"
+                      onClick={() => setShowReviewModal(true)}
+                    >
+                      <FaStar size={14} color="#eab308" /> Đánh giá
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           </div>
 
@@ -271,7 +294,6 @@ function OrderCard({ order }) {
           {showDetail && (
             <div className="mt-4 pt-4 border-top">
               <div className="row g-4">
-                {/* Shipping address */}
                 <div className="col-md-6">
                   <div className="text-muted small mb-2 fw-semibold">
                     📦 Địa chỉ nhận hàng
@@ -289,7 +311,6 @@ function OrderCard({ order }) {
                   </div>
                 </div>
 
-                {/* Review bubbles — visible when reviewed + detail open */}
                 {localOrder.isReviewed && reviews.length > 0 && (
                   <div className="col-md-6">
                     <div className="text-muted small mb-2 fw-semibold">
@@ -308,7 +329,6 @@ function OrderCard({ order }) {
         </Card.Body>
       </Card>
 
-      {/* Review Modal */}
       <ReviewModal
         show={showReviewModal}
         onHide={() => setShowReviewModal(false)}

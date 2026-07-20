@@ -46,7 +46,6 @@ body {
 /* ProductCard.css */
 
 .product-card {
-  width: 300px;
   background: #fff;
   transition: all 0.3s ease;
   cursor: pointer;

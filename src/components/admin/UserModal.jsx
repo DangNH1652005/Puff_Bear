@@ -15,16 +15,12 @@ const EMPTY_FORM = {
   address: "",
 };
 
-// Lấy class màu badge theo role
-function getRoleBadgeClass(name) {
-  if (name === role.ADMIN) return "au-role-admin";
-  if (name === role.STAFF) return "au-role-staff";
-  return "au-role-customer";
-}
+
 
 export default function UserModal({
   mode,        // "view" | "add" | "edit" | "lock" | ""
   user,        // user đang chọn (null nếu thêm mới)
+  users,       // danh sách người dùng để kiểm tra trùng lặp
   onClose,
   onSaved,     // gọi lại loadData() ở cha sau khi lưu
 }) {
@@ -67,11 +63,40 @@ export default function UserModal({
   function validate() {
     const e = {};
     if (!form.fullName.trim()) e.fullName = "Vui lòng nhập họ tên";
-    if (!form.email.trim()) e.email = "Vui lòng nhập email";
-    else if (!form.email.includes("@")) e.email = "Email không hợp lệ";
+    
+    // Kiểm tra email
+    if (!form.email.trim()) {
+      e.email = "Vui lòng nhập email";
+    } else if (!/^[^\s@]+@gmail\.com$/.test(form.email)) {
+      e.email = "Email phải có định dạng ...@gmail.com";
+    } else {
+      const isDuplicateEmail = (users || []).some(
+        (u) => u.email === form.email && u.id !== user?.id
+      );
+      if (isDuplicateEmail) {
+        e.email = "Email này đã tồn tại trong hệ thống";
+      }
+    }
+
     // Password chỉ bắt buộc khi thêm mới
-    if (mode === "add" && !form.password.trim())
+    if (mode === "add" && !form.password.trim()) {
       e.password = "Vui lòng nhập mật khẩu";
+    }
+
+    // Kiểm tra số điện thoại
+    if (!form.phone.trim()) {
+      e.phone = "Vui lòng nhập số điện thoại";
+    } else if (!/^\d{10}$/.test(form.phone)) {
+      e.phone = "Số điện thoại phải gồm đúng 10 chữ số (không chứa ký tự)";
+    } else {
+      const isDuplicatePhone = (users || []).some(
+        (u) => u.phone === form.phone && u.id !== user?.id
+      );
+      if (isDuplicatePhone) {
+        e.phone = "Số điện thoại này đã tồn tại trong hệ thống";
+      }
+    }
+
     return e;
   }
 
@@ -160,9 +185,15 @@ export default function UserModal({
         {mode === "view" && user && (
           <div className="row g-3">
             <div className="col-md-4 text-center">
-              <div className="au-view-avatar-fallback">{getInitial(user.fullName)}</div>
+              {user.avatar ? (
+                <div className="au-view-avatar">
+                  <img src={user.avatar} alt="avatar" />
+                </div>
+              ) : (
+                <div className="au-view-avatar-fallback">{getInitial(user.fullName)}</div>
+              )}
               <h6 className="fw-bold mt-3 mb-1">{user.fullName}</h6>
-              <span className={"au-badge-role " + getRoleBadgeClass(user.role)}>{user.role}</span>
+              <span className={`au-badge-role au-role-${user.role}`}>{user.role}</span>
               <div className="mt-2">
                 <span className={`au-badge-status ${isLocked ? "locked" : "active"}`}>
                   {isLocked ? "Đã khoá" : "Hoạt động"}
@@ -216,7 +247,7 @@ export default function UserModal({
               <input
                 className={`form-control au-input ${errors.email ? "is-invalid" : ""}`}
                 name="email" value={form.email} onChange={handleChange}
-                placeholder="email@puffbear.com"
+                placeholder="email@gmail.com"
                 disabled={mode === "edit"}
               />
               {errors.email && <div className="invalid-feedback">{errors.email}</div>}
@@ -233,12 +264,13 @@ export default function UserModal({
             </div>
 
             <div className="col-md-6">
-              <label className="au-label">Số điện thoại</label>
+              <label className="au-label">Số điện thoại *</label>
               <input
-                className="form-control au-input"
+                className={`form-control au-input ${errors.phone ? "is-invalid" : ""}`}
                 name="phone" value={form.phone} onChange={handleChange}
                 placeholder="0900000000"
               />
+              {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
             </div>
 
             <div className="col-md-6">

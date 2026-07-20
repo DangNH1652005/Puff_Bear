@@ -40,12 +40,13 @@ const ProductCard = ({ product }) => {
 
           {/* Favorite */}
           <button
-            className="position-absolute top-0 end-0 m-3 btn btn-light rounded-circle p-2 shadow-sm favorite-btn d-flex align-items-center justify-content-center"
+            className="position-absolute top-0 end-0 m-2 m-md-3 btn btn-light rounded-circle p-2 shadow-sm favorite-btn d-flex align-items-center justify-content-center"
             onClick={handleFavoriteClick}
             title="Yêu thích"
+            style={{ width: "32px", height: "32px" }}
           >
             <Heart
-              size={20}
+              size={16}
               fill={isFavorite ? "#e91e63" : "none"}
               color={isFavorite ? "#e91e63" : "#666"}
             />
@@ -53,7 +54,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Content */}
-        <Card.Body className="p-4">
+        <Card.Body className="p-2 p-md-3 p-lg-4 d-flex flex-column">
           {/* Category */}
           {categoryName && (
             <span
@@ -65,14 +66,14 @@ const ProductCard = ({ product }) => {
           )}
 
           {/* Title */}
-          <Card.Title className="product-title fw-semibold mb-2">
+          <Card.Title className="product-title fw-semibold mb-1 mb-md-2" style={{ fontSize: "0.95rem" }}>
             {product.name}
           </Card.Title>
 
           {/* Stock & Sold */}
           <div
-            className="d-flex justify-content-between align-items-center mb-3 text-muted"
-            style={{ fontSize: "13px" }}
+            className="d-flex flex-wrap justify-content-between align-items-center mb-2 mb-md-3 text-muted gap-1 gap-md-0"
+            style={{ fontSize: "12px" }}
           >
             <div className="d-flex align-items-center gap-1">
               <Package size={14} className="text-secondary" />
@@ -92,20 +93,21 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* Bottom */}
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex justify-content-between align-items-center mt-auto pt-2">
             {/* Price */}
-            <div className="price-text fw-semibold">
+            <div className="price-text fw-semibold" style={{ fontSize: "0.95rem" }}>
               {product.price.toLocaleString()}đ
             </div>
 
             {/* Cart */}
             <Link
               to={`/product/${product.id}`}
-              className="cart-btn rounded-circle border-0 d-flex align-items-center justify-content-center btn btn-primary"
+              className="cart-btn rounded-circle border-0 d-flex align-items-center justify-content-center btn btn-primary flex-shrink-0"
               title="Chọn biến thể và thêm vào giỏ hàng"
               onClick={(e) => e.stopPropagation()}
+              style={{ width: "32px", height: "32px" }}
             >
-              <ShoppingCart size={20} />
+              <ShoppingCart size={16} />
             </Link>
           </div>
         </Card.Body>
