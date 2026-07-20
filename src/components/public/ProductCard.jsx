@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 import { useAuthStore } from "../../store/auth.store";
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
               className="product-image"
             />
           </Link>
-          
+
           {/* Favorite */}
           <button
             className="position-absolute top-0 end-0 m-3 btn btn-light rounded-circle p-2 shadow-sm favorite-btn d-flex align-items-center justify-content-center"
@@ -59,9 +59,14 @@ const ProductCard = ({ product }) => {
             </div>
 
             {/* Cart */}
-            <Button className="cart-btn rounded-circle border-0 d-flex align-items-center justify-content-center">
+            <Link
+              to={`/product/${product.id}`}
+              className="cart-btn rounded-circle border-0 d-flex align-items-center justify-content-center btn btn-primary"
+              title="Chọn biến thể và thêm vào giỏ hàng"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ShoppingCart size={20} />
-            </Button>
+            </Link>
           </div>
         </Card.Body>
       </Card>
