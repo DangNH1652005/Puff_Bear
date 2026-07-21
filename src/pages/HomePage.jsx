@@ -7,7 +7,7 @@ export default function HomePage() {
     <div>
       <Hero />
       <FeaturesSection />
-      {/* <BestSellerSection /> */}
+      <BestSellerSection />
     </div>
   );
 }

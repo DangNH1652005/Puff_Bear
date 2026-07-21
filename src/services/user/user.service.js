@@ -7,8 +7,15 @@ export async function getUsers() {
 }
 
 export async function getUserById(id) {
-  const res = await instance.get(`/users/${id}`);
-  return res.data;
+  try {
+    const res = await instance.get(`/users/${id}`);
+    return res.data;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      return null;
+    }
+    throw error;
+  }
 }
 
 // ─── LẤY ĐƠN HÀNG CỦA USER ───────────────────────────────────────────────────

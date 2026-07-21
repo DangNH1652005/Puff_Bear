@@ -7,8 +7,6 @@ import "../../styles/admin/AdminSizeColor.css";
 const ColorManager = () => {
   const { colors, fetchColors } = useColorStore()
 
-  console.log(colors);
-
   useEffect(() => {
     fetchColors()
   }, [])

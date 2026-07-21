@@ -9,28 +9,6 @@ import "../../styles/customer/ProductReviews.css";
 
 const PAGE_SIZE = 5;
 
-// Lấy chữ viết tắt từ tên (avatar initials)
-function getInitials(name = "") {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(-2)
-    .map((w) => w[0].toUpperCase())
-    .join("");
-}
-
-// Màu gradient avatar theo tên
-const AVATAR_GRADIENTS = [
-  "linear-gradient(135deg, #fbbf24, #f87171)",
-  "linear-gradient(135deg, #a78bfa, #ec4899)",
-  "linear-gradient(135deg, #34d399, #3b82f6)",
-  "linear-gradient(135deg, #f97316, #eab308)",
-  "linear-gradient(135deg, #60a5fa, #818cf8)",
-];
-function pickGradient(name = "") {
-  const code = [...name].reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return AVATAR_GRADIENTS[code % AVATAR_GRADIENTS.length];
-}
 
 // Star row
 function StarRow({ rating, size = 14 }) {
@@ -186,10 +164,7 @@ export default function ProductReviews() {
       ) : (
         <>
           {paginated.map((review) => {
-            const displayName =
-              review.user?.fullName || "Khách hàng ẩn danh";
-            const initials = getInitials(displayName);
-            const gradient = pickGradient(displayName);
+            const displayName = review.user?.fullName || "Khách hàng ẩn danh";
             const dateStr = review.createdAt
               ? new Date(review.createdAt).toLocaleDateString("vi-VN")
               : "";
@@ -199,12 +174,12 @@ export default function ProductReviews() {
                 {/* Row 1: avatar + name + date */}
                 <div className="d-flex align-items-start gap-3">
                   {/* Avatar */}
-                  <div
-                    className="review-avatar"
-                    style={{ background: gradient }}
-                  >
-                    {initials}
-                  </div>
+                  <img
+                    src={review.user?.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                    alt={displayName}
+                    className="review-avatar rounded-circle"
+                    style={{ width: "45px", height: "45px", objectFit: "cover" }}
+                  />
 
                   <div className="flex-grow-1">
                     {/* Name + verified + date */}

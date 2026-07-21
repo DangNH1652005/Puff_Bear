@@ -8,12 +8,7 @@ import "../../styles/admin/AdminUserManager.css";
 
 const PER_PAGE = 8;
 
-// Lấy class màu badge theo role
-function getRoleBadgeClass(name) {
-  if (name === role.ADMIN) return "au-role-admin";
-  if (name === role.STAFF) return "au-role-staff";
-  return "au-role-customer";
-}
+
 
 export default function AdminUserManager() {
   // ===== STATE =====
@@ -197,14 +192,18 @@ export default function AdminUserManager() {
                       <tr key={user.id} className="au-table-row">
                         <td>
                           <div className="d-flex align-items-center gap-2">
-                            <div className="au-avatar-fallback">{getInitial(user.fullName)}</div>
+                            {user.avatar ? (
+                              <img src={user.avatar} alt="avatar" className="au-avatar" />
+                            ) : (
+                              <div className="au-avatar-fallback">{getInitial(user.fullName)}</div>
+                            )}
                             <div className="au-user-name">{user.fullName}</div>
                           </div>
                         </td>
                         <td className="au-cell-muted">{user.email}</td>
                         <td className="au-cell-muted">{user.phone || "—"}</td>
                         <td>
-                          <span className={"au-badge-role " + getRoleBadgeClass(roleName)}>
+                          <span className={`au-badge-role au-role-${roleName}`}>
                             {roleName}
                           </span>
                         </td>
@@ -267,6 +266,7 @@ export default function AdminUserManager() {
       <UserModal
         mode={modalType}
         user={selectedUser}
+        users={users}
         onClose={closeModal}
         onSaved={loadData}
       />

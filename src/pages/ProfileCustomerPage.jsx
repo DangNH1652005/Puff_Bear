@@ -34,7 +34,11 @@ export default function ProfileCustomerPage() {
       return;
     }
 
-    fetchUser(authUser.id);
+    fetchUser(authUser.id).then((fetchedUser) => {
+      if (!fetchedUser) {
+        useAuthStore.getState().logout();
+      }
+    });
   }, [authUser?.id]);
 
   if (!user) {
