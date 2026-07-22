@@ -3,10 +3,13 @@ import { Badge } from "react-bootstrap";
 import { Star, Package, ShoppingBag } from "lucide-react";
 import { getCategoryById } from "../../services/category/category.service";
 import { useProductDetailStore } from "../../store/product.store";
+import { getSizeById } from "../../services/size/size.service";
+import { getSizeSurcharge } from "../../utils/sizeSurcharge";
 
 const ProductInfo = () => {
   const { product } = useProductDetailStore();
   const [category, setCategory] = useState(null);
+  const [sizeDetail, setSizeDetail] = useState(null);
   // console.log(product);
 
   useEffect(() => {
@@ -20,9 +23,33 @@ const ProductInfo = () => {
     fetchMeta();
   }, [product]);
 
+  // Lấy thông tin size hiện tại để tính phụ thu
+  const { selection } = useProductDetailStore();
+  useEffect(() => {
+    let mounted = true;
+    const fetchSize = async () => {
+      if (!selection?.size) {
+        setSizeDetail(null);
+        return;
+      }
+      try {
+        const s = await getSizeById(selection.size);
+        if (mounted) setSizeDetail(s);
+      } catch (err) {
+        console.error("Load size failed:", err);
+      }
+    };
+    fetchSize();
+    return () => (mounted = false);
+  }, [selection?.size]);
+
   if (!product) return null;
 
   const isOutOfStock = product.stock <= 0;
+
+  const surcharge = getSizeSurcharge(sizeDetail?.name);
+  const basePrice = Number(product.price || 0);
+  const displayedPrice = basePrice + surcharge;
 
   return (
     <>
@@ -40,9 +67,21 @@ const ProductInfo = () => {
 
       {/* Price */}
       <div className="mb-4">
-        <h3 className="text-danger fw-bold d-inline me-3">
-          ₫{product.price.toLocaleString("vi-VN")}
-        </h3>
+        {surcharge > 0 ? (
+          <>
+            <small className="text-muted me-2">
+              <s>₫{basePrice.toLocaleString("vi-VN")}</s>
+            </small>
+            <h3 className="text-danger fw-bold d-inline me-3">
+              ₫{displayedPrice.toLocaleString("vi-VN")}
+            </h3>
+            <div>
+              <small className="text-muted">+ phụ thu kích thước: ₫{surcharge.toLocaleString("vi-VN")}</small>
+            </div>
+          </>
+        ) : (
+          <h3 className="text-danger fw-bold d-inline me-3">₫{displayedPrice.toLocaleString("vi-VN")}</h3>
+        )}
       </div>
 
       {/* Stock and Sold info */}
