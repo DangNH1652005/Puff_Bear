@@ -21,7 +21,9 @@ export const useProductDetailStore = create((set, get) => ({
         set({ error: "Không tìm thấy sản phẩm.", loading: false });
         return;
       }
+
       set({ product: data, loading: false });
+
     } catch (err) {
       console.error(err);
       set({ error: "Đã có lỗi xảy ra khi tải sản phẩm.", loading: false });

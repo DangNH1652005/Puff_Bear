@@ -7,6 +7,7 @@ import { useProductDetailStore } from "../../store/product.store";
 const ProductInfo = () => {
   const { product } = useProductDetailStore();
   const [category, setCategory] = useState(null);
+  // console.log(product);
 
   useEffect(() => {
     if (!product) return;
