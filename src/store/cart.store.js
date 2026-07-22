@@ -16,6 +16,7 @@ export const useCartStore = create((set, get) => ({
     set({ loading: true });
     try {
       const rawItems = await getCartItemsByUserId(userId);
+      console.log(rawItems)
       if (!(rawItems instanceof Error)) {
         const itemsWithProduct = await Promise.all(
           rawItems.map(async (item) => {
@@ -38,8 +39,9 @@ export const useCartStore = create((set, get) => ({
           }),
         );
 
+        // console.log(itemsWithProduct)
         const totalPriceCart = itemsWithProduct.reduce(
-          (sum, item) => sum + (item.totalPrice || 0) * (item.quantity || 1),
+          (sum, item) => sum + (item.totalPrice || 0),
           0,
         );
         set({ cartItems: itemsWithProduct, totalPriceCart });

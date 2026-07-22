@@ -36,19 +36,19 @@ const CartItem = ({ item }) => {
             <h5>{item.product?.name || "Sản phẩm không xác định"}</h5>
 
             <p className="text-muted mb-1">
-              <strong>Size:</strong> {item.size.name}
+              <strong>Kích cỡ:</strong> {item.size.name}
             </p>
 
             <p className="text-muted mb-1">
-              <strong>Color:</strong> {item.color.name}
+              <strong>Màu sắc:</strong> {item.color.name}
             </p>
 
             <p className="mb-1">
-              <strong>Quantity:</strong> {item.quantity}
+              <strong>Số lượng:</strong> {item.quantity}
             </p>
 
             <h6 className="text-danger">
-              {item.totalPrice?.toLocaleString("vi-VN")} VND
+              Tổng: {item.totalPrice?.toLocaleString("vi-VN")} VND
             </h6>
           </div>
         </div>
