@@ -9,6 +9,8 @@ import { productStatus } from "../../constants/productStatus.constant";
 function ProductListPage() {
   const [products, setProducts] = useState([]);
 
+  console.log(products);
+
   const [filters, setFilters] = useState({
     categoryId: "",
     sizeId: "",
@@ -31,13 +33,13 @@ function ProductListPage() {
       return false;
     }
 
-    if (filters.sizeId && !product.sizeIds.includes(filters.sizeId)) {
+    if (filters.sizeId && !product.sizeId.includes(filters.sizeId)) {
       return false;
     }
 
     if (
       filters.colorIds.length > 0 &&
-      !filters.colorIds.some((colorId) => product.colorIds.includes(colorId))
+      !filters.colorIds.some((colorId) => product.colorId.includes(colorId))
     ) {
       return false;
     }
@@ -59,7 +61,9 @@ function ProductListPage() {
 
         {/* Danh sách sản phẩm (Product Grid) */}
         <div className="col-12 col-md-8 col-lg-9">
-          <h5 className="mb-4 fw-semibold">{filteredProducts.length} sản phẩm</h5>
+          <h5 className="mb-4 fw-semibold">
+            {filteredProducts.length} sản phẩm
+          </h5>
 
           <div className="row">
             {filteredProducts.map((product) => (
