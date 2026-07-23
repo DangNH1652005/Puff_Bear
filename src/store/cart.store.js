@@ -16,7 +16,6 @@ export const useCartStore = create((set, get) => ({
     set({ loading: true });
     try {
       const rawItems = await getCartItemsByUserId(userId);
-      console.log(rawItems)
       if (!(rawItems instanceof Error)) {
         const itemsWithProduct = await Promise.all(
           rawItems.map(async (item) => {

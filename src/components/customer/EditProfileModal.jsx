@@ -22,9 +22,12 @@ export default function EditProfileModal({ user, onClose }) {
   };
 
   const handleSubmit = async () => {
-    await updateUser(user.id, formData);
-
-    onClose();
+    try {
+      await updateUser(user.id, formData);
+      onClose();
+    } catch (error) {
+      // Error toast is handled by the user store.
+    }
   };
 
   return (

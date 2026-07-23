@@ -59,6 +59,15 @@ export const placeOrder = async (
     throw new Error("Email không hợp lệ. Vui lòng nhập đúng định dạng email (ví dụ: example@gmail.com).");
   }
 
+  for(const item of cartItems) {
+    const product = await getProductById(item.productId);
+    if (product.stock < item.quantity) {
+      throw new Error(
+        `${product.name} chỉ còn ${product.stock} sản phẩm trong kho`,
+      );
+    }
+  }
+
   const orderPayload = {
     userId: user.id || null,
     receiverName: orderForm.receiverName,

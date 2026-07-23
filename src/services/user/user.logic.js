@@ -3,6 +3,7 @@ import {
   createUser,
   getUserById,
   getUserByRole,
+  getUsers,
   updateUser,
 } from "./user.service";
 
@@ -54,6 +55,19 @@ export const updateProfileLogic = async (data) => {
       throw new Error("Can not find user by id " + id);
     }
 
+    const arrUser = await getUsers();
+    if(!arrUser) {
+      throw new Error("Can not get users");
+    }
+
+    if(arrUser.some(u => u.email === payload.email && u.id !== id)) {
+      throw new Error("Email already exists");
+    }
+
+    if(arrUser.some(u => u.phone === payload.phone && u.id !== id)) {
+      throw new Error("Phone number already exists");
+    }
+
     const newData = {
       ...payload,
       updatedAt: new Date().toISOString(),
@@ -63,7 +77,8 @@ export const updateProfileLogic = async (data) => {
 
     return updatedUser;
   } catch (error) {
-    throw new Error("Error in updateProfileLogic: " + error.message);
+    const message = error?.message || "Có lỗi xảy ra khi cập nhật hồ sơ";
+    throw new Error(message);
   }
 };
 

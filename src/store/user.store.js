@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { create } from "zustand";
 import {
   getUserByIdLogic,
@@ -48,14 +49,17 @@ export const useUserStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const updatedUser = await updateProfileLogic({ id: userId, payload });
+      console.log(payload);
       set({
         user: updatedUser,
         loading: false,
       });
       return updatedUser;
     } catch (error) {
+      const message = error?.message ?? "Cập nhật hồ sơ thất bại";
+      toast.error(message);
       set({
-        error: error?.message ?? "Update failed. Please try again.",
+        error: message,
         loading: false,
       });
       throw error;
