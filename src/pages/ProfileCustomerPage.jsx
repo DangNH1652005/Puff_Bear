@@ -23,11 +23,18 @@ import { useUserStore } from "../store/user.store";
 import { useEffect, useState } from "react";
 import Loading from "../components/public/Loading";
 import EditProfileModal from "../components/customer/EditProfileModal";
+import { getOrdersByUserId } from "../services/order/order.service";
+import { getFavoritesByUserId } from "../services/favorite/favorite.service";
+import { getReviewsByUserId } from "../services/review/review.service";
 
 export default function ProfileCustomerPage() {
   const { user: authUser } = useAuthStore();
   const { user, fetchUser } = useUserStore();
   const [showEdit, setShowEdit] = useState(false);
+  const [order, setOrder] = useState([]);
+  const [favorite, setFavorite] = useState([]);
+  const [review, setReview] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!authUser?.id) {
@@ -41,8 +48,35 @@ export default function ProfileCustomerPage() {
     });
   }, [authUser?.id]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [orders, favorites, reviews] = await Promise.all([
+          getOrdersByUserId(authUser.id),
+          getFavoritesByUserId(authUser.id),
+          getReviewsByUserId(authUser.id),
+        ])
+        setOrder(orders);
+        setFavorite(favorites);
+        setReview(reviews);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data");
+      }
+    };
+    fetchData();
+  }, []);
+
   if (!user) {
     return <Loading />;
+  }
+
+  if(error) {
+    return (
+      <Container className="py-5 text-center">
+        <p className="text-danger">{error}</p>
+      </Container>
+    );
   }
 
   return (
@@ -75,19 +109,19 @@ export default function ProfileCustomerPage() {
           <Row className="text-center stats">
             <Col>
               <ShoppingBag size={18} />
-              <h3>3</h3>
+              <h3>{order.length}</h3>
               <small>Đơn hàng</small>
             </Col>
 
             <Col>
               <Heart size={18} />
-              <h3>8</h3>
+              <h3>{favorite.length}</h3>
               <small>Yêu thích</small>
             </Col>
 
             <Col>
               <Star size={18} />
-              <h3>5</h3>
+              <h3>{review.length}</h3>
               <small>Đánh giá</small>
             </Col>
           </Row>
