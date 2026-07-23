@@ -377,12 +377,12 @@ const StaffProduct = () => {
 
                                 <div className="detail-row">
                                     <span>Size</span>
-                                    <strong>{getSizeLabels(selectedProduct.sizeIds)}</strong>
+                                    <strong>{getSizeLabels(selectedProduct.sizeId)}</strong>
                                 </div>
 
                                 <div className="detail-row">
                                     <span>Màu sắc</span>
-                                    <strong>{getColorNames(selectedProduct.colorIds)}</strong>
+                                    <strong>{getColorNames(selectedProduct.colorId)}</strong>
                                 </div>
 
                                 <div className="detail-row">

@@ -5,6 +5,7 @@ import StaffOrderTable from "../../components/order/StaffOrderTable";
 import OrderDetailDrawer from "../../components/order/OrderDetailDrawer";
 import { getOrdersForStaff } from "../../services/order/order.logic";
 import { updateOrderStatus } from "../../services/order/order.service";
+import { getProductById, updateProduct } from "../../services/product/product.service";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
@@ -75,6 +76,38 @@ function AdminOrderManagerPage() {
       }
 
       await updateOrderStatus(selectedOrder.id, updateData);
+
+      if (status === ORDER_STATUS.DELIVERED && selectedOrder.status !== ORDER_STATUS.DELIVERED) {
+        if (selectedOrder.items && selectedOrder.items.length > 0) {
+          for (const item of selectedOrder.items) {
+            try {
+              const product = await getProductById(item.productId);
+              if (product) {
+                const newStock = Math.max(0, (product.stock || 0) - item.quantity);
+                const newSold = (product.sold || 0) + item.quantity;
+                await updateProduct(product.id, { ...product, stock: newStock, sold: newSold });
+              }
+            } catch (err) {
+              console.error(`Failed to update product ${item.productId}:`, err);
+            }
+          }
+        }
+      } else if (selectedOrder.status === ORDER_STATUS.DELIVERED && status !== ORDER_STATUS.DELIVERED) {
+        if (selectedOrder.items && selectedOrder.items.length > 0) {
+          for (const item of selectedOrder.items) {
+            try {
+              const product = await getProductById(item.productId);
+              if (product) {
+                const newStock = (product.stock || 0) + item.quantity;
+                const newSold = Math.max(0, (product.sold || 0) - item.quantity);
+                await updateProduct(product.id, { ...product, stock: newStock, sold: newSold });
+              }
+            } catch (err) {
+              console.error(`Failed to revert product ${item.productId}:`, err);
+            }
+          }
+        }
+      }
 
       // Update local state
       setAllOrders(
