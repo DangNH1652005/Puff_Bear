@@ -48,7 +48,7 @@ function ProductFilter({ filters, setFilters }) {
       categoryId: "",
       sizeId: "",
       colorIds: [],
-      maxPrice: 1000000,
+      maxPrice: 500000,
     });
   };
 
