@@ -8,6 +8,7 @@ import { updateOrderStatus } from "../../services/order/order.service";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import toast from "react-hot-toast";
 import "../../styles/staff/StaffDashBoardPage.css";
+import "../../styles/staff/StaffOrder.css";
 
 function AdminOrderManagerPage() {
   const [allOrders, setAllOrders] = useState([]);
@@ -108,19 +109,18 @@ function AdminOrderManagerPage() {
   }
 
   return (
-    <div>
+    <div className="staff-order-manager">
       {/* Header with Search */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Quản lý đơn hàng</h2>
-        <InputGroup style={{ width: "300px" }}>
-          <InputGroup.Text className="bg-white border-end-0">
+        <InputGroup style={{ width: "300px" }} className="staff-search-input">
+          <InputGroup.Text>
             <Search size={18} className="text-muted" />
           </InputGroup.Text>
           <Form.Control
             placeholder="Tìm mã đơn, tên, email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border-start-0"
           />
         </InputGroup>
       </div>
@@ -133,6 +133,14 @@ function AdminOrderManagerPage() {
             <h4>{stats.PENDING}</h4>
           </div>
           <div className="stat-icon green">🛒</div>
+        </div>
+
+        <div className="staff-stat-card">
+          <div>
+            <p>Đã xác nhận đơn hàng</p>
+            <h4>{stats.CONFIRMED}</h4>
+          </div>
+          <div className="stat-icon blue">✅</div>
         </div>
 
         <div className="staff-stat-card">
@@ -162,61 +170,58 @@ function AdminOrderManagerPage() {
 
       {/* Filter Tabs */}
       <div className="mb-4 d-flex gap-2 flex-wrap">
-        <Button
-          variant={filterStatus === "ALL" ? "primary" : "outline-primary"}
-          size="sm"
+        <button
+          className={`staff-filter-btn ${filterStatus === "ALL" ? "active" : ""}`}
           onClick={() => setFilterStatus("ALL")}
         >
           Tất cả ({stats.total})
-        </Button>
-        <Button
-          variant={filterStatus === ORDER_STATUS.PENDING ? "warning" : "outline-warning"}
-          size="sm"
+        </button>
+
+        <button
+          className={`staff-filter-btn ${filterStatus === ORDER_STATUS.PENDING ? "active" : ""}`}
           onClick={() => setFilterStatus(ORDER_STATUS.PENDING)}
         >
           Đang xử lý ({stats.PENDING})
-        </Button>
-        <Button
-          variant={filterStatus === ORDER_STATUS.CONFIRMED ? "secondary" : "outline-secondary"}
-          size="sm"
+        </button>
+
+        <button
+          className={`staff-filter-btn ${filterStatus === ORDER_STATUS.CONFIRMED ? "active" : ""}`}
           onClick={() => setFilterStatus(ORDER_STATUS.CONFIRMED)}
         >
           Đã xác nhận ({stats.CONFIRMED})
-        </Button>
-        <Button
-          variant={filterStatus === ORDER_STATUS.SHIPPING ? "info" : "outline-info"}
-          size="sm"
+        </button>
+
+        <button
+          className={`staff-filter-btn ${filterStatus === ORDER_STATUS.SHIPPING ? "active" : ""}`}
           onClick={() => setFilterStatus(ORDER_STATUS.SHIPPING)}
         >
           Đang giao ({stats.SHIPPING})
-        </Button>
-        <Button
-          variant={filterStatus === ORDER_STATUS.DELIVERED ? "success" : "outline-success"}
-          size="sm"
+        </button>
+
+        <button
+          className={`staff-filter-btn ${filterStatus === ORDER_STATUS.DELIVERED ? "active" : ""}`}
           onClick={() => setFilterStatus(ORDER_STATUS.DELIVERED)}
         >
           Đã giao ({stats.DELIVERED})
-        </Button>
-        <Button
-          variant={filterStatus === ORDER_STATUS.CANCELLED ? "danger" : "outline-danger"}
-          size="sm"
+        </button>
+
+        <button
+          className={`staff-filter-btn ${filterStatus === ORDER_STATUS.CANCELLED ? "active" : ""}`}
           onClick={() => setFilterStatus(ORDER_STATUS.CANCELLED)}
         >
           Đã hủy ({stats.CANCELLED})
-        </Button>
+        </button>
       </div>
 
       {/* Orders Table */}
-      <div className="card border-0 shadow-sm">
-        <div className="card-body">
-          {orders.length === 0 ? (
-            <div className="text-center py-5 text-muted">
-              Không có đơn hàng nào
-            </div>
-          ) : (
-            <StaffOrderTable orders={orders} onView={handleViewOrder} />
-          )}
-        </div>
+      <div className="staff-table-card">
+        {orders.length === 0 ? (
+          <div className="text-center py-5 text-muted">
+            Không có đơn hàng nào
+          </div>
+        ) : (
+          <StaffOrderTable orders={orders} onView={handleViewOrder} />
+        )}
       </div>
 
       {/* Order Detail Drawer */}
