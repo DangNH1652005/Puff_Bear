@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getCartItemsByUserId } from "../services/cart/cart.service";
+import { deleteCartItemById, getCartItemsByUserId } from "../services/cart/cart.service";
 import { getProductById } from "../services/product/product.service";
 import { getColorById } from "../services/color/color.service"
 import { getSizeById } from "../services/size/size.service";
@@ -16,6 +16,7 @@ export const useCartStore = create((set, get) => ({
     set({ loading: true });
     try {
       const rawItems = await getCartItemsByUserId(userId);
+      console.log(rawItems)
       if (!(rawItems instanceof Error)) {
         const itemsWithProduct = await Promise.all(
           rawItems.map(async (item) => {
@@ -38,8 +39,9 @@ export const useCartStore = create((set, get) => ({
           }),
         );
 
+        // console.log(itemsWithProduct)
         const totalPriceCart = itemsWithProduct.reduce(
-          (sum, item) => sum + (item.totalPrice || 0) * (item.quantity || 1),
+          (sum, item) => sum + (item.totalPrice || 0),
           0,
         );
         set({ cartItems: itemsWithProduct, totalPriceCart });
@@ -51,5 +53,33 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
-  clearCart: () => set({ cartItems: [] }),
+  deleteCartItem: async (cartItemId) => {
+    try {
+      const result = await deleteCartItemById(cartItemId);
+
+      if (result instanceof Error) {
+        return result;
+      }
+
+      const newCartItems = get().cartItems.filter(
+        (item) => item.id !== cartItemId
+      );
+
+      const totalPriceCart = newCartItems.reduce(
+        (sum, item) => sum + (item.totalPrice || 0) * (item.quantity || 1),
+        0
+      );
+
+      set({
+        cartItems: newCartItems,
+        totalPriceCart,
+      });
+
+      return result;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  clearCart: () => set({ cartItems: [], totalPriceCart: 0 }),
 }));

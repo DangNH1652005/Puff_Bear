@@ -72,7 +72,7 @@ export const getUserByIdLogic = async (userId) => {
     const user = await getUserById(userId);
 
     if (!user) {
-      throw new Error("Can not find user");
+      return null;
     }
     return user;
   } catch (error) {

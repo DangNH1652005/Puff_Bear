@@ -1,82 +1,80 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Minus, Plus } from "lucide-react";
+
 import { getAllSizes } from "../../services/size/size.service";
 import { getAllColors } from "../../services/color/color.service";
-import { getProductSizes } from "../../services/size/size.logic";
 import { useProductDetailStore } from "../../store/product.store";
 
 const ProductOptions = () => {
   const { product, selection, setSelection } = useProductDetailStore();
+
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
 
-  // Fetch sizes & colors khi product thay đổi
+  // Lấy danh sách size và color của sản phẩm
   useEffect(() => {
     if (!product) return;
+
     const fetchOptions = async () => {
-      const [allSizes, allColors] = await Promise.all([
-        getAllSizes(),
-        getAllColors(),
-      ]);
+      try {
+        const [allSizes, allColors] = await Promise.all([
+          getAllSizes(),
+          getAllColors(),
+        ]);
 
-      const filteredSizes = getProductSizes(product, allSizes);
-      const filteredColors = allColors.filter((c) =>
-        product.colorIds?.includes(c.id),
-      );
+        setSizes(
+          allSizes.filter((size) => product.sizeId?.includes(size.id))
+        );
 
-      setSizes(filteredSizes);
-      setColors(filteredColors);
-
-      const defaultSize = filteredSizes[0]?.id ?? null;
-      const defaultColor = filteredColors[0]?.id ?? null;
-
-      // Update store with defaults if not set yet
-      if (!selection.size && !selection.color) {
-        setSelection({ size: defaultSize, color: defaultColor, quantity: 1 });
+        setColors(
+          allColors.filter((color) => product.colorId?.includes(color.id))
+        );
+      } catch (err) {
+        console.error("Load product options failed:", err);
       }
     };
+
     fetchOptions();
-  }, [product, setSelection, selection.size, selection.color]);
+  }, [product]);
+
+  // Chọn mặc định
+  useEffect(() => {
+    if (!sizes.length && !colors.length) return;
+
+    setSelection({
+      size: selection.size ?? sizes[0]?.id ?? null,
+      color: selection.color ?? colors[0]?.id ?? null,
+      quantity: selection.quantity ?? 1,
+    });
+  }, [sizes, colors]);
 
   if (!product) return null;
 
   const { size: selectedSize, color: selectedColor, quantity } = selection;
 
-  const handleSizeChange = (sizeId) => {
-    setSelection({ size: sizeId });
-  };
-
-  const handleColorChange = (colorId) => {
-    setSelection({ color: colorId });
-  };
-
-  const handleQuantityChange = (updater) => {
-    const next = typeof updater === "function" ? updater(quantity) : updater;
-    setSelection({ quantity: next });
-  };
-
   return (
     <>
-      {/* Size selector */}
+      {/* Size */}
       {sizes.length > 0 && (
         <div className="mb-4">
           <h6 className="fw-semibold mb-2">
             Kích thước:{" "}
             <span className="text-danger">
-              {" "}
               {sizes.find((s) => s.id === selectedSize)?.name}
             </span>
           </h6>
+
           <div className="d-flex flex-wrap gap-2">
             {sizes.map((size) => (
               <Button
                 key={size.id}
                 variant={
-                  selectedSize === size.id ? "danger" : "outline-secondary"
+                  selectedSize === size.id
+                    ? "danger"
+                    : "outline-secondary"
                 }
-                className="px-3"
-                onClick={() => handleSizeChange(size.id)}
+                onClick={() => setSelection({ size: size.id })}
               >
                 {size.name}
               </Button>
@@ -85,24 +83,26 @@ const ProductOptions = () => {
         </div>
       )}
 
-      {/* Color selector */}
+      {/* Color */}
       {colors.length > 0 && (
         <div className="mb-4">
           <h6 className="fw-semibold mb-2">
             Màu sắc:{" "}
             <span className="text-danger">
-              {colors.find((c) => c.id === selectedColor)?.name ?? "—"}
+              {colors.find((c) => c.id === selectedColor)?.name}
             </span>
           </h6>
+
           <div className="d-flex flex-wrap gap-2">
             {colors.map((color) => (
               <Button
                 key={color.id}
                 variant={
-                  selectedColor === color.id ? "danger" : "outline-secondary"
+                  selectedColor === color.id
+                    ? "danger"
+                    : "outline-secondary"
                 }
-                className="px-3"
-                onClick={() => handleColorChange(color.id)}
+                onClick={() => setSelection({ color: color.id })}
               >
                 {color.name}
               </Button>
@@ -114,24 +114,33 @@ const ProductOptions = () => {
       {/* Quantity */}
       <div className="mb-4">
         <h6 className="fw-semibold mb-2">Số lượng</h6>
+
         <div className="d-flex align-items-center">
           <Button
             variant="outline-secondary"
             onClick={() =>
-              handleQuantityChange((prev) => (prev > 1 ? prev - 1 : 1))
+              setSelection({
+                quantity: Math.max(1, quantity - 1),
+              })
             }
           >
             <Minus size={16} />
           </Button>
+
           <div
             className="px-4 fw-bold text-center"
-            style={{ minWidth: "48px" }}
+            style={{ minWidth: 48 }}
           >
             {quantity}
           </div>
+
           <Button
             variant="outline-secondary"
-            onClick={() => handleQuantityChange((prev) => prev + 1)}
+            onClick={() =>
+              setSelection({
+                quantity: quantity + 1,
+              })
+            }
           >
             <Plus size={16} />
           </Button>

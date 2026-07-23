@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { createUser, updateUser, getUserOrders } from "../../services/user/user.service";
+import { createUser, updateUser, getUserOrders, deleteUser } from "../../services/user/user.service";
 import { role } from "../../constants/role.constant";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import { formatMoney, formatDate, getInitial } from "../../utils/format";
@@ -13,18 +13,15 @@ const EMPTY_FORM = {
   password: "",
   phone: "",
   address: "",
+  role: "staff",
 };
 
-// Lấy class màu badge theo role
-function getRoleBadgeClass(name) {
-  if (name === role.ADMIN) return "au-role-admin";
-  if (name === role.STAFF) return "au-role-staff";
-  return "au-role-customer";
-}
+
 
 export default function UserModal({
   mode,        // "view" | "add" | "edit" | "lock" | ""
   user,        // user đang chọn (null nếu thêm mới)
+  users,       // danh sách người dùng để kiểm tra trùng lặp
   onClose,
   onSaved,     // gọi lại loadData() ở cha sau khi lưu
 }) {
@@ -42,6 +39,7 @@ export default function UserModal({
         password: user.password || "",
         phone: user.phone || "",
         address: user.address || "",
+        role: user.role || "customer",
       });
     } else if (mode === "add") {
       setForm(EMPTY_FORM);
@@ -67,11 +65,40 @@ export default function UserModal({
   function validate() {
     const e = {};
     if (!form.fullName.trim()) e.fullName = "Vui lòng nhập họ tên";
-    if (!form.email.trim()) e.email = "Vui lòng nhập email";
-    else if (!form.email.includes("@")) e.email = "Email không hợp lệ";
+    
+    // Kiểm tra email
+    if (!form.email.trim()) {
+      e.email = "Vui lòng nhập email";
+    } else if (!/^[^\s@]+@gmail\.com$/.test(form.email)) {
+      e.email = "Email phải có định dạng ...@gmail.com";
+    } else {
+      const isDuplicateEmail = (users || []).some(
+        (u) => u.email === form.email && u.id !== user?.id
+      );
+      if (isDuplicateEmail) {
+        e.email = "Email này đã tồn tại trong hệ thống";
+      }
+    }
+
     // Password chỉ bắt buộc khi thêm mới
-    if (mode === "add" && !form.password.trim())
+    if (mode === "add" && !form.password.trim()) {
       e.password = "Vui lòng nhập mật khẩu";
+    }
+
+    // Kiểm tra số điện thoại
+    if (!form.phone.trim()) {
+      e.phone = "Vui lòng nhập số điện thoại";
+    } else if (!/^\d{10}$/.test(form.phone)) {
+      e.phone = "Số điện thoại phải gồm đúng 10 chữ số (không chứa ký tự)";
+    } else {
+      const isDuplicatePhone = (users || []).some(
+        (u) => u.phone === form.phone && u.id !== user?.id
+      );
+      if (isDuplicatePhone) {
+        e.phone = "Số điện thoại này đã tồn tại trong hệ thống";
+      }
+    }
+
     return e;
   }
 
@@ -88,7 +115,6 @@ export default function UserModal({
         // Thêm staff mới
         await createUser({
           ...form,
-          role: role.STAFF,
           avatar: "/profile.png",
           status: "active",
           createdAt: new Date().toISOString(),
@@ -130,6 +156,20 @@ export default function UserModal({
     setSaving(false);
   }
 
+  // Xoá tài khoản
+  async function handleDelete() {
+    setSaving(true);
+    try {
+      await deleteUser(user.id);
+      toast.success("Đã xoá tài khoản thành công!");
+      await onSaved();
+      onClose();
+    } catch {
+      toast.error("Lỗi server hoặc tài khoản đang có dữ liệu liên kết!");
+    }
+    setSaving(false);
+  }
+
   // Tổng chi tiêu (chỉ tính đơn đã giao)
   let totalSpent = 0;
   orders.forEach((o) => {
@@ -152,6 +192,7 @@ export default function UserModal({
           {mode === "lock" && (isLocked
             ? <><i className="bi bi-unlock me-2"></i>Mở khoá tài khoản</>
             : <><i className="bi bi-lock me-2"></i>Khoá tài khoản</>)}
+          {mode === "delete" && <><i className="bi bi-trash me-2"></i>Xoá tài khoản</>}
         </Modal.Title>
       </Modal.Header>
 
@@ -160,9 +201,15 @@ export default function UserModal({
         {mode === "view" && user && (
           <div className="row g-3">
             <div className="col-md-4 text-center">
-              <div className="au-view-avatar-fallback">{getInitial(user.fullName)}</div>
+              {user.avatar ? (
+                <div className="au-view-avatar">
+                  <img src={user.avatar} alt="avatar" />
+                </div>
+              ) : (
+                <div className="au-view-avatar-fallback">{getInitial(user.fullName)}</div>
+              )}
               <h6 className="fw-bold mt-3 mb-1">{user.fullName}</h6>
-              <span className={"au-badge-role " + getRoleBadgeClass(user.role)}>{user.role}</span>
+              <span className={`au-badge-role au-role-${user.role}`}>{user.role}</span>
               <div className="mt-2">
                 <span className={`au-badge-status ${isLocked ? "locked" : "active"}`}>
                   {isLocked ? "Đã khoá" : "Hoạt động"}
@@ -216,7 +263,7 @@ export default function UserModal({
               <input
                 className={`form-control au-input ${errors.email ? "is-invalid" : ""}`}
                 name="email" value={form.email} onChange={handleChange}
-                placeholder="email@puffbear.com"
+                placeholder="email@gmail.com"
                 disabled={mode === "edit"}
               />
               {errors.email && <div className="invalid-feedback">{errors.email}</div>}
@@ -233,15 +280,28 @@ export default function UserModal({
             </div>
 
             <div className="col-md-6">
-              <label className="au-label">Số điện thoại</label>
+              <label className="au-label">Số điện thoại *</label>
               <input
-                className="form-control au-input"
+                className={`form-control au-input ${errors.phone ? "is-invalid" : ""}`}
                 name="phone" value={form.phone} onChange={handleChange}
                 placeholder="0900000000"
               />
+              {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
             </div>
 
             <div className="col-md-6">
+              <label className="au-label">Vai trò *</label>
+              <select
+                className="form-select au-input"
+                name="role" value={form.role} onChange={handleChange}
+              >
+                <option value={role.STAFF}>Staff</option>
+                <option value={role.ADMIN}>Admin</option>
+                {mode === "edit" && <option value={role.CUSTOMER}>Customer</option>}
+              </select>
+            </div>
+
+            <div className="col-12">
               <label className="au-label">Địa chỉ</label>
               <input
                 className="form-control au-input"
@@ -249,15 +309,6 @@ export default function UserModal({
                 placeholder="Hà Nội"
               />
             </div>
-
-            {mode === "add" && (
-              <div className="col-12">
-                <p className="text-muted mb-0" style={{ fontSize: 12 }}>
-                  <i className="bi bi-info-circle me-1"></i>
-                  Tài khoản này sẽ được tạo với vai trò <strong>Staff</strong>.
-                </p>
-              </div>
-            )}
           </div>
         )}
 
@@ -273,6 +324,20 @@ export default function UserModal({
               {isLocked
                 ? "sẽ đăng nhập lại được bình thường."
                 : "sẽ không thể đăng nhập cho đến khi được mở khoá."}
+            </p>
+          </div>
+        )}
+
+        {/* XOÁ TÀI KHOẢN */}
+        {mode === "delete" && user && (
+          <div className="text-center py-3">
+            <div className="au-lock-icon mb-3" style={{ color: "#dc3545", backgroundColor: "#f8d7da" }}>
+              <i className="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            <h6>Bạn có chắc chắn muốn xoá tài khoản này?</h6>
+            <p className="text-danger mb-0">
+              <strong>{user.fullName}</strong>{" "}
+              sẽ bị xoá vĩnh viễn khỏi hệ thống. Hành động này không thể hoàn tác!
             </p>
           </div>
         )}
@@ -296,6 +361,15 @@ export default function UserModal({
               ? <span className="spinner-border spinner-border-sm me-1"></span>
               : <i className={`bi ${isLocked ? "bi-unlock" : "bi-lock"} me-1`}></i>}
             {isLocked ? "Mở khoá" : "Khoá tài khoản"}
+          </button>
+        )}
+
+        {mode === "delete" && (
+          <button className="btn btn-danger au-btn-save" onClick={handleDelete} disabled={saving} style={{ backgroundColor: "#dc3545", borderColor: "#dc3545" }}>
+            {saving
+              ? <span className="spinner-border spinner-border-sm me-1"></span>
+              : <i className="bi bi-trash me-1"></i>}
+            Xác nhận xoá
           </button>
         )}
       </Modal.Footer>

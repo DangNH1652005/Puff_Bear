@@ -5,6 +5,7 @@ import { getProductById } from "../../services/product/product.service";
 import OrderCard from "../../components/order/OrderCard";
 import { getSizeById } from "../../services/size/size.service";
 import { getColorById } from "../../services/color/color.service";
+import { Search } from "lucide-react";
 
 const fetchProductSafe = async (productId) => {
   try {
@@ -50,6 +51,8 @@ const enrichOrderItems = async (orderItems) => {
 function OrderHistoryPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -98,6 +101,29 @@ function OrderHistoryPage() {
     }
   };
 
+  const getStatusCount = (status) => {
+    if (status === "ALL") return orders.length;
+    return orders.filter(o => o.status === status).length;
+  };
+
+  const filteredOrders = orders.filter((order) => {
+    const matchesSearch =
+      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.items?.some((item) =>
+        item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    const matchesStatus = statusFilter === "ALL" || order.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const TABS = [
+    { label: "Tất cả", value: "ALL" },
+    { label: "Đang xử lý", value: ORDER_STATUS.PENDING },
+    { label: "Đang giao", value: ORDER_STATUS.SHIPPING },
+    { label: "Đã giao", value: ORDER_STATUS.DELIVERED },
+    { label: "Đã hủy", value: ORDER_STATUS.CANCELLED },
+  ];
+
   if (loading) {
     return (
       <div className="container py-5 text-center">
@@ -108,23 +134,62 @@ function OrderHistoryPage() {
 
   return (
     <div className="container py-5">
+      <div className="mb-4 d-flex flex-wrap align-items-center gap-3 bg-white p-3 rounded-pill shadow-sm" style={{ border: "1px solid #ffe9e6" }}>
+        <div className="position-relative flex-grow-1" style={{ maxWidth: "350px" }}>
+          <Search size={18} className="position-absolute text-muted" style={{ top: "50%", left: "16px", transform: "translateY(-50%)" }} />
+          <input 
+            type="text" 
+            className="form-control rounded-pill border-0 ps-5" 
+            style={{ backgroundColor: "#f8f9fa", fontSize: "0.95rem" }}
+            placeholder="Tìm theo mã đơn hoặc tên sản phẩm..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-      <div className="mb-4">
-        <h1 className="fw-bold">
-          Lịch sử đơn hàng
-        </h1>
-
-        <p className="text-muted">
-          Theo dõi tất cả đơn hàng của bạn
-        </p>
+        <div className="d-flex flex-wrap gap-2 ms-auto">
+          {TABS.map((tab) => {
+            const count = getStatusCount(tab.value);
+            const isActive = statusFilter === tab.value;
+            return (
+              <button
+                key={tab.value}
+                className={`btn rounded-pill px-4 py-2 d-flex align-items-center gap-2 fw-semibold border`}
+                style={{
+                  backgroundColor: isActive ? "#ffb6c1" : "#fff",
+                  borderColor: isActive ? "#ffb6c1" : "#eaeaea",
+                  color: isActive ? "#fff" : "#6c757d",
+                  fontSize: "0.9rem",
+                  transition: "all 0.2s ease"
+                }}
+                onClick={() => setStatusFilter(tab.value)}
+              >
+                {tab.label}
+                {tab.value !== "ALL" && (
+                  <span
+                    className="badge rounded-circle d-flex align-items-center justify-content-center"
+                    style={{
+                      width: "20px", height: "20px",
+                      backgroundColor: isActive ? "#fff" : "#f8f9fa",
+                      color: isActive ? "#ffb6c1" : "#6c757d",
+                      fontSize: "0.75rem", padding: 0
+                    }}
+                  >
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {orders.length === 0 ? (
-        <div className="alert alert-info">
-          Bạn chưa có đơn hàng nào.
+      {filteredOrders.length === 0 ? (
+        <div className="text-center py-5">
+          <h4 className="text-muted">Không tìm thấy đơn hàng nào phù hợp 🛒</h4>
         </div>
       ) : (
-        orders.map((order) => (
+        filteredOrders.map((order) => (
           <OrderCard
             key={order.id}
             order={order}

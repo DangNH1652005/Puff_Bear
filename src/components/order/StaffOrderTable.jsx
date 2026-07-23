@@ -8,8 +8,8 @@ function StaffOrderTable({
   onView,
 }) {
   return (
-    <div style={styles.tableWrapper}>
-      <Table hover responsive  className="text-center align-middle" style={styles.table}>
+    <div className="table-responsive">
+      <Table className="staff-table align-middle text-start">
         <thead>
           <tr>
             <th>Mã đơn</th>
@@ -75,15 +75,14 @@ function StaffOrderTable({
               </td>
 
               <td>
-                <Button
-                  size="sm"
-                  variant="light"
+                <button
+                  className="staff-table-btn"
                   onClick={() =>
                     onView(order)
                   }
                 >
                   Xem
-                </Button>
+                </button>
               </td>
             </tr>
           ))}
@@ -92,17 +91,4 @@ function StaffOrderTable({
     </div>
   );
 }
-
-const styles = {
-  tableWrapper: {
-    marginTop: "16px",
-    overflowX: "auto",
-  },
-  table: {
-    marginBottom: 0,
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-};
-
 export default StaffOrderTable;

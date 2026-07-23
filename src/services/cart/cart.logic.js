@@ -1,5 +1,7 @@
 import { calculateTotalPrice } from "../../utils/calculate";
 import { createCartItem } from "./cart.service";
+import { getSizeById } from "../size/size.service";
+import { getSizeSurcharge } from "../../utils/sizeSurcharge";
 
 export const addCartItemLogic = async ({ product, selection, user }) => {
   try {
@@ -22,8 +24,17 @@ export const addCartItemLogic = async ({ product, selection, user }) => {
       return { success: false, message: "Vui lòng chọn kích thước và màu sắc" };
     }
 
-    // Tính tổng tiền dựa trên giá sản phẩm và số lượng
-    const totalPrice = calculateTotalPrice(product.price, selection.quantity);
+    // Tính phụ thu theo size (nếu có) rồi tính tổng tiền
+    let surcharge = 0;
+    try {
+      const size = await getSizeById(selection.size);
+      surcharge = getSizeSurcharge(size?.name);
+    } catch (err) {
+      console.error("Failed to load size for surcharge:", err);
+    }
+
+    const unitPrice = Number(product.price || 0) + surcharge;
+    const totalPrice = calculateTotalPrice(unitPrice, selection.quantity);
 
     const newCartItem = {
       userId: user.id,

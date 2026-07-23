@@ -53,6 +53,7 @@ export async function getProductStats() {
   return {
     total: products.length,
     active: products.filter((p) => p.status === "active").length,
+    inactive: products.filter((p) => p.status === "inactive").length,
     lowStock: products.filter((p) => p.stock < 15).length,
     revenue: products.reduce((s, p) => s + p.price * p.sold, 0),
   };

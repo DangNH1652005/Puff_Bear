@@ -4,18 +4,16 @@ import { getUsers, getUserStats } from "../../services/user/user.service";
 import { role } from "../../constants/role.constant";
 import { formatDate, getInitial } from "../../utils/format";
 import UserModal from "../../components/admin/UserModal";
+import { useAuthStore } from "../../store/auth.store";
 import "../../styles/admin/AdminUserManager.css";
 
 const PER_PAGE = 8;
 
-// Lấy class màu badge theo role
-function getRoleBadgeClass(name) {
-  if (name === role.ADMIN) return "au-role-admin";
-  if (name === role.STAFF) return "au-role-staff";
-  return "au-role-customer";
-}
+
 
 export default function AdminUserManager() {
+  const currentUser = useAuthStore((state) => state.user);
+
   // ===== STATE =====
   const [users, setUsers]     = useState([]);
   const [stats, setStats]     = useState({});
@@ -53,6 +51,7 @@ export default function AdminUserManager() {
   function openAdd()      { setSelectedUser(null); setModalType("add"); }
   function openEdit(user) { setSelectedUser(user); setModalType("edit"); }
   function openLock(user) { setSelectedUser(user); setModalType("lock"); }
+  function openDelete(user){ setSelectedUser(user); setModalType("delete"); }
   function closeModal()   { setModalType(""); }
 
   // Helper
@@ -192,19 +191,24 @@ export default function AdminUserManager() {
                     const isLocked = user.status === "inactive";
                     // Admin không cho khoá / sửa chính admin khác
                     const isAdmin = roleName === role.ADMIN;
+                    const isMe = user.id === currentUser?.id;
 
                     return (
                       <tr key={user.id} className="au-table-row">
                         <td>
                           <div className="d-flex align-items-center gap-2">
-                            <div className="au-avatar-fallback">{getInitial(user.fullName)}</div>
+                            {user.avatar ? (
+                              <img src={user.avatar} alt="avatar" className="au-avatar" />
+                            ) : (
+                              <div className="au-avatar-fallback">{getInitial(user.fullName)}</div>
+                            )}
                             <div className="au-user-name">{user.fullName}</div>
                           </div>
                         </td>
                         <td className="au-cell-muted">{user.email}</td>
                         <td className="au-cell-muted">{user.phone || "—"}</td>
                         <td>
-                          <span className={"au-badge-role " + getRoleBadgeClass(roleName)}>
+                          <span className={`au-badge-role au-role-${roleName}`}>
                             {roleName}
                           </span>
                         </td>
@@ -237,6 +241,14 @@ export default function AdminUserManager() {
                                 </button>
                               </>
                             )}
+
+                            {/* Xoá: áp dụng cho tất cả, trừ chính mình */}
+                            {!isMe && (
+                              <button className="au-action-btn delete" title="Xoá vĩnh viễn"
+                                onClick={() => openDelete(user)} style={{ color: '#dc3545', backgroundColor: '#f8d7da', borderColor: '#f5c2c7' }}>
+                                <i className="bi bi-trash"></i>
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -267,6 +279,7 @@ export default function AdminUserManager() {
       <UserModal
         mode={modalType}
         user={selectedUser}
+        users={users}
         onClose={closeModal}
         onSaved={loadData}
       />

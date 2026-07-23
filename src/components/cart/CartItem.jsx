@@ -1,9 +1,27 @@
-import { Card, Image } from "react-bootstrap";
+import { Button, Card, Image } from "react-bootstrap";
+import { useCartStore } from "../../store/cart.store";
+import { Trash } from "lucide-react";
 
 const CartItem = ({ item }) => {
+
+  const { deleteCartItem } = useCartStore();
+
+  const handleDelete = async () => {
+    await deleteCartItem(item.id);
+  }
+
   return (
     <Card className="shadow-sm border-0 rounded-4">
-      <Card.Body>
+      <Card.Body className="position-relative">
+        <Button
+          variant="outline-danger"
+          size="sm"
+          className="position-absolute top-0 end-0 m-3"
+          onClick={handleDelete}
+        >
+          <Trash size={16} />
+        </Button>
+
         <div className="d-flex gap-3">
           <Image
             src={item.product?.mainImageUrl || item.product?.imageUrl?.[0]}
@@ -18,19 +36,19 @@ const CartItem = ({ item }) => {
             <h5>{item.product?.name || "Sản phẩm không xác định"}</h5>
 
             <p className="text-muted mb-1">
-              <strong>Size:</strong> {item.size.name}
+              <strong>Kích cỡ:</strong> {item.size.name}
             </p>
 
             <p className="text-muted mb-1">
-              <strong>Color:</strong> {item.color.name}
+              <strong>Màu sắc:</strong> {item.color.name}
             </p>
 
             <p className="mb-1">
-              <strong>Quantity:</strong> {item.quantity}
+              <strong>Số lượng:</strong> {item.quantity}
             </p>
 
             <h6 className="text-danger">
-              {item.totalPrice?.toLocaleString("vi-VN")} VND
+              Tổng: {item.totalPrice?.toLocaleString("vi-VN")} VND
             </h6>
           </div>
         </div>

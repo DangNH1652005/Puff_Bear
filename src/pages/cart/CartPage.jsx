@@ -25,6 +25,8 @@ const CartPage = () => {
     return <Navigate to="/auth/login" replace />;
   }
 
+  console.log(totalPriceCart);
+
   return (
     <Container className="py-4">
       <h1 className="mb-4">Giỏ hàng của bạn</h1>

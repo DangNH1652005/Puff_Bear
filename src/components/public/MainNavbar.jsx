@@ -5,25 +5,35 @@ import { useAuthStore } from "../../store/auth.store";
 import { useCartStore } from "../../store/cart.store";
 import { useFavoriteStore } from "../../store/favorite.store";
 import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/user.store";
 
 const MainNavbar = () => {
-  const { user, logout } = useAuthStore();
+  const { user: authUser, logout } = useAuthStore();
+  const { user, fetchUser, clearUser } = useUserStore();
+
   const navigate = useNavigate();
   const { cartItems, fetchCart, clearCart } = useCartStore();
   const { favorites, fetchFavorites, clearFavorites } = useFavoriteStore();
 
   useEffect(() => {
-    if (user && user.id) {
-      fetchCart(user.id);
-      fetchFavorites(user.id);
+    if (authUser?.id) {
+      fetchCart(authUser.id);
+      fetchFavorites(authUser.id);
     } else {
       clearCart();
       clearFavorites();
     }
-  }, [user, fetchCart, clearCart, fetchFavorites, clearFavorites]);
+  }, [authUser?.id, fetchCart, clearCart, fetchFavorites, clearFavorites]);
+
+  useEffect(() => {
+    if (authUser?.id) {
+      fetchUser(authUser.id);
+    }
+  }, [authUser?.id, fetchUser]);
 
   const handleLogout = () => {
     logout();
+    clearUser();
     clearCart();
     clearFavorites();
   };
@@ -67,7 +77,6 @@ const MainNavbar = () => {
             <Nav.Link href="/">Trang chủ</Nav.Link>
             <Nav.Link href="/products">Sản phẩm</Nav.Link>
             <Nav.Link href="/orders-history">Lịch sử đặt hàng</Nav.Link>
-            <Nav.Link href="#">Liên hệ</Nav.Link>
           </Nav>
 
           {/* Right */}
@@ -94,12 +103,21 @@ const MainNavbar = () => {
               style={{ width: "45px", height: "45px" }}
               onClick={() => navigate("/wishlist")}
             >
-              <Heart size={20} className={favorites.length > 0 ? "text-danger fill-danger" : "text-dark"} />
+              <Heart
+                size={20}
+                className={
+                  favorites.length > 0 ? "text-danger fill-danger" : "text-dark"
+                }
+              />
               {favorites.length > 0 && (
                 <Badge
                   bg="danger"
                   className="position-absolute rounded-circle"
-                  style={{ top: "0", right: "0", transform: "translate(30%, -30%)" }}
+                  style={{
+                    top: "0",
+                    right: "0",
+                    transform: "translate(30%, -30%)",
+                  }}
                 >
                   {favorites.length}
                 </Badge>

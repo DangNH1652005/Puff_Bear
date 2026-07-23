@@ -19,7 +19,7 @@ const WishlistPage = () => {
   }, [user?.id, fetchFavorites]);
 
   return (
-    <div className="min-vh-100 py-4" style={{ backgroundColor: "#fff5f8" }}>
+    <div className="min-vh-100 py-4">
       <Container>
         <h2 className="wishlist-title">Sản phẩm yêu thích</h2>
 
@@ -28,7 +28,7 @@ const WishlistPage = () => {
             <Spinner animation="border" style={{ color: "#e91e63" }} />
           </div>
         ) : favorites.length === 0 ? (
-          <div className="wishlist-empty-state shadow-sm">
+          <div className="wishlist-empty-state">
             <div className="wishlist-empty-icon">
               <Heart size={40} color="white" fill="white" />
             </div>
