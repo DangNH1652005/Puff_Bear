@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, Spinner, InputGroup } from "react-bootstrap";
+import toast from "react-hot-toast";
 import CategoryTable from "../../components/admin/CategoryTable";
 import CategoryProductsModal from "../../components/admin/CategoryProductsModal";
 import "../../styles/admin/AdminCategory.css";
@@ -32,7 +33,18 @@ const AdminCategory = () => {
     };
 
     const handleAddCategory = async () => {
-        if (!newCategoryName.trim()) return;
+        const trimmedName = newCategoryName.trim();
+        if (!trimmedName) return;
+
+        const isDuplicate = categories.some(
+            (c) => c.type.toLowerCase() === trimmedName.toLowerCase()
+        );
+
+        if (isDuplicate) {
+            toast.error("Thể loại này đã tồn tại!");
+            return;
+        }
+
         try {
             const res = await fetch(`${API_URL}/categories`, {
                 method: 'POST',
@@ -42,24 +54,40 @@ const AdminCategory = () => {
             const created = await res.json();
             setCategories((prev) => [...prev, created]);
             setNewCategoryName("");
+            toast.success("Đã thêm thể loại mới!");
         } catch (error) {
             console.error(error);
+            toast.error("Lỗi khi thêm thể loại!");
         }
     };
 
     const handleEditSubmit = async (updatedCategory) => {
+        const trimmedName = updatedCategory.type?.trim();
+        if (!trimmedName) return;
+
+        const isDuplicate = categories.some(
+            (c) => c.id !== updatedCategory.id && c.type.toLowerCase() === trimmedName.toLowerCase()
+        );
+
+        if (isDuplicate) {
+            toast.error("Tên thể loại này đã được sử dụng!");
+            return;
+        }
+
         try {
             const res = await fetch(`${API_URL}/categories/${updatedCategory.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedCategory)
+                body: JSON.stringify({...updatedCategory, type: trimmedName})
             });
             const updated = await res.json();
             setCategories((prev) =>
                 prev.map((c) => (c.id === updatedCategory.id ? updated : c))
             );
+            toast.success("Cập nhật thành công!");
         } catch (error) {
             console.error(error);
+            toast.error("Lỗi khi cập nhật!");
         }
     };
 

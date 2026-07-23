@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { createUser, updateUser, getUserOrders } from "../../services/user/user.service";
+import { createUser, updateUser, getUserOrders, deleteUser } from "../../services/user/user.service";
 import { role } from "../../constants/role.constant";
 import { ORDER_STATUS } from "../../constants/orderStatus.constant";
 import { formatMoney, formatDate, getInitial } from "../../utils/format";
@@ -13,6 +13,7 @@ const EMPTY_FORM = {
   password: "",
   phone: "",
   address: "",
+  role: "staff",
 };
 
 
@@ -38,6 +39,7 @@ export default function UserModal({
         password: user.password || "",
         phone: user.phone || "",
         address: user.address || "",
+        role: user.role || "customer",
       });
     } else if (mode === "add") {
       setForm(EMPTY_FORM);
@@ -113,7 +115,6 @@ export default function UserModal({
         // Thêm staff mới
         await createUser({
           ...form,
-          role: role.STAFF,
           avatar: "/profile.png",
           status: "active",
           createdAt: new Date().toISOString(),
@@ -155,6 +156,20 @@ export default function UserModal({
     setSaving(false);
   }
 
+  // Xoá tài khoản
+  async function handleDelete() {
+    setSaving(true);
+    try {
+      await deleteUser(user.id);
+      toast.success("Đã xoá tài khoản thành công!");
+      await onSaved();
+      onClose();
+    } catch {
+      toast.error("Lỗi server hoặc tài khoản đang có dữ liệu liên kết!");
+    }
+    setSaving(false);
+  }
+
   // Tổng chi tiêu (chỉ tính đơn đã giao)
   let totalSpent = 0;
   orders.forEach((o) => {
@@ -177,6 +192,7 @@ export default function UserModal({
           {mode === "lock" && (isLocked
             ? <><i className="bi bi-unlock me-2"></i>Mở khoá tài khoản</>
             : <><i className="bi bi-lock me-2"></i>Khoá tài khoản</>)}
+          {mode === "delete" && <><i className="bi bi-trash me-2"></i>Xoá tài khoản</>}
         </Modal.Title>
       </Modal.Header>
 
@@ -274,6 +290,18 @@ export default function UserModal({
             </div>
 
             <div className="col-md-6">
+              <label className="au-label">Vai trò *</label>
+              <select
+                className="form-select au-input"
+                name="role" value={form.role} onChange={handleChange}
+              >
+                <option value={role.STAFF}>Staff</option>
+                <option value={role.ADMIN}>Admin</option>
+                {mode === "edit" && <option value={role.CUSTOMER}>Customer</option>}
+              </select>
+            </div>
+
+            <div className="col-12">
               <label className="au-label">Địa chỉ</label>
               <input
                 className="form-control au-input"
@@ -281,15 +309,6 @@ export default function UserModal({
                 placeholder="Hà Nội"
               />
             </div>
-
-            {mode === "add" && (
-              <div className="col-12">
-                <p className="text-muted mb-0" style={{ fontSize: 12 }}>
-                  <i className="bi bi-info-circle me-1"></i>
-                  Tài khoản này sẽ được tạo với vai trò <strong>Staff</strong>.
-                </p>
-              </div>
-            )}
           </div>
         )}
 
@@ -305,6 +324,20 @@ export default function UserModal({
               {isLocked
                 ? "sẽ đăng nhập lại được bình thường."
                 : "sẽ không thể đăng nhập cho đến khi được mở khoá."}
+            </p>
+          </div>
+        )}
+
+        {/* XOÁ TÀI KHOẢN */}
+        {mode === "delete" && user && (
+          <div className="text-center py-3">
+            <div className="au-lock-icon mb-3" style={{ color: "#dc3545", backgroundColor: "#f8d7da" }}>
+              <i className="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            <h6>Bạn có chắc chắn muốn xoá tài khoản này?</h6>
+            <p className="text-danger mb-0">
+              <strong>{user.fullName}</strong>{" "}
+              sẽ bị xoá vĩnh viễn khỏi hệ thống. Hành động này không thể hoàn tác!
             </p>
           </div>
         )}
@@ -328,6 +361,15 @@ export default function UserModal({
               ? <span className="spinner-border spinner-border-sm me-1"></span>
               : <i className={`bi ${isLocked ? "bi-unlock" : "bi-lock"} me-1`}></i>}
             {isLocked ? "Mở khoá" : "Khoá tài khoản"}
+          </button>
+        )}
+
+        {mode === "delete" && (
+          <button className="btn btn-danger au-btn-save" onClick={handleDelete} disabled={saving} style={{ backgroundColor: "#dc3545", borderColor: "#dc3545" }}>
+            {saving
+              ? <span className="spinner-border spinner-border-sm me-1"></span>
+              : <i className="bi bi-trash me-1"></i>}
+            Xác nhận xoá
           </button>
         )}
       </Modal.Footer>
