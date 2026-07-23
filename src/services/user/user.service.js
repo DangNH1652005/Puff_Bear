@@ -55,4 +55,8 @@ export const updateUser = async (userId, data) => {
   return res.data;
 }
 
+export const deleteUser = async (userId) => {
+  const res = await instance.delete(`/users/${userId}`);
+  return res.data;
+}
 
