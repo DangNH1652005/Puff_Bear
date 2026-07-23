@@ -27,9 +27,9 @@ const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts, isStaff }
         <Table responsive hover className="category-table align-middle">
             <thead>
                 <tr>
-                    <th style={{ width: '40%' }}>ID</th>
-                    <th>Tên thể loại</th>
-                    <th style={{ width: '25%', textAlign: 'center' }}>Thao tác</th>
+                    <th style={{ width: '20%' }}>ID</th>
+                    <th style={{ width: '45%', textAlign: 'center' }}>Tên thể loại</th>
+                    <th style={{ width: '35%', textAlign: 'center' }}>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +45,7 @@ const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts, isStaff }
                             <td className="align-middle text-muted">{cat.id}</td>
 
                             {editId === cat.id ? (
-                                <td className="align-middle">
+                                <td className="align-middle text-center">
                                     <Form.Control
                                         type="text"
                                         value={editName}
@@ -55,10 +55,11 @@ const CategoryTable = ({ categories, onEdit, onDelete, onViewProducts, isStaff }
                                             if (e.key === 'Escape') handleCancelEdit();
                                         }}
                                         autoFocus
+                                        className="text-center"
                                     />
                                 </td>
                             ) : (
-                                <td className="align-middle fw-semibold">{cat.type}</td>
+                                <td className="align-middle fw-semibold text-center">{cat.type}</td>
                             )}
 
                             <td className="align-middle text-center">
